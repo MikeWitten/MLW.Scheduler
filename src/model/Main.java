@@ -7,10 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * @author
+ * Micheal Lee Witten
+ */
 public class Main extends Application {
 
     public void start (Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("file"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"));
         stage.setTitle("Title");
         stage.setScene(new Scene(root, 800, 600));
         stage.show();
