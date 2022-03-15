@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600" prefWidth="600" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentDetail">
+   <children>
+      <Label layoutX="247.0" layoutY="14.0" text="Appointment Detail">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="100" layoutY="60.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="90.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="120.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="150.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="180.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="210.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="240.0" prefHeight="26.0" prefWidth="450" />
+      <TextField layoutX="100.0" layoutY="270.0" prefHeight="26.0" prefWidth="450" />
+      <Label layoutX="14.0" layoutY="65.0" text="Appt ID :" />
+      <Label layoutX="14.0" layoutY="94.0" text="User ID :" />
+      <Label layoutX="14.0" layoutY="124.0" text="Customer ID :" />
+      <Label layoutX="14.0" layoutY="154.0" text="Contact :" />
+      <Label layoutX="14.0" layoutY="184.0" text="Type :" />
+      <Label layoutX="14.0" layoutY="214.0" text="Start :" />
+      <Label layoutX="14.0" layoutY="244.0" text="End :" />
+      <Label layoutX="14.0" layoutY="274.0" text="Location :" />
+      <Label layoutX="14.0" layoutY="304.0" text="Description :" />
+      <TextArea layoutX="100.0" layoutY="300.0" prefHeight="98.0" prefWidth="450.0" />
+      <Pane layoutY="432.0" prefHeight="166.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="15" layoutY="15" text="Associated Customer :" />
+            <Label layoutX="15" layoutY="35" text="ID :" />
+            <Label layoutX="15" layoutY="55" text="Name :" />
+            <Label layoutX="15" layoutY="75" text="Phone :" />
+            <Label layoutX="15" layoutY="95" text="Address :" />
+            <Label layoutX="132.0" layoutY="35.0" prefHeight="17.0" prefWidth="265.0" text="CUSTOMER ID" />
+            <Label layoutX="132.0" layoutY="55.0" prefHeight="17.0" prefWidth="265.0" text="CUSTOMER NAME" />
+            <Label layoutX="132.0" layoutY="75.0" prefHeight="17.0" prefWidth="265.0" text="CUSTOMER PHONE" />
+            <Label layoutX="132.0" layoutY="95.0" prefHeight="17.0" prefWidth="265.0" text="123 ALPHABET SOUP STREET EAST," />
+            <Label layoutX="132.0" layoutY="115.0" prefHeight="17.0" prefWidth="330.0" text="SOME CITY, SOME NEIGHBORHOOD, STATE ZIPCODE" />
+            <Label layoutX="132.0" layoutY="135.0" prefHeight="17.0" prefWidth="265.0" text="COUNTRY" />
+         </children>
+      </Pane>
+      <ButtonBar layoutX="267.0" layoutY="398.0" prefHeight="40.0" prefWidth="236.0">
+        <buttons>
+            <Button layoutX="200.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
+            <Button layoutX="200.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+            <Button fx:id="toMainScreen" layoutX="171.0" layoutY="17.0" mnemonicParsing="false" text="Back" />
+        </buttons>
+      </ButtonBar>
+      <ButtonBar layoutX="80.0" layoutY="398.0" prefHeight="40.0" prefWidth="183.0">
+         <buttons>
+            <Button layoutX="200.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" textFill="RED" />
+            <Button layoutX="200.0" layoutY="17.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" textFill="RED" />
+         </buttons>
+      </ButtonBar>
+
+   </children>
+</AnchorPane>

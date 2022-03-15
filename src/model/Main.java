@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public void start (Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentDetail.fxml"));
         stage.setTitle("Title");
-        stage.setScene(new Scene(root, 800, 600));
+        stage.setScene(new Scene(root, 400, 600));
         stage.show();
     }
 
