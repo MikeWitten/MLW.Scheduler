@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="486.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentManager">
+   <children>
+      <TableView layoutX="14.0" layoutY="14.0" prefHeight="334.0" prefWidth="824.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Appt ID" />
+          <TableColumn prefWidth="155.39999389648438" text="Type" />
+            <TableColumn prefWidth="173.20001220703125" text="Start" />
+            <TableColumn prefWidth="170.800048828125" text="End" />
+            <TableColumn prefWidth="161.199951171875" text="Customer Name" />
+            <TableColumn prefWidth="90.0" text="Customer ID" />
+        </columns>
+      </TableView>
+      <ButtonBar layoutX="122.0" layoutY="348.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="608.0">
+        <buttons>
+            <RadioButton mnemonicParsing="false" text="Month View" />
+            <RadioButton layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Week View" />
+          <Button mnemonicParsing="false" text="Detail View" />
+            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" text="Add" />
+            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" text="Delete" />
+            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" text="Modify" />
+        </buttons>
+      </ButtonBar>
+      <ButtonBar layoutX="326.0" layoutY="388.0" prefHeight="40.0" prefWidth="200.0">
+         <buttons>
+            <DatePicker />
+         </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>
