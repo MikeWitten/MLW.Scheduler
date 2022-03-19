@@ -3,6 +3,19 @@ package controller;
 import javafx.event.ActionEvent;
 
 public class AppointmentDetail {
+    /**
+     * Identify Appointment object
+     */
+    Appointment thisAppointment;
+
+    /**
+     * Receive the appointment object.
+     */
+    public void sendAppointment(Appointment appointment){
+        thisAppointment= appointment;
+    }
+
+
     public void cancel(ActionEvent actionEvent) {
     }
 
@@ -14,4 +27,6 @@ public class AppointmentDetail {
 
     public void editAppointment(ActionEvent actionEvent) {
     }
+
+
 }

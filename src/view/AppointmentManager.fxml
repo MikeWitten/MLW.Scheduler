@@ -2,33 +2,36 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="486.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentManager">
+<AnchorPane fx:id="label1" prefHeight="486.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentManager">
    <children>
-      <TableView layoutX="14.0" layoutY="14.0" prefHeight="334.0" prefWidth="824.0">
+      <TableView layoutX="15.0" layoutY="76.0" prefHeight="334.0" prefWidth="824.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Appt ID" />
           <TableColumn prefWidth="155.39999389648438" text="Type" />
-            <TableColumn prefWidth="173.20001220703125" text="Start" />
-            <TableColumn prefWidth="170.800048828125" text="End" />
+            <TableColumn prefWidth="176.60000610351562" text="Start" />
+            <TableColumn prefWidth="168.19998168945312" text="End" />
             <TableColumn prefWidth="161.199951171875" text="Customer Name" />
             <TableColumn prefWidth="90.0" text="Customer ID" />
         </columns>
       </TableView>
-      <ButtonBar layoutX="122.0" layoutY="348.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="608.0">
+      <ButtonBar layoutX="123.0" layoutY="408.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="608.0">
         <buttons>
-            <RadioButton mnemonicParsing="false" text="Month View" />
-            <RadioButton layoutX="187.0" layoutY="21.0" mnemonicParsing="false" text="Week View" />
-          <Button mnemonicParsing="false" text="Detail View" />
-            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" text="Add" />
-            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" text="Delete" />
-            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" text="Modify" />
+            <RadioButton mnemonicParsing="false" onAction="#toMonthFilter" text="Month View" />
+            <RadioButton layoutX="187.0" layoutY="21.0" mnemonicParsing="false" onAction="#toWeekFilter" text="Week View" />
+          <Button mnemonicParsing="false" onAction="#toAppoointmentDetails" text="View" />
+            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Add" />
+            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+            <Button layoutX="593.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Modify" />
         </buttons>
       </ButtonBar>
-      <ButtonBar layoutX="326.0" layoutY="388.0" prefHeight="40.0" prefWidth="200.0">
-         <buttons>
-            <DatePicker />
-         </buttons>
-      </ButtonBar>
+      <DatePicker fx:id="datePicker" layoutX="373.0" layoutY="451.0" />
+      <Label layoutX="335.0" layoutY="21.0" text="Appointment Manager">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="787.0" layoutY="448.0" mnemonicParsing="false" onAction="#toExitProgram" text="EXIT" />
    </children>
 </AnchorPane>

@@ -6,36 +6,36 @@
 
 <AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreen">
     <children>
-        <Label layoutX="454.0" layoutY="14.0" text="Quick Start">
+        <Label fx:id="label1" layoutX="454.0" layoutY="14.0" text="Quick Start">
             <font>
                 <Font size="19.0" />
             </font>
         </Label>
         <Pane layoutX="14.0" layoutY="127.0" prefHeight="320.0" prefWidth="439.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
          <children>
-            <TableView layoutX="20.0" layoutY="14.0" prefHeight="293.0" prefWidth="412.0">
+            <TableView fx:id="CustomerTable" layoutX="20.0" layoutY="14.0" prefHeight="293.0" prefWidth="412.0">
               <columns>
-                <TableColumn prefWidth="99.0" text="Customer ID" />
-                <TableColumn prefWidth="191.0" text="Customer Name" />
-                  <TableColumn minWidth="0.0" prefWidth="106.0" text="Phone" />
+                <TableColumn fx:id="customerID" prefWidth="99.0" text="Customer ID" />
+                <TableColumn fx:id="customerName" prefWidth="191.0" text="Customer Name" />
+                  <TableColumn fx:id="customerPhone" minWidth="0.0" prefWidth="120.79998779296875" text="Phone" />
               </columns>
             </TableView>
          </children></Pane>
         <Pane layoutX="487.0" layoutY="127.0" prefHeight="320.0" prefWidth="494.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
             <children>
-                <TableView layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="470.0">
+                <TableView fx:id="AppointmentsTable" layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="470.0">
                     <columns>
-                        <TableColumn prefWidth="54.199951171875" text="Appt ID" />
-                        <TableColumn prefWidth="101.0" text="Appt Type" />
-                  <TableColumn prefWidth="149.79998779296875" text="Start" />
-                  <TableColumn prefWidth="163.79998779296875" text="End" />
+                        <TableColumn fx:id="appointmentID" prefWidth="54.199951171875" text="Appt ID" />
+                        <TableColumn fx:id="appointmentType" prefWidth="101.0" text="Appt Type" />
+                  <TableColumn fx:id="startTime" prefWidth="149.79998779296875" text="Start" />
+                  <TableColumn fx:id="endTime" prefWidth="163.79998779296875" text="End" />
                     </columns>
                 </TableView>
             </children></Pane>
         <ButtonBar layoutX="253.0" layoutY="450.0" prefHeight="40.0" prefWidth="200.0">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#toCustomerAdd" text="Add" />
-                <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View" />
+                <Button mnemonicParsing="false" onAction="#toCustomerDetailsAdd" text="Add" />
+                <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetailsView" text="View" />
             </buttons>
         </ButtonBar>
         <ButtonBar layoutX="612.0" layoutY="450.0" prefHeight="40.0" prefWidth="373.0">
@@ -66,5 +66,6 @@
         </Label>
         <Button layoutX="786.0" layoutY="509.0" mnemonicParsing="false" onAction="#toAppointmentDetails" prefHeight="26.0" prefWidth="75.0" text="Details" />
       <TextField layoutX="268.0" layoutY="89.0" prefHeight="26.0" prefWidth="186.0" promptText="Search by Name, ID, or Phone" />
+      <Button layoutX="934.0" layoutY="510.0" mnemonicParsing="false" onAction="#toExitProgram" text="EXIT" />
     </children>
 </AnchorPane>

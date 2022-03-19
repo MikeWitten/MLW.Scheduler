@@ -57,5 +57,6 @@
             <Button layoutX="48.0" layoutY="17.0" mnemonicParsing="false" text="Delete" />
          </buttons>
       </ButtonBar>
+      <Button layoutX="949.0" layoutY="461.0" mnemonicParsing="false" onAction="#toExitProgram" text="EXIT" />
    </children>
 </AnchorPane>

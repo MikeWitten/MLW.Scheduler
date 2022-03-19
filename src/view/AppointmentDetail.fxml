@@ -42,6 +42,7 @@
             <Label layoutX="132.0" layoutY="95.0" prefHeight="17.0" prefWidth="265.0" text="123 ALPHABET SOUP STREET EAST," />
             <Label layoutX="132.0" layoutY="115.0" prefHeight="17.0" prefWidth="330.0" text="SOME CITY, SOME NEIGHBORHOOD, STATE ZIPCODE" />
             <Label layoutX="132.0" layoutY="135.0" prefHeight="17.0" prefWidth="265.0" text="COUNTRY" />
+            <Button layoutX="534.0" layoutY="131.0" mnemonicParsing="false" onAction="#toExitProgram" text="EXIT" />
          </children>
       </Pane>
       <ButtonBar layoutX="267.0" layoutY="398.0" prefHeight="40.0" prefWidth="236.0">
