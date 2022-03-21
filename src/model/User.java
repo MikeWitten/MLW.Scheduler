@@ -93,4 +93,25 @@ public class User {
      * Create a list for associated appointments
      */
     ObservableList<Appointment> userAppointments = FXCollections.observableArrayList();
+
+    /**
+     * Method to add an appointment to the appointments list.
+     */
+    public void addUserAppointment(Appointment appointment){
+        userAppointments.add(appointment);
+    }
+
+    /**
+     * Method to delete an appointment from appointments list.
+     */
+    public void deleteUserAppointment(Appointment appointment){
+        userAppointments.remove(appointment);
+    }
+
+    /**
+     * Method to show user appointments.
+     */
+    public ObservableList<Appointment> getUserAppointments(){
+        return userAppointments;
+    }
 }

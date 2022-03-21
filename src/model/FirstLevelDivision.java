@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 
 public class FirstLevelDivision {
     //Create First Level Division object arguments.
-    int divisionID;                 //FIXME unique value 10 char max
-    String division;                //FIXME 50 char max Alert(already exists)
+    int divisionID;
+    String division;
     LocalDateTime createDate;
-    String createdBy;               //FIXME 50 char max
+    String createdBy;
     Timestamp lastUpdate;
-    String lastUpdatedBy;           //FIXME 50 char max
-    int CountryID;                  //FIXME unique value 10 char max
+    String lastUpdatedBy;
+    int CountryID;
 
     /**
      * Create a constructor for the First Level Division objects.
@@ -27,66 +27,38 @@ public class FirstLevelDivision {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
-        CountryID = countryID;
+        this.CountryID = countryID;
     }
 
     /**
-     * Create getters and setters for the First Level Division objects.
+     * Create getters for the First Level Division objects (no setters since this class is read only).
      */
     public int getDivisionID() {
         return divisionID;
-    }
-
-    public void setDivisionID(int divisionID) {
-        this.divisionID = divisionID;
     }
 
     public String getDivision() {
         return division;
     }
 
-    public void setDivision(String division) {
-        this.division = division;
-    }
-
     public LocalDateTime getCreateDate() {
         return createDate;
-    }
-
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public Timestamp getLastUpdate() {
         return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-
     public int getCountryID() {
         return CountryID;
-    }
-
-    public void setCountryID(int countryID) {
-        CountryID = countryID;
     }
 
     /**
