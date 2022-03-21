@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogIn">
+   <Label fx:id="stageLabel" layoutX="473.0" layoutY="14.0" text="Log In">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+   </Label>
+   <TextField fx:id="userNameTxt" alignment="CENTER" layoutX="425.0" layoutY="150.0" nodeOrientation="LEFT_TO_RIGHT" promptText="UserName" />
+   <TextField fx:id="passwordTxt" alignment="CENTER" layoutX="425.0" layoutY="200.0" promptText="Password" />
+   <Button layoutX="475.0" layoutY="250.0" mnemonicParsing="false" onAction="#credentialCheck" text="Log In" />
+   <Button layoutX="481.0" layoutY="300.0" mnemonicParsing="false" onAction="#toExit" text="EXIT" />
+   <Label layoutX="463.0" layoutY="400.0" text="Local time for" />
+   <TextField fx:id="zoneIDTxt" alignment="CENTER" layoutX="425.0" layoutY="420.0" text="Zone ID" />
+   <Label layoutX="495.0" layoutY="450.0" text="is" />
+   <TextField fx:id="dateTimeTxt" alignment="CENTER" layoutX="425.0" layoutY="470.0" text="DATETIME" />
+   <Label layoutX="325.0" layoutY="154.0" text="User Name" />
+   <Label layoutX="329.0" layoutY="204.0" text="Password" />
+</AnchorPane>

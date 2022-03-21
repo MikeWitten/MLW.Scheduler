@@ -27,7 +27,7 @@ public class HomePage  {
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
-    }       //FIXME import user profile
+    }       //FIXME pass the User football
 
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
@@ -44,7 +44,10 @@ public class HomePage  {
         navigation(stage, "/view/Home Page.fxml");
     }
 
-    public void toNextAppointment() {
-    }       //FIXME
+    public void toNextAppointment() throws IOException {
+        //FIXME pass the appointment football
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        navigation(stage, "/view/Appointment Details.fxml");
+    }
 }
 

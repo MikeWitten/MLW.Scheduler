@@ -31,68 +31,40 @@ public class User {
     }
 
     /**
-     * Create getters and setters for User objects.
+     * Create getters for User objects (addition of users is beyond the scope of this application).
      */
     public int getUserID() {
         return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
     public String getCreatedBy() {
         return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
     }
 
     public Timestamp getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     /**
      * Create a list for associated appointments
      */
-    ObservableList<Appointment> userAppointments = FXCollections.observableArrayList();
+    static ObservableList<Appointment> userAppointments = FXCollections.observableArrayList();
 
     /**
      * Method to add an appointment to the appointments list.
@@ -104,7 +76,7 @@ public class User {
     /**
      * Method to delete an appointment from appointments list.
      */
-    public void deleteUserAppointment(Appointment appointment){
+    public static void deleteUserAppointment(Appointment appointment){
         userAppointments.remove(appointment);
     }
 

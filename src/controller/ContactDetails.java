@@ -23,7 +23,7 @@ public class ContactDetails {
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
-    }       //FIXME import user profile
+    }       //FIXME pass the User football
 
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
