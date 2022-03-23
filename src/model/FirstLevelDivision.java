@@ -64,7 +64,7 @@ public class FirstLevelDivision {
     /**
      * Create a list of associated customers for the first level division objects.
      */
-    ObservableList<Customer> divisionCustomerList = FXCollections.observableArrayList();
+    static ObservableList<Customer> divisionCustomerList = FXCollections.observableArrayList();
 
     /**
      * Method to add a customer to the associated list.
@@ -76,7 +76,7 @@ public class FirstLevelDivision {
     /**
      * Method to delete a customer from the associated list.
      */
-    public void deleteDivisionCustomer(Customer customer){
+    public static void deleteDivisionCustomer(Customer customer){
         divisionCustomerList.remove(customer);
     }
 

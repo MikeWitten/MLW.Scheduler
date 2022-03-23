@@ -27,7 +27,7 @@
    <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="328.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
       <TextField fx:id="userIDTxt" editable="false" layoutX="115.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
       <TextField fx:id="userNameTxt" editable="false" layoutX="115.0" layoutY="80.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="passwordTxt" editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" text="XXXXXXXXXXXXXXXXXXXXXXXXXX" />
+      <TextField editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" text="XXXXXXXXXXXXXXXXXXXXXXXXXX" />
       <TextField fx:id="createDateTxt" editable="false" layoutX="115.0" layoutY="160" prefHeight="26.0" prefWidth="200.0" />
       <TextField fx:id="createdByTxt" editable="false" layoutX="115.0" layoutY="200" prefHeight="26.0" prefWidth="200.0" />
       <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="115.0" layoutY="241.0" prefHeight="26.0" prefWidth="200.0" />

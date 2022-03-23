@@ -1,6 +1,10 @@
 package controller;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -10,6 +14,13 @@ import static utilities.Methods.*;
 public class ContactDetails {
 
     public Label stageLabel;
+    public TextField userIDTxt;
+    public TextField userNameTxt;
+    public TextField passwordTxt;
+    public Button editableButton;
+    public ButtonBar buttonBar;
+
+
     //Navigation
     public void toExit() {
         exitHere();
@@ -38,5 +49,20 @@ public class ContactDetails {
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
+    }
+
+    public void addAppointment(ActionEvent actionEvent) {
+    }
+
+    public void editAppointment(ActionEvent actionEvent) {
+    }
+
+    public void deleteAppointment(ActionEvent actionEvent) {
+    }
+
+    public void toAppointmentDetails(ActionEvent actionEvent) {
+    }
+
+    public void turnOnButtonBar(ActionEvent actionEvent) {
     }
 }

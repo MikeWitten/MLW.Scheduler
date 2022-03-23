@@ -2,9 +2,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 
@@ -16,6 +14,14 @@ import static utilities.Methods.*;
 
 public class ManageAppointments implements Initializable {
     public Label stageLabel;
+    public Label monthOfTheYear;
+    public TextField appointmentFilterTxt;
+    public RadioButton monthViewButton;
+    public RadioButton weekViewButton;
+    public Button prevMonthButton;
+    public Button nextMonthButton;
+    public Button prevWeekButton;
+    public Button nextWeekButton;
 
     //Navigation
     public void toExit() {
@@ -47,10 +53,8 @@ public class ManageAppointments implements Initializable {
         navigation(stage, "/view/Home Page.fxml");
     }
 
-    //Methods
-
     /**
-     * Method to add appointment.
+     * Navigate to add appointment.
      */
     public void addAppointment() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
@@ -58,7 +62,7 @@ public class ManageAppointments implements Initializable {
     }
 
     /**
-     * Method to edit an existing appointment.
+     * Navigate to edit an existing appointment.
      */
     public void editAppointment(){
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
@@ -68,7 +72,7 @@ public class ManageAppointments implements Initializable {
     }  //FIXME pass the Appointment football
 
     /**
-     * Method to view existing appointment details.
+     * Navigate to view existing appointment details.
      */
     public void toAppointmentDetails() {
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
@@ -77,6 +81,72 @@ public class ManageAppointments implements Initializable {
         }
     }
 
+    /**
+     * Method to delete appointment.
+     */
+    public void deleteAppointment() {
+        if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
+            Alerts("no item selected");
+            return;
+        }
+        Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        deleteAppointmentFromAll(appointment);
+        AppointmentTable.refresh();
+    }
+
+    /**
+     * Method to change the table to filter appointments by month.
+     */
+    public void toMonthView() {
+        monthViewButton.setSelected(true);
+        monthViewButton.setDisable(true);
+        nextMonthButton.setVisible(true);
+        prevMonthButton.setVisible(true);
+        nextWeekButton.setVisible(false);
+        prevWeekButton.setVisible(false);
+        weekViewButton.setDisable(false);
+        weekViewButton.setSelected(false);
+        //FIXME change to month view.
+    }
+
+    /**
+     * Method to change the table to filter by month.
+     */
+    public void toWeekView() {
+        monthViewButton.setSelected(false);
+        monthViewButton.setDisable(false);
+        nextMonthButton.setVisible(false);
+        prevMonthButton.setVisible(false);
+        nextWeekButton.setVisible(true);
+        prevWeekButton.setVisible(true);
+        weekViewButton.setDisable(true);
+        weekViewButton.setSelected(true);
+        //FIXME change to week view.
+    }
+
+    /**
+     * Method to filter results to the next month.
+     */
+    public void previousMonthFilter() {
+    }
+
+    /**
+     * Method to filter results to the next month.
+     */
+    public void nextMonthFilter(ActionEvent actionEvent) {
+    }
+
+    /**
+     * Method to filter to previous week.
+     */
+    public void previousWeekFilter() {
+    }
+
+    /**
+     * Method to filter to next week.
+     */
+    public void nextWeekFilter() {
+    }
 
 
 
@@ -99,9 +169,5 @@ public class ManageAppointments implements Initializable {
     }
 
 
-    /**
-     * Method to delete appointment.
-     */
-    public void deleteAppointment(ActionEvent actionEvent) {
-    }
+
 }

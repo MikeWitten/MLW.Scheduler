@@ -124,7 +124,7 @@ public class Customer {
     /**
      * Create an associated list for customer appointments.
      */
-    ObservableList<Appointment> customerAppointmentList = FXCollections.observableArrayList();
+    public static ObservableList<Appointment> customerAppointmentList = FXCollections.observableArrayList();
 
     /**
      * Method to add associated appointments.
@@ -136,7 +136,7 @@ public class Customer {
     /**
      * Method to delete an associated appointments.
      */
-    void deleteAssociatedAppointment(Appointment appointment){
+    public static void deleteCustomerAppointment(Appointment appointment){
         customerAppointmentList.remove(appointment);
     }
 

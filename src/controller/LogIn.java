@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.JDBC;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -31,6 +32,7 @@ public class LogIn implements Initializable {
         //FIXME Credential Check.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
+        JDBC.openConnection();
     }
 
     /**

@@ -53,7 +53,7 @@ public class Contact {
     /**
      * Create a list for associated appointments
      */
-    ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
+    static ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
 
     /**
      * Method to add an appointment to the appointments list.
@@ -65,7 +65,7 @@ public class Contact {
     /**
      * Method to delete an appointment from appointments list.
      */
-    public void deleteContactAppointment(Appointment appointment){
+    public static void deleteContactAppointment(Appointment appointment){
         contactAppointments.remove(appointment);
     }
 

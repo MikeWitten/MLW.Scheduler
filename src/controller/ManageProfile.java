@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +52,19 @@ public class ManageProfile implements Initializable {
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
+    }
+
+    /**
+     * Get active user data and populate text fields
+     */
+    public void getProfileUserFootball(User user){
+        userIDTxt.setText(String.valueOf(user.getUserID()));
+        passwordTxt.setText(user.getPassword());
+        userNameTxt.setText(user.getUserName());
+        createDateTxt.setText(String.valueOf(user.getCreateDate()));
+        createdByTxt.setText(user.getCreatedBy());
+        lastUpdatedTxt.setText(String.valueOf(user.getLastUpdate()));
+        lastUpdatedByTxt.setText(user.getLastUpdatedBy());
     }
 
     //Methods

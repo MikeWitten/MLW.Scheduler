@@ -71,7 +71,7 @@ public class Country {
     /**
      * Create a list of associated customers.
      */
-    ObservableList<Customer> countryCustomers = FXCollections.observableArrayList();
+    static ObservableList<Customer> countryCustomers = FXCollections.observableArrayList();
 
     /**
      * Method to add a customer to associated list.
@@ -83,7 +83,7 @@ public class Country {
     /**
      * Method to delete a customer from the associated list.
      */
-    public void deleteCountryCustomer(Customer customer){
+    public static void deleteCountryCustomer(Customer customer){
         countryCustomers.remove(customer);
     }
 
