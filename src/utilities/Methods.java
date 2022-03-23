@@ -84,6 +84,7 @@ public class Methods {
         alert.setContentText("To Exit press OK");
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
+                JDBC.closeConnection();
                 System.exit(0);
             }
         });
