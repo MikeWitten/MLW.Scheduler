@@ -24,4 +24,25 @@
          <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
       </buttons>
    </ButtonBar>
+   <Pane layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="1002.0">
+      <TableView fx:id="AppointmentTable" layoutX="11.0" layoutY="47.0" prefHeight="309.0" prefWidth="983.0">
+         <columns>
+            <TableColumn fx:id="aptIDColumn" prefWidth="120.19999980926514" text="ID" />
+            <TableColumn fx:id="customerColumn" prefWidth="624.9999694824219" text="Customer Name" />
+            <TableColumn fx:id="contactColumn" prefWidth="153.4000244140625" text="Phone" />
+            <TableColumn fx:id="contactColumn1" prefWidth="83.5999755859375" text="Division ID" />
+         </columns>
+      </TableView>
+      <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">
+         <buttons>
+            <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
+            <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
+            <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
+            <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+         </buttons>
+      </ButtonBar>
+      <TextField fx:id="appointmentFilterTxt" layoutX="806.0" layoutY="10.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Name, or Phone" />
+      <Label layoutX="747.0" layoutY="15.0" text="Search" />
+   </Pane>
+
 </AnchorPane>
