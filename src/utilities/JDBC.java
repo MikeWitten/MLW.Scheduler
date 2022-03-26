@@ -1,4 +1,4 @@
-package DAO;
+package utilities;
 //from C195 code repository
 
 import java.sql.Connection;
@@ -15,7 +15,7 @@ public class JDBC {
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
-    private static String password = "passw0rd!"; // Password
+    private static final String password = "passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
     /**

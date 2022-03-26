@@ -1,6 +1,5 @@
 package utilities;
 
-import DAO.JDBC;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

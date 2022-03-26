@@ -1,6 +1,6 @@
 package controller;
 
-import DAO.JDBC;
+import utilities.JDBC;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
