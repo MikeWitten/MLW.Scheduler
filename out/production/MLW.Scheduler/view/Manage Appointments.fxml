@@ -29,11 +29,11 @@
             <columns>
                 <TableColumn fx:id="aptIDColumn" prefWidth="59.19997787475586" text="Appt ID" />
                 <TableColumn fx:id="titleColumn" prefWidth="91.20001220703125" text="Title" />
-                <TableColumn fx:id="customerColumn" prefWidth="214.39999389648438" text="Customer Name" />
-                <TableColumn fx:id="contactColumn" prefWidth="164.80001831054688" text="Contact" />
-                <TableColumn fx:id="locationColumn" prefWidth="149.60000610351562" text="Location" />
-                <TableColumn fx:id="startColumn" prefWidth="132.0" text="Start" />
-                <TableColumn fx:id="endColumn" prefWidth="154.39996337890625" text="End" />
+                <TableColumn fx:id="customerColumn" prefWidth="188.3999786376953" text="Customer ID" />
+                <TableColumn fx:id="contactColumn" prefWidth="146.0" text="Contact" />
+                <TableColumn fx:id="locationColumn" prefWidth="171.79998779296875" text="Location" />
+                <TableColumn fx:id="startColumn" prefWidth="157.0" text="Start" />
+                <TableColumn fx:id="endColumn" prefWidth="168.5999755859375" text="End" />
             </columns>
         </TableView>
         <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">

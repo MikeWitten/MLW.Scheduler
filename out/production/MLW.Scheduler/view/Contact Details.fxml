@@ -25,25 +25,25 @@
       </buttons>
    </ButtonBar>
    <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="328.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TextField fx:id="userIDTxt" editable="false" layoutX="115.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="userNameTxt" editable="false" layoutX="115.0" layoutY="80.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="passwordTxt" editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" />
-      <Label alignment="CENTER_RIGHT" layoutX="38.0" layoutY="46.0" text="Contact ID" textAlignment="RIGHT" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="28.0" layoutY="85.0" text="Contact Name" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="49.0" layoutY="125.0" text="Email" />
+      <TextField fx:id="contactIDTxt" editable="false" layoutX="115.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
+      <TextField fx:id="contactNameTxt" editable="false" layoutX="115.0" layoutY="80.0" prefHeight="26.0" prefWidth="200.0" />
+      <TextField fx:id="emailTxt" editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="10" layoutY="46.0" text="Contact ID" textAlignment="RIGHT" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10" layoutY="85.0" text="Contact Name" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10" layoutY="125.0" text="Email" />
       <Label layoutX="98.0" layoutY="338.0" text="Contact an administrator" />
       <Label layoutX="63.0" layoutY="355.0" text="to change or update contact information." />
    </Pane>
    <Pane layoutX="342.0" layoutY="100.0" prefHeight="386.0" prefWidth="645.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
       <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
          <columns>
-            <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Appt ID" />
+            <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Apt ID" />
             <TableColumn fx:id="customerName" prefWidth="211.39996337890625" text="Customer Name" />
             <TableColumn fx:id="startTime" prefWidth="177.0" text="Start" />
             <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
          </columns>
       </TableView>
-      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0" visible="false">
+      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
             <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
@@ -51,9 +51,8 @@
             <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
          </buttons>
       </ButtonBar>
-      <TextField fx:id="appointmentFilter" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" promptText="Search by ApptID or Customer Name" />
+      <TextField fx:id="appointmentFilter" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" promptText="Search by AptID or Customer Name" />
       <Label layoutX="344.0" layoutY="18.0" text="Search" />
       <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
-      <Button fx:id="editableButton" layoutX="14.0" layoutY="340.0" mnemonicParsing="false" onAction="#turnOnButtonBar" text="Turn on Editing" />
    </Pane>
 </AnchorPane>

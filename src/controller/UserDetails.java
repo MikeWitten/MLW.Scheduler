@@ -61,35 +61,25 @@ public class UserDetails implements Initializable {
         navigation(stage, "/view/Home Page.fxml");
     }
 
-    /**
-     * Navigate to the appointment details page.  Pass all appointment information.
-     */
     public void toAppointmentDetails() {
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alerts("no item selected");
             return;
         }
-        //FIXME pass the appointment football
-    }
+    }//FIXME pass the appointment football
 
-    /**
-     *Navigate to the appointment details screen.  Pass the user information
-     */
     public void addAppointment() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Appointment Details.fxml");
     }  //FIXME pass the User football
 
-    /**
-     * Navigate to the appointment details page.  Pass all appointment information.
-     */
     public void editAppointment() {
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alerts("no item selected");
             return;
         }
-        //FIXME pass the appointment football
-    }
+
+    }//FIXME pass the appointment football
 
     /**
      * Get user data and populate text fields

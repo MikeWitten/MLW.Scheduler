@@ -43,7 +43,7 @@
             <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
          </columns>
       </TableView>
-      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0" visible="false">
+      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
             <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />

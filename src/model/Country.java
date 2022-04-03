@@ -29,9 +29,35 @@ public class Country {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+
+
     /**
-     * Create getters for the Country objects. (no setters because it is a read only class).
+     * Create getters and setters for the Country objects.
      */
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
     public int getCountryID() {
         return countryID;
     }
@@ -59,13 +85,13 @@ public class Country {
     /**
      * Create a list of associated First Level Divisions
      */
-    ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
+    ObservableList<Division> divisions = FXCollections.observableArrayList();
 
     /**
      * Method to get the first Level Division list.
      */
-    ObservableList<FirstLevelDivision> getFirstLevelDivisions(){
-        return firstLevelDivisions;
+    ObservableList<Division> getFirstLevelDivisions(){
+        return divisions;
     }
 
     /**

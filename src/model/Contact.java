@@ -12,11 +12,10 @@ public class Contact {
     /**
      * Create a constructor for the Contact objects.
      */
-    public Contact(int contactID, String contactName, String email, ObservableList<Appointment> contactAppointments) {
+    public Contact(int contactID, String contactName, String email) {
         this.contactID = contactID;
         this.contactName = contactName;
         Email = email;
-        this.contactAppointments = contactAppointments;
     }
 
     /**

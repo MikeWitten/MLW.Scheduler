@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class FirstLevelDivision {
+public class Division {
     //Create First Level Division object arguments.
     int divisionID;
     String division;
@@ -19,8 +19,8 @@ public class FirstLevelDivision {
     /**
      * Create a constructor for the First Level Division objects.
      */
-    public FirstLevelDivision(int divisionID, String division, LocalDateTime createDate, String createdBy,
-                              Timestamp lastUpdate, String lastUpdatedBy, int countryID) {
+    public Division(int divisionID, String division, LocalDateTime createDate, String createdBy,
+                    Timestamp lastUpdate, String lastUpdatedBy, int countryID) {
         this.divisionID = divisionID;
         this.division = division;
         this.createDate = createDate;
@@ -30,9 +30,39 @@ public class FirstLevelDivision {
         this.CountryID = countryID;
     }
 
+
+
     /**
-     * Create getters for the First Level Division objects (no setters since this class is read only).
+     * Create getters and setters for the First Level Division objects.
      */
+    public void setDivisionID(int divisionID) {
+        this.divisionID = divisionID;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public void setCountryID(int countryID) {
+        CountryID = countryID;
+    }
+
     public int getDivisionID() {
         return divisionID;
     }

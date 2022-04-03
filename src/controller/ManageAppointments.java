@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 
@@ -166,6 +167,15 @@ public class ManageAppointments implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //Set values in the table.
+        AppointmentTable.setItems(getAllAppointments());
+        aptIDColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        customerColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
     }
 
 
