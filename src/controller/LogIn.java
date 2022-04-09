@@ -10,6 +10,8 @@ import utilities.JDBC;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -22,6 +24,8 @@ public class LogIn implements Initializable {
     public Label stageLabel;    //Use to get stage for navigation.
     public TextField zoneIDTxt;
     public TextField dateTimeTxt;
+
+
 
     /**
      * Check credentials and navigate to home page.
@@ -70,12 +74,13 @@ public class LogIn implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Populate the zone and time fields.
-        zoneIDTxt.setText(Locale.getDefault().getDisplayCountry());
 
-        LocalDateTime now = LocalDateTime.now();
-        dateTimeTxt.setText(now.toLocalDate() +"   " +
-                String.valueOf(now.getHour()) +":" +String.valueOf(now.getMinute()));
+        //Populate the zone and time fields.
+        zoneIDTxt.setText(ZoneId.systemDefault().toString());
+
+        DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+        dateTimeTxt.setText(timeFormatter.format(LocalDateTime.now()));
+
 
     }
 }

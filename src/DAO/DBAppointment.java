@@ -150,22 +150,6 @@ public abstract class DBAppointment {
                     type, start, end, createDate, createdBy,lastUpdate, lastUpdatedBy, customerID,
                     userID, contactID);
             addApt(appointment);
-
-            System.out.print(appointmentID + " | ");
-            System.out.print(title + " | ");
-            System.out.print(description + " | ");
-            System.out.print(location + " | ");
-            System.out.print(type + " | ");
-            System.out.print(start + " | ");
-            System.out.print(end + " | ");
-            System.out.print(createDate + " | ");
-            System.out.print(createdBy + " | ");
-            System.out.print(lastUpdate + " | ");
-            System.out.print(lastUpdatedBy + " | ");
-            System.out.print(customerID + " | ");
-            System.out.print(userID + " | ");
-            System.out.print(contactID + "\n");
-
         }
     }
 

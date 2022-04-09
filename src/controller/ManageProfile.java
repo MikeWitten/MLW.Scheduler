@@ -125,8 +125,7 @@ public class ManageProfile implements Initializable {
         createdByTxt.setText(getActiveUser(null).getCreatedBy());
         lastUpdatedTxt.setText(String.valueOf(getActiveUser(null).getLastUpdate()));
         lastUpdatedByTxt.setText(getActiveUser(null).getLastUpdatedBy());
+
+
     }
-
-
-
 }
