@@ -46,7 +46,7 @@
         <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
             <columns>
                 <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Apt ID" />
-                <TableColumn fx:id="customerName" prefWidth="211.39996337890625" text="Customer Name" />
+                <TableColumn fx:id="customerID" prefWidth="211.39996337890625" text="customerID" />
                 <TableColumn fx:id="startTime" prefWidth="177.0" text="Start" />
                 <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
             </columns>

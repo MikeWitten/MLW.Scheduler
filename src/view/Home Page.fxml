@@ -24,7 +24,11 @@
          <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
      </buttons>
    </ButtonBar>
-   <TextField fx:id="userNameTxt" alignment="CENTER" editable="false" layoutX="426.0" layoutY="125.0" text="Welcome Back UserName" />
    <TextField fx:id="nextAptTimeTxt" alignment="CENTER" layoutX="213.0" layoutY="175.0" prefHeight="26.0" prefWidth="592.0" text="Your next appointment is scheduled for LocalDateTime" />
    <Button layoutX="439.0" layoutY="210.0" mnemonicParsing="false" onAction="#toNextAppointment" text="Click here for details" />
+   <Label fx:id="welcomeLabel" layoutX="407.0" layoutY="129.0" prefHeight="40.0" prefWidth="198.0" text="     message here     " textAlignment="CENTER">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font></Label>
+
 </AnchorPane>

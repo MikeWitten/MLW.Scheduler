@@ -1,12 +1,16 @@
 package controller;
 
+import DAO.DBAppointment;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static model.User.deleteUserAppointment;
@@ -23,6 +27,7 @@ public class ManageProfile implements Initializable {
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
     public TextField appointmentFilter;
+    User currentUser;
 
     //Navigation
     public void toExit() {
@@ -35,10 +40,9 @@ public class ManageProfile implements Initializable {
     }
 
     public void toYourProfile() throws IOException {
-
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
-    }       //FIXME pass the User football
+    }
 
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
@@ -59,12 +63,14 @@ public class ManageProfile implements Initializable {
     /**
      * Navigate to the appointment details page.  Pass all appointment information.
      */
-    public void toAppointmentDetails() {
-        if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
+    public void toAppointmentDetails() throws IOException {
+        if (AppointmentTable.getSelectionModel().getSelectedItem() == null){
             Alerts("no item selected");
             return;
         }
-        //FIXME pass the appointment football
+        Stage stage1 = (Stage) (stageLabel).getScene().getWindow();
+        Appointment currentAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        passTheAppointment(currentAppointment, stage1);
     }
 
     /**
@@ -72,18 +78,14 @@ public class ManageProfile implements Initializable {
      */
     public void addAppointment() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/Appointment Details.fxml");
-    }  //FIXME pass the User football
+        passTheUser(currentUser, stage);
+    }
 
     /**
      * Navigate to the appointment details page.  Pass all appointment information.
      */
-    public void editAppointment() {
-        if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
-            Alerts("no item selected");
-            return;
-        }
-        //FIXME pass the appointment football
+    public void editAppointment() throws IOException {
+        toAppointmentDetails();
     }
 
     /**
@@ -101,6 +103,12 @@ public class ManageProfile implements Initializable {
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK){
                 deleteUserAppointment(appointment);
+                AppointmentTable.getSelectionModel().clearSelection();
+                try {
+                    DBAppointment.deleteApt(appointment);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -110,7 +118,7 @@ public class ManageProfile implements Initializable {
      */
     public TableView<Appointment> AppointmentTable;
     public TableColumn<Object, Object> appointmentID;
-    public TableColumn<Object, Object> customerName;
+    public TableColumn<Object, Object> customerID;
     public TableColumn<Object, Object>  startTime;
     public TableColumn<Object, Object> endTime;
 
@@ -126,6 +134,20 @@ public class ManageProfile implements Initializable {
         lastUpdatedTxt.setText(String.valueOf(getActiveUser(null).getLastUpdate()));
         lastUpdatedByTxt.setText(getActiveUser(null).getLastUpdatedBy());
 
+        //Determine the user.
+        for (User allUser : AllUsers) {
+            if (allUser.getUserID() == getActiveUser(null).getUserID()) {
+                currentUser = allUser;
+            }
+        }
+
+        //Populate the table.
+        assert currentUser != null;
+        AppointmentTable.setItems(currentUser.getUserAppointments());
+        appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        startTime.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endTime.setCellValueFactory(new PropertyValueFactory<>("end"));
 
     }
 }

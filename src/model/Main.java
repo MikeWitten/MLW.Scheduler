@@ -29,10 +29,10 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) throws IOException {
+        //Get the Locale from the user's computer for localization.
         Locale currentLocale = Locale.getDefault();
-        //Locale currentLocale = new Locale("fr");
         ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
-    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Log In.fxml")),bundle);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Log In.fxml")),bundle);
         stage.setTitle("Log In");
         stage.setScene(new Scene(root, 1000, 550));
         stage.show();

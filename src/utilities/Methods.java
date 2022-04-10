@@ -1,5 +1,6 @@
 package utilities;
 
+import controller.AppointmentDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,9 @@ import javafx.stage.Stage;
 import model.*;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import static model.Contact.deleteContactAppointment;
 import static model.Country.deleteCountryCustomer;
@@ -22,12 +25,16 @@ import static model.User.deleteUserAppointment;
 import static utilities.ActiveUser.voidActiveUser;
 
 public class Methods {
+    //Access the localization bundles to translate messages.
+    static Locale currentLocale = Locale.getDefault();
+    static ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
+
     /**
      * Create a universal method for notification alerts throughout the program.
      */
     public static void Alerts(String alertType){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Something went wrong");
+        alert.setTitle(bundle.getString("errorMessage"));
         alert.setHeight(550);
         alert.setWidth(550);
         switch (alertType) {
@@ -36,7 +43,8 @@ public class Methods {
             case "Deleted appointment" -> alert.setContentText("You have successfully deleted the selected appointment");
             case "Deleted associated appointments" -> alert.setContentText("You have successfully deleted all of this customer's appointments.");
             case "Deleted customer" -> alert.setContentText("You have successfully deleted this customer and all associated appointments");
-            case "User Name and Password required" -> alert.setContentText("Please enter a valid UserName and Password.");
+            case "User Name and Password required" -> alert.setContentText(bundle.getString("credentialMessage"));
+            case "You have an upcoming appointment" -> alert.setContentText("You have an appointment starting in less than 15 minutes!");
 
         }
         alert.show();
@@ -58,6 +66,8 @@ public class Methods {
      * Method to log out from each screen.
      */
     public static void logOutHere(Stage stage){
+        Locale currentLocale = Locale.getDefault();
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Desktop Scheduling Application");
         alert.setContentText("To log out press OK.");
@@ -67,7 +77,7 @@ public class Methods {
                 voidActiveUser();
                 Parent root = stage.getScene().getRoot();
                 try {
-                    root = FXMLLoader.load(Objects.requireNonNull(Methods.class.getResource("/view/Log In.fxml")));
+                    root = FXMLLoader.load(Objects.requireNonNull(Methods.class.getResource("/view/Log In.fxml")), bundle);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -84,14 +94,44 @@ public class Methods {
      */
     public static void exitHere(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Desktop Scheduling Application");
-        alert.setContentText("To Exit press OK");
+        alert.setTitle(bundle.getString("exitTitle"));
+        alert.setContentText(bundle.getString("exitMessage"));
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
                 JDBC.closeConnection();
                 System.exit(0);
             }
         });
+    }
+
+    /**
+     * Method to 'pass the football' to appointment details page.
+     */
+    public static void passTheAppointment(Appointment appointment, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Appointment Details.fxml"));
+        loader.load();
+        AppointmentDetails controller = loader.getController();
+        controller.receiveAppointment(appointment);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
+    }
+
+    /**
+     * Method to 'pass the User football' to appointment details page.
+     */
+    public static void passTheUser(User user, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Appointment Details.fxml"));
+        loader.load();
+        AppointmentDetails controller = loader.getController();
+        controller.receiveUser(user);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
     }
 
     /**

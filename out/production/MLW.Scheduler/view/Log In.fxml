@@ -10,14 +10,14 @@
          <Font name="System Bold" size="18.0" />
       </font>
    </Label>
-   <TextField fx:id="userNameTxt" alignment="CENTER" layoutX="425.0" layoutY="150.0" nodeOrientation="LEFT_TO_RIGHT" promptText="UserName" />
-   <TextField fx:id="passwordTxt" alignment="CENTER" layoutX="425.0" layoutY="200.0" promptText="Password" />
-   <Button layoutX="475.0" layoutY="250.0" mnemonicParsing="false" onAction="#credentialCheck" text="Log-In" />
-   <Button layoutX="481.0" layoutY="300.0" mnemonicParsing="false" onAction="#toExit" text="EXIT" />
-   <Label layoutX="469.0" layoutY="402.0" text="%labelZone" />
+   <TextField fx:id="userNameTxt" alignment="CENTER" layoutX="425.0" layoutY="150.0" nodeOrientation="LEFT_TO_RIGHT" promptText="%UserName" />
+   <TextField fx:id="passwordTxt" alignment="CENTER" layoutX="425.0" layoutY="200.0" promptText="%Password" />
+   <Button layoutX="421.0" layoutY="262.0" mnemonicParsing="false" onAction="#credentialCheck" prefHeight="26.0" prefWidth="156.0" text="%Log-In" />
+   <Button layoutX="422.0" layoutY="302.0" mnemonicParsing="false" onAction="#toExit" prefHeight="26.0" prefWidth="156.0" text="%EXIT" />
+   <Label layoutX="422.0" layoutY="401.0" prefHeight="18.0" prefWidth="139.0" text="%labelZone" textOverrun="CLIP" />
    <TextField fx:id="zoneIDTxt" alignment="CENTER" editable="false" layoutX="425.0" layoutY="420.0" text="Zone ID" />
-   <Label layoutX="478.0" layoutY="452.0" text="%labelIs" />
+   <Label layoutX="425.0" layoutY="451.0" prefHeight="18.0" prefWidth="115.0" text="%labelIs" textAlignment="CENTER" />
    <TextField fx:id="dateTimeTxt" alignment="CENTER" editable="false" layoutX="425.0" layoutY="470.0" text="DATETIME" />
    <Label layoutX="325.0" layoutY="154.0" text="%labelUsername" />
-   <Label layoutX="329.0" layoutY="204.0" text="%labelPassword" />
+   <Label layoutX="325.0" layoutY="204.0" text="%labelPassword" />
 </AnchorPane>
