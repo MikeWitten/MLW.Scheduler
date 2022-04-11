@@ -27,35 +27,42 @@ public class HomePage implements Initializable {
 
     //Navigation
     public void toExit() {
+        //Method found in utilities.methods.
         exitHere();
     }
 
     public void toLogOut() {
+        //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
 
     public void toYourProfile() throws IOException {
+        //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
 
     public void toAppointmentManager() throws IOException {
+        //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
 
     public void toCustomerManager() throws IOException {
+        //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
 
     public void toHome() throws IOException {
+        //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
 
     public void toNextAppointment() throws IOException {
+        //Method found in utilities.methods.
         Stage stage = (Stage) (stageLabel).getScene().getWindow();
         passTheAppointment(currentAppointment, stage);
     }
@@ -93,7 +100,7 @@ public class HomePage implements Initializable {
             }
         }
 
-        //Sort the associated appointments by datetime
+        //Sort the associated appointments by datetime.
         currentUser.getUserAppointments().sort(Comparator.comparing(Appointment::getStart));
 
         //find next appointment. Then, finally, populate the text box.
@@ -106,12 +113,13 @@ public class HomePage implements Initializable {
                 nextAptTimeTxt.setText("Your next appointment is scheduled for "
                         + timeFormatter.format(nextApt));
 
-                //Send an alert if it is within 15 minutes.
+                //Send an alert if the next appointment is within 15 minutes.
                     if (LocalDateTime.now().plusMinutes(15).isAfter(nextApt)){
                         Alerts("You have an upcoming appointment");
                     }
                 return;
             }
+            //If all appointments have passed, or there are no appointments, set a message to indicate that.
             else nextAptTimeTxt.setText("You don't have any upcoming Appointments.");
         }
     }

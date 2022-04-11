@@ -30,7 +30,7 @@ public class Methods {
     static ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
 
     /**
-     * Create a universal method for notification alerts throughout the program.
+     * Method for notification alerts throughout the program.
      */
     public static void Alerts(String alertType){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -73,7 +73,9 @@ public class Methods {
         alert.setContentText("To log out press OK.");
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK){
+                //Close the connection to the database.
                 JDBC.closeConnection();
+                //delete the active user.
                 voidActiveUser();
                 Parent root = stage.getScene().getRoot();
                 try {
@@ -98,6 +100,7 @@ public class Methods {
         alert.setContentText(bundle.getString("exitMessage"));
         alert.showAndWait().ifPresent(response -> {
             if(response == ButtonType.OK){
+                //Close the connection to the database.
                 JDBC.closeConnection();
                 System.exit(0);
             }
@@ -105,7 +108,7 @@ public class Methods {
     }
 
     /**
-     * Method to 'pass the football' to appointment details page.
+     * Method to 'pass the appointment football' to appointment details page.
      */
     public static void passTheAppointment(Appointment appointment, Stage stage1) throws IOException {
         FXMLLoader loader = new FXMLLoader();

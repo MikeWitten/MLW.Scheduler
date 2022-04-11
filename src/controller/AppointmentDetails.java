@@ -1,9 +1,9 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
@@ -13,6 +13,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 import static utilities.Methods.*;
@@ -23,8 +24,6 @@ public class AppointmentDetails implements Initializable {
     public TextField titleTxt;
     public TextField locationTxt;
     public TextField typeTxt;
-    public TextField startTimeTxt;
-    public TextField endTimeTxt;
     public TextField createDateTxt;
     public TextField createdByTxt;
     public TextField lastUpdatedTxt;
@@ -33,6 +32,11 @@ public class AppointmentDetails implements Initializable {
     public TextField userIDTxt;
     public TextField contactIDTxt;
     public TextArea descriptionTxt;
+    public DatePicker aptDatePicker;
+    public ComboBox<Integer> startHourCombo;
+    public ComboBox<Integer> startMinuteCombo;
+    public ComboBox<Integer> endHourCombo;
+    public ComboBox<Integer> endMinuteCombo;
     Appointment currentAppointment;
 
     //Navigation
@@ -91,8 +95,11 @@ public class AppointmentDetails implements Initializable {
         titleTxt.setText(currentAppointment.getTitle());
         locationTxt.setText(currentAppointment.getLocation());
         typeTxt.setText(currentAppointment.getType());
-        startTimeTxt.setText(String.valueOf(currentAppointment.getStart()));
-        endTimeTxt.setText(String.valueOf(currentAppointment.getEnd()));
+        aptDatePicker.setValue(currentAppointment.getStart().toLocalDate());
+        startHourCombo.getSelectionModel().select(currentAppointment.getStart().getHour());
+        startMinuteCombo.getSelectionModel().select((Integer) currentAppointment.getStart().getMinute());
+        endHourCombo.getSelectionModel().select(currentAppointment.getEnd().getHour());
+        endMinuteCombo.getSelectionModel().select((Integer) currentAppointment.getEnd().getMinute());
         createDateTxt.setText(String.valueOf(currentAppointment.getCreateDate()));
         createdByTxt.setText(currentAppointment.getCreatedBy());
         lastUpdatedTxt.setText(String.valueOf(currentAppointment.getLastUpdate()));
@@ -114,35 +121,56 @@ public class AppointmentDetails implements Initializable {
     }
 
     /**
-     * Method to add an appointment.
+     * Make fields editable for creating new appointments or changing existing ones.
      */
-    public void addAppointment() {
-    } //FIXME
-
-    /**
-     * Method to edit an existing appointment.
-     */
-    public void editAppointment() {
-    } //FIXME
-
-    /**
-     * Method to delete an appointment.
-     */
-    public void deleteAppointment() {
-    } //FIXME
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
     public void makeEditable() {
     } //FIXME
 
-
+    /**
+     * Save a new or changed appointment.
+     */
     public void saveChanges() {
     } //FIXME
 
+    /**
+     * clear the form of all imported data.
+     */
     public void clearForm() {
     } //FIXME
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Determine the current time zone and compare it to the HQ timezone.
+        int timeHere = LocalDateTime.now().getHour();
+        int timeInNY = LocalDateTime.now(ZoneId.of("US/Eastern")).getHour();
+        int timeDifference = timeHere - timeInNY;
+
+        //Create Lists to populate the combo boxes.
+        ObservableList<Integer> startHoursList = FXCollections.observableArrayList();
+        ObservableList<Integer> endHoursList = FXCollections.observableArrayList();
+        ObservableList<Integer> minutesList = FXCollections.observableArrayList();
+
+        //Populate the hours box starting at the eastern timezone 8am and going until 1 hour before end of business.
+        for (int i = 0; i < 14; i++) {
+            startHoursList.add(i + 8 + timeDifference);
+        }
+
+        //Populate the end hours list to include the last business hour in the eastern timezone.
+        for (int i = 0; i < 15; i++) {
+            endHoursList.add(i + 8 + timeDifference);
+        }
+
+        //Populate the minutes box with 0 - 59.
+        for (int i = 0; i < 60; i++) {
+                minutesList.add(i);
+        }
+
+        startHourCombo.setItems(startHoursList);
+        startMinuteCombo.setItems(minutesList);
+        endHourCombo.setItems(endHoursList);
+        endMinuteCombo.setItems(minutesList);
+
+
+    }
 }

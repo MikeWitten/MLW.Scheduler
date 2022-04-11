@@ -43,12 +43,13 @@
       <Label layoutX="50.0" layoutY="355.0" text="to change or update your user information." />
    </Pane>
     <Pane layoutX="342.0" layoutY="100.0" prefHeight="386.0" prefWidth="645.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-        <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
+        <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="49.0" prefHeight="276.0" prefWidth="627.0">
             <columns>
                 <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Apt ID" />
-                <TableColumn fx:id="customerID" prefWidth="211.39996337890625" text="customerID" />
-                <TableColumn fx:id="startTime" prefWidth="177.0" text="Start" />
-                <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
+                <TableColumn fx:id="customerID" minWidth="0.0" prefWidth="81.199951171875" text="customerID" />
+            <TableColumn fx:id="title" maxWidth="144.4000244140625" minWidth="-1.0" prefWidth="144.4000244140625" text="Title" />
+                <TableColumn fx:id="startTime" prefWidth="196.0" text="Start" />
+                <TableColumn fx:id="endTime" prefWidth="131.0" text="End" />
             </columns>
         </TableView>
         <ButtonBar layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
@@ -59,8 +60,6 @@
                 <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
             </buttons>
         </ButtonBar>
-        <TextField fx:id="appointmentFilter" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" promptText="Search by AptID or Customer Name" />
-        <Label layoutX="344.0" layoutY="18.0" text="Search" />
         <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
     </Pane>
 </AnchorPane>

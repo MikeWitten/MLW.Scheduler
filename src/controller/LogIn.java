@@ -1,5 +1,9 @@
 package controller;
 
+import DAO.DBContact;
+import DAO.DBCountry;
+import DAO.DBCustomer;
+import DAO.DBDivision;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -9,6 +13,7 @@ import utilities.JDBC;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -29,7 +34,7 @@ public class LogIn implements Initializable {
     /**
      * Check credentials and navigate to home page.
      */
-    public void credentialCheck()throws IOException {
+    public void credentialCheck() throws IOException, SQLException {
         //create a user variable.
         User user1 = null;
 
@@ -46,10 +51,11 @@ public class LogIn implements Initializable {
                user1 = AllUsers.get(i);
             }
         }
+        //If no user is found alert for invalid credentials.
         if (user1 == null){
             Alerts ("User Name and Password required");
         }
-        //If the User is valid check to make sure the password matches.
+        //If the User is valid check to make sure the user ID and password matches.
         else if (user1.getPassword().equals(passwordTxt.getText())){
             //Assign an active user for navigation and field population purposes.
             getActiveUser(user1);
@@ -58,7 +64,13 @@ public class LogIn implements Initializable {
             Stage stage = (Stage) stageLabel.getScene().getWindow();
             navigation(stage, "/view/Home Page.fxml");
             JDBC.openConnection();
+            //Create lists to populate tables and get information throughout the program.
+            DBContact.selectAllContacts();
+            DBCountry.selectAllCountries();
+            DBCustomer.selectAllCustomers();
+            DBDivision.selectAllDivisions();
         }
+        //If UserID and Password do not match alert for invalid credentials.
         else {
             Alerts("User Name and Password required");
         }
@@ -68,6 +80,7 @@ public class LogIn implements Initializable {
      * Exit the program.
      */
     public void toExit() {
+        //Method found in Utilities.methods
         exitHere();
     }
 
@@ -76,8 +89,7 @@ public class LogIn implements Initializable {
 
         //Populate the zone and time fields.
         zoneIDTxt.setText(ZoneId.systemDefault().toString());
-
-        DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+        DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("MMM dd yyyy   HH:mm");
         dateTimeTxt.setText(timeFormatter.format(LocalDateTime.now()));
 
 
