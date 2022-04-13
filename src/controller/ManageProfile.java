@@ -1,8 +1,10 @@
 package controller;
 
-import DAO.DBAppointment;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -10,10 +12,8 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static model.User.deleteUserAppointment;
 import static utilities.ActiveUser.getActiveUser;
 import static utilities.Methods.*;
 
@@ -27,6 +27,7 @@ public class ManageProfile implements Initializable {
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
     User currentUser;
+    Appointment appointment;
 
     //Navigation
     public void toExit() {
@@ -106,27 +107,12 @@ public class ManageProfile implements Initializable {
             Alerts("no item selected");
             return;
         }
-        //Alert the user that deleted items cannot be recovered.
-        Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Are you sure you want to delete " + appointment.getTitle() + " from the appointment list.");
-        alert.setTitle("Delete this Item? ");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK){
-                //If the user agrees to delete the appointment, delete the appointment from associated user list as well as
-                //from the AllAppointments list and the database.
-                deleteUserAppointment(appointment);
-                AllAppointments.remove(appointment);
-                AppointmentTable.getSelectionModel().clearSelection();
-                try {
-                    DBAppointment.deleteApt(appointment);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    } //FIXME can this be sent to methods?
+        else
+            appointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        //Method found in utilities.methods.
+            deleteAppointmentFromAll(appointment, currentUser, null, null);
+        Alerts("Deleted appointment");
+    }
 
     /**
      * Set up the table for associated appointments.

@@ -119,4 +119,9 @@ public class Country {
     ObservableList<Customer> getCountryCustomers(){
         return countryCustomers;
     }
+
+    @Override
+    public String toString(){
+        return (country);
+    }
 }

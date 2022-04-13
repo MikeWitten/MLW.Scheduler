@@ -12,8 +12,8 @@ public class Customer {
     int customerID;
     String customerName;
     String address;
-    int postalCode;
-    int phone;
+    String postalCode;
+    String phone;
     LocalDateTime createDate;
     String createdBy;
     Timestamp lastUpdate;
@@ -23,7 +23,7 @@ public class Customer {
     /**
      * Create constructor for customer objects.
      */
-    public Customer(int customerID, String customerName, String address, int postalCode, int phone,
+    public Customer(int customerID, String customerName, String address, String postalCode, String phone,
                     LocalDateTime createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,
                     int divisionID) {
         this.customerID = customerID;               //FIXME unique value 10 char max
@@ -65,19 +65,19 @@ public class Customer {
             this.address = address;
         }
 
-        public int getPostalCode() {
+        public String getPostalCode() {
             return postalCode;
         }
 
-        public void setPostalCode(int postalCode) {
+        public void setPostalCode(String postalCode) {
             this.postalCode = postalCode;
         }
 
-        public int getPhone() {
+        public String getPhone() {
             return phone;
         }
 
-        public void setPhone(int phone) {
+        public void setPhone(String phone) {
             this.phone = phone;
         }
 

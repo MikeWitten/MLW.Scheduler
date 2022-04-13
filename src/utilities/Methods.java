@@ -1,6 +1,10 @@
 package utilities;
 
+import DAO.DBAppointment;
 import controller.AppointmentDetails;
+import controller.ContactDetails;
+import controller.CustomerDetails;
+import controller.UserDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +16,14 @@ import javafx.stage.Stage;
 import model.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static model.Contact.deleteContactAppointment;
-import static model.Country.deleteCountryCustomer;
 import static model.Customer.customerAppointmentList;
 import static model.Customer.deleteCustomerAppointment;
-import static model.Division.deleteDivisionCustomer;
 import static model.User.deleteUserAppointment;
 import static utilities.ActiveUser.voidActiveUser;
 
@@ -45,7 +48,7 @@ public class Methods {
             case "Deleted customer" -> alert.setContentText("You have successfully deleted this customer and all associated appointments");
             case "User Name and Password required" -> alert.setContentText(bundle.getString("credentialMessage"));
             case "You have an upcoming appointment" -> alert.setContentText("You have an appointment starting in less than 15 minutes!");
-
+            case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes to the selected Item");
         }
         alert.show();
     }
@@ -138,9 +141,52 @@ public class Methods {
     }
 
     /**
+     * Pass the customer football to the customer details page.
+     */
+    public static void passTheCustomer(Customer customer, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Customer Details.fxml"));
+        loader.load();
+        CustomerDetails controller = loader.getController();
+        controller.receiveCustomer(customer);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
+    }
+
+    /**
+     * Pass the user football to the user details page.
+     */
+    public static void passTheUserToUser(User user, Stage stage1) throws IOException{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Methods.class.getResource("/view/User Details.fxml"));
+            loader.load();
+            UserDetails controller = loader.getController();
+            controller.receiveTheUser(user);
+            Parent scene = loader.getRoot();
+            stage1.setTitle("Desktop Scheduling Application");
+            stage1.setScene(new Scene(scene));
+            stage1.show();
+        }
+
+    public static void passTheContact(Contact contact, Stage stage1) throws IOException{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Methods.class.getResource("/view/Contact Details.fxml"));
+            loader.load();
+            ContactDetails controller = loader.getController();
+            controller.receiveTheContact(contact);
+            Parent scene = loader.getRoot();
+            stage1.setTitle("Desktop Scheduling Application");
+            stage1.setScene(new Scene(scene));
+            stage1.show();
+
+    }
+
+    /**
      * Method to delete appointments part 1.
      */
-    public static void deleteAppointmentFromAll(Appointment appointment){
+    public static void deleteAppointmentFromAll(Appointment appointment, User user, Customer customer, Contact contact){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete this appointment?");
         alert.setContentText("""
@@ -149,7 +195,11 @@ public class Methods {
                 Press OK to continue or Cancel to go back.""");
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK){
-                deleteAppointmentFromAllPart2(appointment);
+                try {
+                    deleteAppointmentFromAllPart2(appointment, user, customer, contact);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -157,34 +207,41 @@ public class Methods {
     /**
      * Method allows for a loop to iterate through and delete associated appointments from a customer abject.
      */
-    public static void deleteAppointmentFromAllPart2(Appointment appointment){
-        deleteUserAppointment(appointment);
-        deleteCustomerAppointment(appointment);
-        deleteContactAppointment(appointment);
-        Alerts("Deleted appointment");
+    public static void deleteAppointmentFromAllPart2(Appointment appointment, User user, Customer customer, Contact contact) throws SQLException {
+        if(user != null){deleteUserAppointment(appointment);}
+        if(customer !=null){ deleteCustomerAppointment(appointment);}
+        if(contact !=null){ deleteContactAppointment(appointment);}
+        AllAppointments.remove(appointment);
+        DBAppointment.deleteApt(appointment);
     }
 
     /**
      * Method to delete a customer.
      */
     public static void deleteCustomerFromAll(Customer customer){
-        Alert alert1 =new Alert(Alert.AlertType.CONFIRMATION);                          //Confirm with user the deletion of all associated appointments.
-        alert1.setTitle("You can't do that yet.");
-        alert1.setContentText("""
-                In order to delete a customer from this system
-                you first need to delete all of their associated appointments.\s
-                Do you wish to do that now?""");
-        alert1.showAndWait().ifPresent(response1 -> {
-            if (response1 == ButtonType.OK) {
-                int i;
-                for (i = 0; i < Customer.customerAppointmentList.size(); i++){          //Iterate through all associated appointments and delete them.
-                   Appointment choppedAppointment = customerAppointmentList.get(i);
-                   deleteAppointmentFromAllPart2(choppedAppointment);
+        //Check to see if the customer has any associated appointments and delete them.
+        if(!customer.getAllCustomerAppointments().isEmpty()) {
+            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);                          //Confirm with user the deletion of all associated appointments.
+            alert1.setTitle("You can't do that yet.");
+            alert1.setContentText("""
+                    In order to delete a customer from this system
+                    you first need to delete all of their associated appointments.\s
+                    Do you wish to do that now?""");
+            alert1.showAndWait().ifPresent(response1 -> {
+                if (response1 == ButtonType.OK) {
+                    int i;
+                    for (i = 0; i < Customer.customerAppointmentList.size(); i++) {          //Iterate through all associated appointments and delete them.
+                        Appointment choppedAppointment = customerAppointmentList.get(i);
+                        try {
+                            deleteAppointmentFromAllPart2(choppedAppointment, null, null, null);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            }
-        });
-        Alerts("Deleted associated appointments");                              //Give the user feedback about deleting the customer's appointments.
-
+            });
+            Alerts("Deleted associated appointments");                              //Give the user feedback about deleting the customer's appointments.
+        }
         Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);                         //Confirm the deletion of a Customer object.
         alert2.setTitle("Delete this customer?");
         alert2.setContentText("""
@@ -193,8 +250,6 @@ public class Methods {
                 Press OK to continue or Cancel to go back.""");
         alert2.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK){
-                deleteCountryCustomer(customer);
-                deleteDivisionCustomer(customer);
                 Alerts("Deleted Customer");
             }
         });
@@ -206,15 +261,6 @@ public class Methods {
     public static ObservableList<Appointment> AllAppointments= FXCollections.observableArrayList();
 
     public static void addApt(Appointment appointment){AllAppointments.add(appointment); }
-
-    public static void deleteApt(Appointment appointment){
-        for (int j = 0; j <AllAppointments.size() ; j++) {
-            if(AllAppointments.get(j).getAppointmentID() == appointment.getAppointmentID()){
-                AllAppointments.remove(j);
-                deleteApt(appointment);
-            }
-        }
-    }
 
     public static ObservableList<Appointment> getAllAppointments(){
         return AllAppointments;

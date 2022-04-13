@@ -23,13 +23,7 @@ public class UserDetails implements Initializable {
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
     public TextField appointmentFilter;
-
-
-  /*  LocalDateTime myObj = LocalDateTime.from(LocalTime.now());      //FIXME erase this test data.  Change testUser to user football.
-    Timestamp myObj2 = Timestamp.from(Instant.now());
-    User testUser = new User(101010101, "userName", "password", myObj,
-            "Mikey", myObj2, "Mikey");*/
-
+    static User currentUser;
 
     //Navigation
     public void toExit() {
@@ -44,7 +38,7 @@ public class UserDetails implements Initializable {
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
-    }       //FIXME pass the User football
+    }
 
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
@@ -84,13 +78,14 @@ public class UserDetails implements Initializable {
     /**
      * Get user data and populate text fields
      */
-    public void getUserDetailsFootball(User user){
-        userIDTxt.setText(String.valueOf(user.getUserID()));
-        userNameTxt.setText(user.getUserName());
-        createDateTxt.setText(String.valueOf(user.getCreateDate()));
-        createdByTxt.setText(user.getCreatedBy());
-        lastUpdatedTxt.setText(String.valueOf(user.getLastUpdate()));
-        lastUpdatedByTxt.setText(user.getLastUpdatedBy());
+    public void receiveTheUser(User user){
+        currentUser = user;
+        userIDTxt.setText(String.valueOf(currentUser.getUserID()));
+        userNameTxt.setText(currentUser.getUserName());
+        createDateTxt.setText(String.valueOf(currentUser.getCreateDate()));
+        createdByTxt.setText(currentUser.getCreatedBy());
+        lastUpdatedTxt.setText(String.valueOf(currentUser.getLastUpdate()));
+        lastUpdatedByTxt.setText(currentUser.getLastUpdatedBy());
     }
 
 
@@ -104,7 +99,9 @@ public class UserDetails implements Initializable {
             return;
         }
         Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
-        deleteAppointmentFromAll(appointment);
+        //Method found in utilities.methods.
+        deleteAppointmentFromAll(appointment, null, null, null);
+        Alerts("Deleted appointment");
     }
 
     /**

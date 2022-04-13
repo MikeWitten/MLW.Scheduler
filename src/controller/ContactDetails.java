@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Contact;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,15 +15,11 @@ import static utilities.Methods.*;
 public class ContactDetails implements Initializable {
 
     public Label stageLabel;
-    public TextField userIDTxt;
-    public TextField userNameTxt;
-    public TextField passwordTxt;
-    public Button editableButton;
-    public ButtonBar buttonBar;
     public TextField contactIDTxt;
     public TextField contactNameTxt;
     public TextField emailTxt;
-    public TextField appointmentFilter;
+    public ButtonBar buttonBar;
+    static Contact currentContact;
 
 
     //Navigation
@@ -38,7 +35,7 @@ public class ContactDetails implements Initializable {
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
-    }       //FIXME pass the User football
+    }
 
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
@@ -58,6 +55,18 @@ public class ContactDetails implements Initializable {
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
+    }
+
+    /**
+     * Receive the contact football.
+     */
+    public void receiveTheContact(Contact contact) {
+        currentContact = contact;
+
+        //Set the text fields from the contact data.
+        contactNameTxt.setText(currentContact.getContactName());
+        contactIDTxt.setText(String.valueOf(currentContact.getContactID()));
+        emailTxt.setText(currentContact.getEmail());
     }
 
     /**
@@ -91,4 +100,6 @@ public class ContactDetails implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+
 }

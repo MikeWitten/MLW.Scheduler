@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -24,22 +25,30 @@
          <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
       </buttons>
    </ButtonBar>
-   <Pane layoutX="10.0" layoutY="82.0" prefHeight="386.0" prefWidth="979.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <ButtonBar layoutX="327.0" layoutY="332.0" prefHeight="40.0" prefWidth="325.0">
+   <Pane accessibleRole="COMBO_BOX" layoutX="9.0" layoutY="82.0" prefHeight="386.0" prefWidth="979.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+      <ButtonBar layoutX="356.0" layoutY="332.0" prefHeight="40.0" prefWidth="249.0">
          <buttons>
-            <Button mnemonicParsing="false" onAction="#makeEditable" text="Make Changes" />
-            <Button layoutX="657.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" />
-            <Button layoutX="657.0" layoutY="17.0" mnemonicParsing="false" onAction="#clearForm" text="Clear All" />
+            <Button fx:id="makeChanges" mnemonicParsing="false" onAction="#makeEditable" text="Add/Edit" />
+            <Button fx:id="saveButton" layoutX="657.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" visible="false" />
+            <Button fx:id="clearButton" layoutX="657.0" layoutY="17.0" mnemonicParsing="false" onAction="#clearForm" text="Clear All" />
          </buttons>
       </ButtonBar>
-      <TextField fx:id="appointmentIDTxt" editable="false" layoutX="100.0" layoutY="30.0" />
-      <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" />
-      <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" />
-      <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" />
+      <TextField fx:id="appointmentIDTxt" editable="false" layoutX="100.0" layoutY="30.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" prefWidth="150" />
+      <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" prefWidth="150" />
+      <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" prefWidth="150" />
+      <DatePicker fx:id="aptDatePicker" editable="false" layoutX="100.0" layoutY="150.0" onAction="#checkForEditable" onMouseClicked="#checkForEditable" prefWidth="150" />
+      <ComboBox fx:id="startTime" accessibleRole="IMAGE_VIEW" layoutX="100" layoutY="180" onAction="#checkForEditable" onMouseClicked="#checkForEditable" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="endTime" layoutX="100" layoutY="210" onMouseClicked="#checkForEditable" prefHeight="25.0" prefWidth="150" />
+      <TextArea fx:id="descriptionTxt" editable="false" layoutX="100.0" layoutY="240.0" prefHeight="132.0" prefWidth="150" />
 
-      <TextField fx:id="createDateTxt" editable="false" layoutX="415.0" layoutY="30.0" />
+
+      <TextField fx:id="createDateTxt" editable="false" layoutX="415.0" layoutY="30.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></TextField>
       <TextField fx:id="createdByTxt" editable="false" layoutX="415.0" layoutY="90.0" />
-      <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="415.0" layoutY="150.0" />
+      <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="415.0" layoutY="150.0" prefHeight="25.0" prefWidth="150.0" />
       <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="415.0" layoutY="210.0" />
 
       <TextField fx:id="customerIDTxt" editable="false" layoutX="750.0" layoutY="30" />
@@ -59,12 +68,7 @@
       <Label layoutX="348.0" layoutY="94.0" text="Created By" />
       <Label layoutX="318.0" layoutY="154.0" text="Last Updated On" />
       <Label layoutX="318.0" layoutY="214.0" text="Last Updated By" />
-      <TextArea fx:id="descriptionTxt" editable="false" layoutX="100.0" layoutY="270.0" prefHeight="102.0" prefWidth="149.0" />
-      <DatePicker fx:id="aptDatePicker" editable="false" layoutX="100.0" layoutY="150.0" />
-      <ComboBox fx:id="startHourCombo" layoutX="100.0" layoutY="181.0" prefHeight="25.0" prefWidth="72.0" />
-      <ComboBox fx:id="startMinuteCombo" layoutX="177.0" layoutY="181.0" prefHeight="25.0" prefWidth="72.0" />
-      <ComboBox fx:id="endHourCombo" layoutX="100.0" layoutY="218.0" prefHeight="25.0" prefWidth="72.0" />
-      <ComboBox fx:id="endMinuteCombo" layoutX="177.0" layoutY="218.0" prefHeight="25.0" prefWidth="72.0" />
       <Label layoutX="66.0" layoutY="154.0" text="Date" />
+      <Button fx:id="cancelButton" layoutX="631.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelChanges" text="Cancel" visible="false" />
    </Pane>
 </AnchorPane>

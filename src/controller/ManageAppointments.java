@@ -91,7 +91,8 @@ public class ManageAppointments implements Initializable {
             return;
         }
         Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
-        deleteAppointmentFromAll(appointment);
+        deleteAppointmentFromAll(appointment, null, null, null);
+        Alerts("Deleted appointment");
         AppointmentTable.refresh();
     }
 

@@ -18,8 +18,8 @@ public abstract class DBCustomer {
         //I get all the values from the passed customer object.
         String customerName = customer.getCustomerName();
         String address = customer.getAddress();
-        int postalCode = customer.getPostalCode();
-        int phone = customer.getPhone();
+        String postalCode = customer.getPostalCode();
+        String phone = customer.getPhone();
         LocalDateTime createDate = customer.getCreateDate();
         String createdBy = customer.getCreatedBy();
         Timestamp lastUpdate = customer.getLastUpdate();
@@ -34,8 +34,8 @@ public abstract class DBCustomer {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, "customerName");
         ps.setString(2, "address");
-        ps.setInt(3, postalCode);
-        ps.setInt(4, phone);
+        ps.setString(3, postalCode);
+        ps.setString(4, phone);
         ps.setTimestamp(5, Timestamp.valueOf(createDate));
         ps.setString(6, createdBy);
         ps.setTimestamp(7, lastUpdate);
@@ -54,8 +54,8 @@ public abstract class DBCustomer {
             //I get all the values from the passed customer object.
             String customerName = customer.getCustomerName();
             String address = customer.getAddress();
-            int postalCode = customer.getPostalCode();
-            int phone = customer.getPhone();
+            String postalCode = customer.getPostalCode();
+            String phone = customer.getPhone();
             LocalDateTime createDate = customer.getCreateDate();
             String createdBy = customer.getCreatedBy();
             Timestamp lastUpdate = customer.getLastUpdate();
@@ -70,8 +70,8 @@ public abstract class DBCustomer {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, "customerName");
             ps.setString(2, "address");
-            ps.setInt(3, postalCode);
-            ps.setInt(4, phone);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
             ps.setTimestamp(5, Timestamp.valueOf(createDate));
             ps.setString(6, createdBy);
             ps.setTimestamp(7, lastUpdate);
@@ -114,8 +114,8 @@ public abstract class DBCustomer {
             int customerID = resultSet.getInt("Customer_ID");
             String customerName = resultSet.getString("Customer_Name");
             String address = resultSet.getString("Address");
-            int postalCode = resultSet.getInt("Postal_Code");
-            int phone = resultSet.getInt("Phone");
+            String postalCode = resultSet.getString("Postal_Code");
+            String phone = resultSet.getString("Phone");
             Timestamp createDateTS = resultSet.getTimestamp("Create_Date");
             LocalDateTime createDate = createDateTS.toLocalDateTime();
             String createdBy = resultSet.getString("Created_By");

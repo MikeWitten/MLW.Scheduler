@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Contact;
+import model.Customer;
 import model.User;
 
 import java.io.IOException;
@@ -13,7 +15,9 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import static utilities.Methods.*;
@@ -25,6 +29,7 @@ public class AppointmentDetails implements Initializable {
     public TextField locationTxt;
     public TextField typeTxt;
     public TextField createDateTxt;
+    final Tooltip tooltip = new Tooltip("This field is AutoPopulated.");      //explains text fields.
     public TextField createdByTxt;
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
@@ -33,11 +38,14 @@ public class AppointmentDetails implements Initializable {
     public TextField contactIDTxt;
     public TextArea descriptionTxt;
     public DatePicker aptDatePicker;
-    public ComboBox<Integer> startHourCombo;
-    public ComboBox<Integer> startMinuteCombo;
-    public ComboBox<Integer> endHourCombo;
-    public ComboBox<Integer> endMinuteCombo;
+    public ComboBox<LocalTime> startTime;
+    public ComboBox<LocalTime> endTime;
+    public Button makeChanges;
+    public Button cancelButton;
+    public Button saveButton;
+    public Button clearButton;
     Appointment currentAppointment;
+    User currentUser;
 
     //Navigation
     public void toExit() {
@@ -71,18 +79,56 @@ public class AppointmentDetails implements Initializable {
 
     public void toCustomerDetails() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/Customer Details.fxml");
-    } //FIXME pass the customer football
+        //Find the customer
+        Customer currentCustomer = null;
+        for (Customer allCustomer : AllCustomers) {
+            if (allCustomer.getCustomerID() == Integer.parseInt(customerIDTxt.getText())) {
+                currentCustomer = allCustomer;
+            }
+        }
+        passTheCustomer(currentCustomer, stage);
+    }
 
     public void toUserDetails() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/User Details.fxml");
-    } //FIXME pass the user football
+        for (User allUser : AllUsers) {
+            if (allUser.getUserID() == Integer.parseInt(userIDTxt.getText())) {
+                currentUser = allUser;
+            }
+            passTheUserToUser(currentUser, stage);
+        }
+    }
 
     public void toContactDetails() throws IOException {
+        Contact currentContact = null;
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/Contact Details.fxml");
+        for (Contact allContact : AllContacts) {
+            if (allContact.getContactID() == Integer.parseInt(contactIDTxt.getText())) {
+                currentContact = allContact;
+            }
+        }
+        passTheContact(currentContact, stage);
+
     } //FIXME pass the contact football
+
+
+    //Create a formatter for readability in the appointment form.
+    DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("MMM dd yyyy   HH:mm");
+
+    /**
+     * Create an observable list to populate the combo boxes on the appointment form.
+     */
+    ObservableList<LocalTime> availableTimes = FXCollections.observableArrayList();
+
+    /**
+     * Method to stop users from changing form elements without using the proper methods.
+     */
+    public void checkForEditable() {
+        //The location text field is only editable after the Add/Edit button is pressed.
+        if (!locationTxt.isEditable()){
+            Alerts("make editable");
+        }
+    }
 
     /**
      * Receive the appointment from the previous stage.
@@ -96,13 +142,13 @@ public class AppointmentDetails implements Initializable {
         locationTxt.setText(currentAppointment.getLocation());
         typeTxt.setText(currentAppointment.getType());
         aptDatePicker.setValue(currentAppointment.getStart().toLocalDate());
-        startHourCombo.getSelectionModel().select(currentAppointment.getStart().getHour());
-        startMinuteCombo.getSelectionModel().select((Integer) currentAppointment.getStart().getMinute());
-        endHourCombo.getSelectionModel().select(currentAppointment.getEnd().getHour());
-        endMinuteCombo.getSelectionModel().select((Integer) currentAppointment.getEnd().getMinute());
-        createDateTxt.setText(String.valueOf(currentAppointment.getCreateDate()));
+        startTime.setItems(availableTimes);
+        startTime.setValue(currentAppointment.getStart().toLocalTime());
+        endTime.setItems(availableTimes);
+        endTime.setValue(currentAppointment.getEnd().toLocalTime());
+        createDateTxt.setText(timeFormatter.format(currentAppointment.getCreateDate()));
         createdByTxt.setText(currentAppointment.getCreatedBy());
-        lastUpdatedTxt.setText(String.valueOf(currentAppointment.getLastUpdate()));
+        lastUpdatedTxt.setText(timeFormatter.format(currentAppointment.getLastUpdate().toLocalDateTime()));
         lastUpdatedByTxt.setText(currentAppointment.getLastUpdatedBy());
         customerIDTxt.setText(String.valueOf(currentAppointment.getCustomerID()));
         userIDTxt.setText(String.valueOf(currentAppointment.getUserID()));
@@ -114,9 +160,10 @@ public class AppointmentDetails implements Initializable {
      * Receive the user information from the previous stage.
      */
     public void receiveUser(User user) {
-        lastUpdatedByTxt.setText(user.getUserName());
+        currentUser = user;
+        lastUpdatedByTxt.setText(currentUser.getUserName());
         lastUpdatedTxt.setText(String.valueOf(Timestamp.from(Instant.now())));
-        createdByTxt.setText(user.getUserName());
+        createdByTxt.setText(currentUser.getUserName());
         createDateTxt.setText(String.valueOf(LocalDateTime.now()));
     }
 
@@ -124,7 +171,19 @@ public class AppointmentDetails implements Initializable {
      * Make fields editable for creating new appointments or changing existing ones.
      */
     public void makeEditable() {
-    } //FIXME
+        titleTxt.setEditable(true);
+        locationTxt.setEditable(true);
+        typeTxt.setEditable(true);
+        descriptionTxt.setEditable(true);
+        customerIDTxt.setEditable(true);
+        userIDTxt.setEditable(true);
+        contactIDTxt.setEditable(true);
+        saveButton.setVisible(true);
+        cancelButton.setVisible(true);
+        clearButton.setVisible(false);
+        makeChanges.setVisible(false);
+
+    }
 
     /**
      * Save a new or changed appointment.
@@ -133,44 +192,52 @@ public class AppointmentDetails implements Initializable {
     } //FIXME
 
     /**
-     * clear the form of all imported data.
+     * Return to the form without saving changes.
      */
-    public void clearForm() {
-    } //FIXME
+    public void cancelChanges() throws IOException {
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        //Reload the page with the unchanged appointment details.
+        if(currentAppointment != null){
+            passTheAppointment(currentAppointment, stage);
+        } //Reload the page with the current user details.
+        else if (currentUser != null) {
+            passTheUser(currentUser, stage);
+        }//Reload a blank form.
+        else
+            navigation(stage, "/view/Appointment Details.fxml");
+    }
+
+    /**
+     * clear the form of all data.
+     */
+    public void clearForm() throws IOException {
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        navigation(stage, "/view/Appointment Details.fxml");
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Determine the current time zone and compare it to the HQ timezone.
-        int timeHere = LocalDateTime.now().getHour();
-        int timeInNY = LocalDateTime.now(ZoneId.of("US/Eastern")).getHour();
-        int timeDifference = timeHere - timeInNY;
+        //Explain non-editable fields.
+        appointmentIDTxt.setTooltip(tooltip);
+        createDateTxt.setTooltip(tooltip);
+        createdByTxt.setTooltip(tooltip);
+        lastUpdatedTxt.setTooltip(tooltip);
+        lastUpdatedByTxt.setTooltip(tooltip);
 
-        //Create Lists to populate the combo boxes.
-        ObservableList<Integer> startHoursList = FXCollections.observableArrayList();
-        ObservableList<Integer> endHoursList = FXCollections.observableArrayList();
-        ObservableList<Integer> minutesList = FXCollections.observableArrayList();
+        //Determine the time difference between the user's local system and the company headquarters.
+        LocalTime timeHere= LocalDateTime.now().toLocalTime();
+        LocalTime timeAtHQ = LocalDateTime.now(ZoneId.of("US/Eastern")).toLocalTime();
+        int timeDifference = timeHere.getHour() - timeAtHQ.getHour();
 
-        //Populate the hours box starting at the eastern timezone 8am and going until 1 hour before end of business.
-        for (int i = 0; i < 14; i++) {
-            startHoursList.add(i + 8 + timeDifference);
+        //Create a for loop to populate the available times in the combo boxes.
+        for (int i = 8; i < 22; i++) {
+            for (int j = 0; j < 60; j++) {
+                availableTimes.add(LocalTime.of(i + timeDifference, j));
+            }
+            availableTimes.add(LocalTime.of(22 + timeDifference, 0));
         }
-
-        //Populate the end hours list to include the last business hour in the eastern timezone.
-        for (int i = 0; i < 15; i++) {
-            endHoursList.add(i + 8 + timeDifference);
-        }
-
-        //Populate the minutes box with 0 - 59.
-        for (int i = 0; i < 60; i++) {
-                minutesList.add(i);
-        }
-
-        startHourCombo.setItems(startHoursList);
-        startMinuteCombo.setItems(minutesList);
-        endHourCombo.setItems(endHoursList);
-        endMinuteCombo.setItems(minutesList);
-
-
     }
+
+
 }

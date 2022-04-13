@@ -116,4 +116,9 @@ public class Division {
     public ObservableList<Customer> getDivisionCustomerList() {
         return divisionCustomerList;
     }
+
+    @Override
+    public String toString(){
+        return (division);
+    }
 }
