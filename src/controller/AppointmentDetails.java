@@ -109,7 +109,7 @@ public class AppointmentDetails implements Initializable {
         }
         passTheContact(currentContact, stage);
 
-    } //FIXME pass the contact football
+    }
 
 
     //Create a formatter for readability in the appointment form.
@@ -188,7 +188,37 @@ public class AppointmentDetails implements Initializable {
     /**
      * Save a new or changed appointment.
      */
-    public void saveChanges() {
+    public void saveChanges() throws IOException {
+        //Verify all editable fields are complete and that they meet database requirements.
+        //Method in utilities.methods.
+        checkNullValues(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(),
+        descriptionTxt.getText(), customerIDTxt.getText(), userIDTxt.getText(), contactIDTxt.getText());
+
+        //Ensure the start time is before the end time.
+        if(startTime.getSelectionModel().getSelectedItem().isAfter(endTime.getSelectionModel().getSelectedItem()) ||
+                startTime.getSelectionModel().getSelectedItem().equals(endTime.getSelectionModel().getSelectedItem())){
+            Alerts("The passage of time is important  lol");
+            return;
+        }
+        if (aptDatePicker.getValue().isBefore(LocalDateTime.now().toLocalDate()) ||
+                aptDatePicker.getValue().equals(LocalDateTime.now().toLocalDate()) &&
+                        endTime.getSelectionModel().getSelectedItem().isBefore(LocalDateTime.now().toLocalTime())){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Your time is passed! Meet your DOOM!");
+            alert.setContentText("The time you have chosen for your meeting has already ended.  Would you like to continue");
+            alert.setWidth(550);
+            alert.setHeight(550);
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.CANCEL) {
+                  return;
+                }
+            });
+        }
+
+
+        //assign values to non-editable fields
+
+        //send appointment to the database.
     } //FIXME
 
     /**

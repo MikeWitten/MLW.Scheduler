@@ -61,12 +61,17 @@ public class ContactDetails implements Initializable {
      * Receive the contact football.
      */
     public void receiveTheContact(Contact contact) {
+        //set the current contact for reference.
         currentContact = contact;
 
         //Set the text fields from the contact data.
         contactNameTxt.setText(currentContact.getContactName());
         contactIDTxt.setText(String.valueOf(currentContact.getContactID()));
         emailTxt.setText(currentContact.getEmail());
+
+        //populate the associated appointments list.  //FIXME
+
+        //populate the appointment table.    //FIXME
     }
 
     /**

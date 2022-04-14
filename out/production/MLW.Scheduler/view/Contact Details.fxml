@@ -51,8 +51,6 @@
             <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
          </buttons>
       </ButtonBar>
-      <TextField fx:id="appointmentFilter" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" promptText="Search by AptID or Customer Name" />
-      <Label layoutX="344.0" layoutY="18.0" text="Search" />
       <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
    </Pane>
 </AnchorPane>

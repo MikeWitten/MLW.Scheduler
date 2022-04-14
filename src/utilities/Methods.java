@@ -48,7 +48,10 @@ public class Methods {
             case "Deleted customer" -> alert.setContentText("You have successfully deleted this customer and all associated appointments");
             case "User Name and Password required" -> alert.setContentText(bundle.getString("credentialMessage"));
             case "You have an upcoming appointment" -> alert.setContentText("You have an appointment starting in less than 15 minutes!");
+            case "Null value" -> alert.setContentText("All editable fields are required.");
+            case "The passage of time is important  lol" -> alert.setContentText("You have broken the time continuum. Please choose appropriate times for your meeting.");
             case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes to the selected Item");
+            case "appointment date has passed." -> alert.setContentText("The date or time you have chosen has already passed, would you like to continue?");
         }
         alert.show();
     }
@@ -111,7 +114,19 @@ public class Methods {
     }
 
     /**
-     * Method to 'pass the appointment football' to appointment details page.
+     * Method to check if input fields are null.  Credit to kamwo @ https://stackoverflow.com/users/1943228/kamwo.
+     * Many thanks for your contribution.
+     */
+    public static void checkNullValues(String... strings){
+        for(String s: strings){
+            if (s.isEmpty()){
+                Alerts("Null value");
+            }
+        }
+    } //FIXME
+
+    /**
+     * Method to pass the 'appointment football' to appointment details page.
      */
     public static void passTheAppointment(Appointment appointment, Stage stage1) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -126,7 +141,7 @@ public class Methods {
     }
 
     /**
-     * Method to 'pass the User football' to appointment details page.
+     * Method to pass the 'user football' to appointment details page.
      */
     public static void passTheUser(User user, Stage stage1) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -141,7 +156,7 @@ public class Methods {
     }
 
     /**
-     * Pass the customer football to the customer details page.
+     * Pass the 'customer football' to the customer details page.
      */
     public static void passTheCustomer(Customer customer, Stage stage1) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -156,7 +171,7 @@ public class Methods {
     }
 
     /**
-     * Pass the user football to the user details page.
+     * Pass the 'user football' to the user details page.
      */
     public static void passTheUserToUser(User user, Stage stage1) throws IOException{
             FXMLLoader loader = new FXMLLoader();
@@ -170,6 +185,9 @@ public class Methods {
             stage1.show();
         }
 
+    /**
+     * Method to pass the 'contact football' to the contact details page.
+     */
     public static void passTheContact(Contact contact, Stage stage1) throws IOException{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Methods.class.getResource("/view/Contact Details.fxml"));
