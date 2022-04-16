@@ -147,4 +147,12 @@ public class Customer {
         return customerAppointmentList;
     }
 
+    /**
+     * Override to allow for readability in the combo boxes
+     */
+    @Override
+    public String toString(){
+        return (customerName + "   " + "ID: " + customerID);
+    }
+
 }

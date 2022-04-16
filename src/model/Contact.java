@@ -74,4 +74,12 @@ public class Contact {
     public ObservableList<Appointment> getContactAppointments(){
         return contactAppointments;
     }
+
+    /**
+     * Override to allow for readability in the combo boxes
+     */
+    @Override
+    public String toString(){
+        return (contactName + "   " + "ID: " + contactID);
+    }
 }

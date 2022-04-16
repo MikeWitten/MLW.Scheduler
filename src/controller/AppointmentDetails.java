@@ -33,19 +33,23 @@ public class AppointmentDetails implements Initializable {
     public TextField createdByTxt;
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
-    public TextField customerIDTxt;
-    public TextField userIDTxt;
-    public TextField contactIDTxt;
     public TextArea descriptionTxt;
     public DatePicker aptDatePicker;
     public ComboBox<LocalTime> startTime;
     public ComboBox<LocalTime> endTime;
+    public ComboBox<Contact> contactCombo;
+    public ComboBox<User> userCombo;
+    public ComboBox<Customer> customerCombo;
     public Button makeChanges;
     public Button cancelButton;
     public Button saveButton;
     public Button clearButton;
+    public CheckBox overnight;
     Appointment currentAppointment;
     User currentUser;
+    Customer tempCustomer;
+    User tempUser;
+    Contact tempContact;
 
     //Navigation
     public void toExit() {
@@ -62,7 +66,7 @@ public class AppointmentDetails implements Initializable {
         navigation(stage, "/view/Manage Profile.fxml");
     }
 
-    public void toAppointmentManager() throws IOException{
+    public void toAppointmentManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
@@ -79,41 +83,26 @@ public class AppointmentDetails implements Initializable {
 
     public void toCustomerDetails() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        //Find the customer
-        Customer currentCustomer = null;
-        for (Customer allCustomer : AllCustomers) {
-            if (allCustomer.getCustomerID() == Integer.parseInt(customerIDTxt.getText())) {
-                currentCustomer = allCustomer;
-            }
-        }
+        Customer currentCustomer = customerCombo.getSelectionModel().getSelectedItem();
         passTheCustomer(currentCustomer, stage);
     }
 
     public void toUserDetails() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        for (User allUser : AllUsers) {
-            if (allUser.getUserID() == Integer.parseInt(userIDTxt.getText())) {
-                currentUser = allUser;
-            }
-            passTheUserToUser(currentUser, stage);
-        }
+        currentUser = userCombo.getSelectionModel().getSelectedItem();
+        passTheUserToUser(currentUser, stage);
     }
 
     public void toContactDetails() throws IOException {
         Contact currentContact = null;
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        for (Contact allContact : AllContacts) {
-            if (allContact.getContactID() == Integer.parseInt(contactIDTxt.getText())) {
-                currentContact = allContact;
-            }
-        }
+        currentContact = contactCombo.getSelectionModel().getSelectedItem();
         passTheContact(currentContact, stage);
-
     }
 
 
     //Create a formatter for readability in the appointment form.
-    DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("MMM dd yyyy   HH:mm");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy   HH:mm");
 
     /**
      * Create an observable list to populate the combo boxes on the appointment form.
@@ -125,7 +114,7 @@ public class AppointmentDetails implements Initializable {
      */
     public void checkForEditable() {
         //The location text field is only editable after the Add/Edit button is pressed.
-        if (!locationTxt.isEditable()){
+        if (!locationTxt.isEditable()) {
             Alerts("make editable");
         }
     }
@@ -133,8 +122,27 @@ public class AppointmentDetails implements Initializable {
     /**
      * Receive the appointment from the previous stage.
      */
-    public void receiveAppointment(Appointment appointment){
+    public void receiveAppointment(Appointment appointment) {
         currentAppointment = appointment;
+        System.out.println("OK");
+        //Find the associated contact, user, and customers using their ID.
+        for (Contact allContact : AllContacts) {
+            if (currentAppointment.getContactID() == allContact.getContactID()) {
+                tempContact = allContact;
+            }
+        }
+
+        for (User allUser : AllUsers) {
+            if(currentAppointment.getUserID() == allUser.getUserID()){
+                tempUser = allUser;
+            }
+        }
+
+        for (Customer allCustomer: AllCustomers) {
+            if (currentAppointment.getCustomerID() == allCustomer.getCustomerID()){
+                tempCustomer = allCustomer;
+            }
+        }
 
         //Set fields with current appointment data.
         appointmentIDTxt.setText(String.valueOf(currentAppointment.getAppointmentID()));
@@ -150,10 +158,15 @@ public class AppointmentDetails implements Initializable {
         createdByTxt.setText(currentAppointment.getCreatedBy());
         lastUpdatedTxt.setText(timeFormatter.format(currentAppointment.getLastUpdate().toLocalDateTime()));
         lastUpdatedByTxt.setText(currentAppointment.getLastUpdatedBy());
-        customerIDTxt.setText(String.valueOf(currentAppointment.getCustomerID()));
-        userIDTxt.setText(String.valueOf(currentAppointment.getUserID()));
-        contactIDTxt.setText(String.valueOf(currentAppointment.getContactID()));
+        customerCombo.setValue(tempCustomer);
+        userCombo.setValue(tempUser);
+        contactCombo.setValue(tempContact);
         descriptionTxt.setText(currentAppointment.getDescription());
+
+        //set the overnight field if it is appropriate.
+        if(currentAppointment.getStart().isAfter(currentAppointment.getEnd())){
+            overnight.setSelected(true);  //FIXME check your work drowsy bastard.
+        }
     }
 
     /**
@@ -175,9 +188,6 @@ public class AppointmentDetails implements Initializable {
         locationTxt.setEditable(true);
         typeTxt.setEditable(true);
         descriptionTxt.setEditable(true);
-        customerIDTxt.setEditable(true);
-        userIDTxt.setEditable(true);
-        contactIDTxt.setEditable(true);
         saveButton.setVisible(true);
         cancelButton.setVisible(true);
         clearButton.setVisible(false);
@@ -188,21 +198,27 @@ public class AppointmentDetails implements Initializable {
     /**
      * Save a new or changed appointment.
      */
-    public void saveChanges() throws IOException {
+    public void saveChanges() {
         //Verify all editable fields are complete and that they meet database requirements.
-        //Method in utilities.methods.
-        checkNullValues(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(),
-        descriptionTxt.getText(), customerIDTxt.getText(), userIDTxt.getText(), contactIDTxt.getText());
+        //Check for null values. Method in utilities.methods.
+        if (containsNullValues(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(), descriptionTxt.getText())) {
+            return;
+        }
+
+        //Check for input that doesn't meet the 50-character database limit. Method in utilities.methods.
+        if (stringTooLong(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(), descriptionTxt.getText())) {
+            return;
+        }
 
         //Ensure the start time is before the end time.
-        if(startTime.getSelectionModel().getSelectedItem().isAfter(endTime.getSelectionModel().getSelectedItem()) ||
-                startTime.getSelectionModel().getSelectedItem().equals(endTime.getSelectionModel().getSelectedItem())){
+        if (startTime.getSelectionModel().getSelectedItem().isAfter(endTime.getSelectionModel().getSelectedItem()) ||
+                startTime.getSelectionModel().getSelectedItem().equals(endTime.getSelectionModel().getSelectedItem())) {
             Alerts("The passage of time is important  lol");
             return;
         }
         if (aptDatePicker.getValue().isBefore(LocalDateTime.now().toLocalDate()) ||
                 aptDatePicker.getValue().equals(LocalDateTime.now().toLocalDate()) &&
-                        endTime.getSelectionModel().getSelectedItem().isBefore(LocalDateTime.now().toLocalTime())){
+                        endTime.getSelectionModel().getSelectedItem().isBefore(LocalDateTime.now().toLocalTime())) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Your time is passed! Meet your DOOM!");
             alert.setContentText("The time you have chosen for your meeting has already ended.  Would you like to continue");
@@ -210,10 +226,11 @@ public class AppointmentDetails implements Initializable {
             alert.setHeight(550);
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.CANCEL) {
-                  return;
+                    return;
                 }
             });
-        }
+        }  //FIXME Resume Here.
+
 
 
         //assign values to non-editable fields
@@ -221,13 +238,14 @@ public class AppointmentDetails implements Initializable {
         //send appointment to the database.
     } //FIXME
 
+
     /**
      * Return to the form without saving changes.
      */
     public void cancelChanges() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         //Reload the page with the unchanged appointment details.
-        if(currentAppointment != null){
+        if (currentAppointment != null) {
             passTheAppointment(currentAppointment, stage);
         } //Reload the page with the current user details.
         else if (currentUser != null) {
@@ -254,19 +272,32 @@ public class AppointmentDetails implements Initializable {
         createdByTxt.setTooltip(tooltip);
         lastUpdatedTxt.setTooltip(tooltip);
         lastUpdatedByTxt.setTooltip(tooltip);
+        overnight.setTooltip(tooltip);      //FIXME remember to set overnight field
+
 
         //Determine the time difference between the user's local system and the company headquarters.
-        LocalTime timeHere= LocalDateTime.now().toLocalTime();
+        LocalTime timeHere = LocalDateTime.now().toLocalTime();
         LocalTime timeAtHQ = LocalDateTime.now(ZoneId.of("US/Eastern")).toLocalTime();
         int timeDifference = timeHere.getHour() - timeAtHQ.getHour();
 
         //Create a for loop to populate the available times in the combo boxes.
         for (int i = 8; i < 22; i++) {
             for (int j = 0; j < 60; j++) {
+                if(i + timeDifference > 24){
+                    availableTimes.add(LocalTime.of(i + timeDifference - 24, j));
+                }else
                 availableTimes.add(LocalTime.of(i + timeDifference, j));
             }
+            if (22 + timeDifference > 24){
+                availableTimes.add(LocalTime.of(-2 + timeDifference, 0));
+            }else
             availableTimes.add(LocalTime.of(22 + timeDifference, 0));
         }
+
+        //Populate the combo boxes.
+        userCombo.setItems(AllUsers);
+        contactCombo.setItems(AllContacts);
+        customerCombo.setItems(AllCustomers);
     }
 
 

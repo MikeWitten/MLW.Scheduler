@@ -114,4 +114,12 @@ public class User {
     public ObservableList<Appointment> getUserAppointments(){
         return userAppointments;
     }
+
+    /**
+     * Override to allow for readability in the combo boxes
+     */
+    @Override
+    public String toString(){
+        return (userName+ "   " + "ID: " + userID);
+    }
 }

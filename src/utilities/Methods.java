@@ -35,7 +35,7 @@ public class Methods {
     /**
      * Method for notification alerts throughout the program.
      */
-    public static void Alerts(String alertType){
+    public static void Alerts(String alertType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(bundle.getString("errorMessage"));
         alert.setHeight(550);
@@ -51,6 +51,7 @@ public class Methods {
             case "Null value" -> alert.setContentText("All editable fields are required.");
             case "The passage of time is important  lol" -> alert.setContentText("You have broken the time continuum. Please choose appropriate times for your meeting.");
             case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes to the selected Item");
+            case "String too long" -> alert.setContentText("Please limit your input to 50 total characters(including spaces).");
             case "appointment date has passed." -> alert.setContentText("The date or time you have chosen has already passed, would you like to continue?");
         }
         alert.show();
@@ -71,14 +72,14 @@ public class Methods {
     /**
      * Method to log out from each screen.
      */
-    public static void logOutHere(Stage stage){
+    public static void logOutHere(Stage stage) {
         Locale currentLocale = Locale.getDefault();
         ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Desktop Scheduling Application");
         alert.setContentText("To log out press OK.");
         alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK){
+            if (response == ButtonType.OK) {
                 //Close the connection to the database.
                 JDBC.closeConnection();
                 //delete the active user.
@@ -100,12 +101,12 @@ public class Methods {
     /**
      * Method to exit the program.
      */
-    public static void exitHere(){
+    public static void exitHere() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(bundle.getString("exitTitle"));
         alert.setContentText(bundle.getString("exitMessage"));
         alert.showAndWait().ifPresent(response -> {
-            if(response == ButtonType.OK){
+            if (response == ButtonType.OK) {
                 //Close the connection to the database.
                 JDBC.closeConnection();
                 System.exit(0);
@@ -117,13 +118,28 @@ public class Methods {
      * Method to check if input fields are null.  Credit to kamwo @ https://stackoverflow.com/users/1943228/kamwo.
      * Many thanks for your contribution.
      */
-    public static void checkNullValues(String... strings){
-        for(String s: strings){
-            if (s.isEmpty()){
+    public static boolean containsNullValues(String... strings) {
+        for (String s : strings) {
+            if (s.isEmpty()) {
                 Alerts("Null value");
+                return true;
             }
         }
-    } //FIXME
+        return false;
+    }
+
+    /**
+     * Method to ensure that string data adheres to the database 50-character limit.
+     */
+    public static boolean stringTooLong(String... strings) {
+        for (String s : strings) {
+            if (s.length() > 50) {
+                Alerts("String too long");
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Method to pass the 'appointment football' to appointment details page.
