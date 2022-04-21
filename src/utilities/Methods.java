@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static DAO.DBAppointment.*;
 import static model.Contact.deleteContactAppointment;
 import static model.Customer.customerAppointmentList;
 import static model.Customer.deleteCustomerAppointment;
@@ -41,6 +42,7 @@ public class Methods {
         alert.setHeight(550);
         alert.setWidth(550);
         switch (alertType) {
+            case "Select participants" -> alert.setContentText("Please select a customer, user, and contact for this appointment.");
             case "no item selected" -> alert.setContentText("You haven't selected anything.");
             case "no upcoming appointments" -> alert.setContentText("There are no upcoming appointments.");
             case "Deleted appointment" -> alert.setContentText("You have successfully deleted the selected appointment");
@@ -49,9 +51,14 @@ public class Methods {
             case "User Name and Password required" -> alert.setContentText(bundle.getString("credentialMessage"));
             case "You have an upcoming appointment" -> alert.setContentText("You have an appointment starting in less than 15 minutes!");
             case "Null value" -> alert.setContentText("All editable fields are required.");
-            case "The passage of time is important  lol" -> alert.setContentText("You have broken the time continuum. Please choose appropriate times for your meeting.");
+            case "The passage of time is important  lol" -> alert.setContentText("Your meeting start time is before (or at the same time as)  your meeting end time." +
+                    "Please check to ensure that you have chosen the correct times.");
+            case "Customer overlapping appointment" -> alert.setContentText("Customers are not allowed to have overlapping appointments." +
+                    "Please remove the conflicting appointment, or schedule this appointment for another time.");
+            case "Please select a date." -> alert.setContentText("Please select a date.");
             case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes to the selected Item");
             case "String too long" -> alert.setContentText("Please limit your input to 50 total characters(including spaces).");
+            case "No available times." -> alert.setContentText("There are no times available for this date.");
             case "appointment date has passed." -> alert.setContentText("The date or time you have chosen has already passed, would you like to continue?");
         }
         alert.show();
@@ -289,6 +296,21 @@ public class Methods {
         });
     }
 
+
+    /**
+     * Method to add an appointment to the database and update the current AllAppointmentsList.
+     */
+    public static void addAppointmentToDB(Appointment appointment) throws SQLException {
+        if(appointment.getAppointmentID() < 90909){
+            //Methods found in DAO.DBAppointment.
+            updateApt(appointment);
+        }else{
+            insertApt(appointment);
+        }
+        AllAppointments.clear();
+        selectAllAppointments();
+    }
+
     /**
      * Methods to populate appointments list, to be used for table population
      */
@@ -355,5 +377,38 @@ public class Methods {
     public static void addUser(User user) { AllUsers.add(user); }
 
     public static ObservableList<User> getAllUsers () { return AllUsers; }
+
+    /**
+     * Method to populate appointments for users, contacts, and customers.
+     */
+    public static void populateAssociatedLists(Customer customer, User user, Contact contact){
+        int customerID;
+        int userID;
+        int contactID;
+        if(customer != null){
+            customerID = customer.getCustomerID();
+            for (Appointment apt: AllAppointments) {
+                if(apt.getCustomerID() == customerID){
+                    customer.getAllCustomerAppointments().add(apt);
+                }
+            }
+        }
+        if(user != null){
+            userID = user.getUserID();
+            for (Appointment apt: AllAppointments) {
+                if (userID == apt.getUserID()){
+                    user.getUserAppointments().add(apt);
+                }
+            }
+        }
+        if(contact != null){
+            contactID = contact.getContactID();
+            for (Appointment apt: AllAppointments){
+                if(contactID == apt.getContactID()){
+                    contact.getContactAppointments().add(apt);
+                }
+            }
+        }
+    }
 
 }

@@ -93,23 +93,26 @@ public class HomePage implements Initializable {
 
         //Populate the current user's associated appointments.
         if(currentUser.getUserAppointments().isEmpty()) {
-           for (model.Appointment allAppointment : AllAppointments) {
+           for (Appointment allAppointment : AllAppointments) {
                if (allAppointment.getUserID() == currentUser.getUserID()) {
                    currentUser.addUserAppointment(allAppointment);
                 }
             }
         }
+        if(currentUser.getUserAppointments().isEmpty()){
+            nextAptTimeTxt.setText("You don't have any upcoming Appointments.");
+        }
 
         //Sort the associated appointments by datetime.
-        currentUser.getUserAppointments().sort(Comparator.comparing(Appointment::getStart));
+        currentUser.getUserAppointments().sort(Comparator.comparing(Appointment::getRawStart));
 
         //find next appointment. Then, finally, populate the text box.
         LocalDateTime nextApt;
         for (int i = 0; i < currentUser.getUserAppointments().size(); i++) {
             DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("    MMM dd yyyy   HH:mm");
-            if(LocalDateTime.now().isBefore(currentUser.getUserAppointments().get(i).getStart())){
+            if(LocalDateTime.now().isBefore(currentUser.getUserAppointments().get(i).getRawStart())){
                 currentAppointment = currentUser.getUserAppointments().get(i);
-                nextApt = currentUser.getUserAppointments().get(i).getStart();
+                nextApt = currentUser.getUserAppointments().get(i).getRawStart();
                 nextAptTimeTxt.setText("Your next appointment is scheduled for "
                         + timeFormatter.format(nextApt));
 

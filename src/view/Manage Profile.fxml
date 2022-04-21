@@ -48,8 +48,9 @@
                 <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Apt ID" />
                 <TableColumn fx:id="customerID" minWidth="0.0" prefWidth="81.199951171875" text="customerID" />
             <TableColumn fx:id="title" maxWidth="144.4000244140625" minWidth="-1.0" prefWidth="144.4000244140625" text="Title" />
-                <TableColumn fx:id="startTime" prefWidth="196.0" text="Start" />
-                <TableColumn fx:id="endTime" prefWidth="131.0" text="End" />
+                <TableColumn fx:id="dateColumn" prefWidth="114.0" text="Date" />
+                <TableColumn fx:id="startTime" prefWidth="112.79998779296875" text="Start" />
+            <TableColumn fx:id="endTime" prefWidth="97.5999755859375" text="End" />
             </columns>
         </TableView>
         <ButtonBar layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">

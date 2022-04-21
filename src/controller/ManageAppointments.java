@@ -37,7 +37,7 @@ public class ManageAppointments implements Initializable {
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
-    }       //FIXME pass the User Football
+    }
 
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();

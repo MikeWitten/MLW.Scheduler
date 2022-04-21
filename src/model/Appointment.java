@@ -1,7 +1,9 @@
 package model;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Appointment {
     //Create Appointment class arguments.
@@ -10,8 +12,12 @@ public class Appointment {
     String description;
     String location;
     String type;
-    LocalDateTime start;
-    LocalDateTime end;
+    LocalDateTime rawStart;
+    LocalDate parsedStartDate;
+    LocalTime parsedStartTime;
+    LocalDateTime rawEnd;
+    LocalDate parsedEndDate;
+    LocalTime parsedEndTime;
     LocalDateTime createDate;
     String createdBy;
     Timestamp lastUpdate;
@@ -25,24 +31,29 @@ public class Appointment {
      * Create a constructor for the Appointment objects.
      */
     public Appointment(int appointmentID, String title, String description, String location, String type,
-                       LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String createdBy,
-                       Timestamp lastUpdate, String lastUpdatedBy, int customerID, int userID, int contactID) {
-        this.appointmentID = appointmentID;     //FIXME unique value
-        this.title = title;                     //FIXME 50 char max
-        this.description = description;         //FIXME 50 char max
-        this.location = location;               //FIXME 50 char max
+                       LocalDateTime rawStart, LocalDate parsedStartDate, LocalTime parsedStartTime,
+                       LocalDateTime rawEnd, LocalDate parsedEndDate, LocalTime parsedEndTime,
+                       LocalDateTime createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,
+                       int customerID, int userID, int contactID) {
+        this.appointmentID = appointmentID;
+        this.title = title;
+        this.description = description;
+        this.location = location;
         this.type = type;
-        this.start = start;
-        this.end = end;
+        this.rawStart = rawStart;
+        this.parsedStartDate = parsedStartDate;
+        this.parsedStartTime = parsedStartTime;
+        this.rawEnd = rawEnd;
+        this.parsedEndDate = parsedEndDate;
+        this.parsedEndTime = parsedEndTime;
         this.createDate = createDate;
-        this.createdBy = createdBy;             //FIXME 50 char max
+        this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;     //FIXME 50 char max
-        this.customerID = customerID;           //FIXME unique value
-        this.userID = userID;                   //FIXME unique value
-        this.contactID = contactID;             //FIXME unique value
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.customerID = customerID;
+        this.userID = userID;
+        this.contactID = contactID;
     }
-
     /**
      * Create getters and setters for the Appointment objects.
      */
@@ -86,20 +97,52 @@ public class Appointment {
         this.type = type;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public LocalDateTime getRawStart() {
+        return rawStart;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
+    public void setRawStart(LocalDateTime rawStart) {
+        this.rawStart = rawStart;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDate getParsedStartDate() {
+        return parsedStartDate;
     }
 
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setParsedStartDate(LocalDate parsedStartDate) {
+        this.parsedStartDate = parsedStartDate;
+    }
+
+    public LocalTime getParsedStartTime() {
+        return parsedStartTime;
+    }
+
+    public void setParsedStartTime(LocalTime parsedStartTime) {
+        this.parsedStartTime = parsedStartTime;
+    }
+
+    public LocalDateTime getRawEnd() {
+        return rawEnd;
+    }
+
+    public void setRawEnd(LocalDateTime rawEnd) {
+        this.rawEnd = rawEnd;
+    }
+
+    public LocalDate getParsedEndDate() {
+        return parsedEndDate;
+    }
+
+    public void setParsedEndDate(LocalDate parsedEndDate) {
+        this.parsedEndDate = parsedEndDate;
+    }
+
+    public LocalTime getParsedEndTime() {
+        return parsedEndTime;
+    }
+
+    public void setParsedEndTime(LocalTime parsedEndTime) {
+        this.parsedEndTime = parsedEndTime;
     }
 
     public LocalDateTime getCreateDate() {
@@ -157,5 +200,4 @@ public class Appointment {
     public void setContactID(int contactID) {
         this.contactID = contactID;
     }
-
 }

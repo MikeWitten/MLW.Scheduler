@@ -12,6 +12,7 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import static utilities.ActiveUser.getActiveUser;
@@ -26,6 +27,7 @@ public class ManageProfile implements Initializable {
     public TextField createdByTxt;
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
+
     User currentUser;
     Appointment appointment;
 
@@ -65,7 +67,6 @@ public class ManageProfile implements Initializable {
         navigation(stage, "/view/Home Page.fxml");
     }
 
-    //Methods
     /**
      * Navigate to the appointment details page.  Pass all appointment information.
      */
@@ -112,6 +113,7 @@ public class ManageProfile implements Initializable {
         //Method found in utilities.methods.
             deleteAppointmentFromAll(appointment, currentUser, null, null);
         Alerts("Deleted appointment");
+        AppointmentTable.refresh();
     }
 
     /**
@@ -121,6 +123,7 @@ public class ManageProfile implements Initializable {
     public TableColumn<Object, Object> appointmentID;
     public TableColumn<Object, Object> customerID;
     public TableColumn<Object, Object> title;
+    public TableColumn<Object, Object> dateColumn;
     public TableColumn<Object, Object>  startTime;
     public TableColumn<Object, Object> endTime;
 
@@ -128,18 +131,33 @@ public class ManageProfile implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Get active user data and populate text fields
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'of' yyyy 'at' hh:mm a" );
         userIDTxt.setText(String.valueOf(getActiveUser(null).getUserID()));
         passwordTxt.setText(getActiveUser(null).getPassword());
         userNameTxt.setText(getActiveUser(null).getUserName());
-        createDateTxt.setText(String.valueOf(getActiveUser(null).getCreateDate()));
+        createDateTxt.setText(formatter.format(getActiveUser(null).getCreateDate()));
         createdByTxt.setText(getActiveUser(null).getCreatedBy());
-        lastUpdatedTxt.setText(String.valueOf(getActiveUser(null).getLastUpdate()));
+        lastUpdatedTxt.setText(formatter.format(getActiveUser(null).getLastUpdate().toLocalDateTime()));
         lastUpdatedByTxt.setText(getActiveUser(null).getLastUpdatedBy());
 
         //Determine the user.
         for (User allUser : AllUsers) {
             if (allUser.getUserID() == getActiveUser(null).getUserID()) {
                 currentUser = allUser;
+            }
+        }
+        //If another user was logged on previously, clear their associated appointments.
+        assert currentUser != null;
+        if (currentUser.getUserAppointments().size() > 0 ){
+            currentUser.getUserAppointments().clear();
+        }
+
+        //Populate the current user's associated appointments.
+        if(currentUser.getUserAppointments().isEmpty()) {
+            for (Appointment allAppointment : AllAppointments) {
+                if (allAppointment.getUserID() == currentUser.getUserID()) {
+                    currentUser.addUserAppointment(allAppointment);
+                }
             }
         }
 
@@ -149,8 +167,9 @@ public class ManageProfile implements Initializable {
         appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
-        startTime.setCellValueFactory(new PropertyValueFactory<>("start"));
-        endTime.setCellValueFactory(new PropertyValueFactory<>("end"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("parsedStartDate"));
+        startTime.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
+        endTime.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
 
     }
 }
