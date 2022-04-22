@@ -112,7 +112,6 @@ public class ManageProfile implements Initializable {
             appointment = AppointmentTable.getSelectionModel().getSelectedItem();
         //Method found in utilities.methods.
             deleteAppointmentFromAll(appointment, currentUser, null, null);
-        Alerts("Deleted appointment");
         AppointmentTable.refresh();
     }
 

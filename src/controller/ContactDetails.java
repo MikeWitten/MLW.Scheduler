@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
@@ -20,6 +21,7 @@ public class ContactDetails implements Initializable {
     public TextField emailTxt;
     public ButtonBar buttonBar;
     static Contact currentContact;
+    Appointment selectedAppointment;
 
 
     //Navigation
@@ -47,15 +49,49 @@ public class ContactDetails implements Initializable {
         navigation(stage, "/view/Manage Customers.fxml");
     }
 
-    public void toAppointmentDetails() throws IOException {
-        Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/Home Page.fxml");
-    } //FIXME pass the appointment football.
-
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
+
+    public void toAppointmentDetails() throws IOException {
+        //Ensure an appointment is selected.
+        if (AppointmentTable.getSelectionModel().getSelectedItem() == null){
+            Alerts("no item selected");
+            return;
+        }
+        //Pass the information. Found in utilities.methods.
+        Stage stage1 = (Stage) (stageLabel).getScene().getWindow();
+        Appointment currentAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        passTheAppointment(currentAppointment, stage1);
+    } //FIXME pass the appointment football. not tested
+
+    /**
+     * Method to edit an existing appointment.
+     */
+    public void editAppointment() throws IOException {
+        // Navigate to the appointment details page.
+        toAppointmentDetails();
+    } //FIXME not tested
+
+    /**
+     * Method to add an appointment.
+     */
+    public void addAppointment() throws IOException {
+        Stage stage1 = (Stage) stageLabel.getScene().getWindow();
+        passTheContactToAptDetails(currentContact, stage1);
+    } //FIXME Send Contact details. not tested.
+
+    /**
+     * Create an appointment table.
+     */
+    public TableView<Appointment> AppointmentTable;
+    public TableColumn<Object, Object> appointmentID;
+    public TableColumn<Object, Object> customerID;
+    public TableColumn<Object, Object> date;
+    public TableColumn<Object, Object> startTime;
+    public TableColumn<Object, Object> endTime;
+
 
     /**
      * Receive the contact football.
@@ -69,37 +105,39 @@ public class ContactDetails implements Initializable {
         contactIDTxt.setText(String.valueOf(currentContact.getContactID()));
         emailTxt.setText(currentContact.getEmail());
 
-        //populate the associated appointments list.  //FIXME
-
-        //populate the appointment table.    //FIXME
+        //populate the associated appointments list.  //FIXME not tested
+        if(!contact.getContactAppointments().isEmpty()){
+            contact.getContactAppointments().clear();
+        }
+        for (Appointment apt: AllAppointments){
+            if(currentContact.getContactID() == apt.getContactID()){
+                currentContact.getContactAppointments().add(apt);
+            }
+        }
+        //populate the appointment table.    //FIXME not tested
+        AppointmentTable.setItems(currentContact.getContactAppointments());
+        appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        date.setCellValueFactory(new PropertyValueFactory<>("parsedStartDate"));
+        startTime.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
+        endTime.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
     }
-
-    /**
-     * Method to add an appointment.
-     */
-    public void addAppointment() {
-    } //FIXME
-
-    /**
-     * Method to edit an existing appointment.
-     */
-    public void editAppointment() {
-    } //FIXME
 
     /**
      * Method to delete an appointment.
      */
     public void deleteAppointment() {
-    } //FIXME
+        if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
+           Alerts ("no item selected");
+           return;
+        }
+        selectedAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        deleteAppointmentFromAll(selectedAppointment, null,null, currentContact);
+        AppointmentTable.refresh();
+        AppointmentTable.getSelectionModel().clearSelection();
+    } //FIXME not tested
 
-    /**
-     * Create an appointment table.
-     */
-    public TableView<Appointment> AppointmentTable;
-    public TableColumn<Object, Object> appointmentID;
-    public TableColumn<Object, Object> customerName;
-    public TableColumn<Object, Object> startTime;
-    public TableColumn<Object, Object> endTime;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

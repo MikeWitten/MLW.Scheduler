@@ -46,7 +46,7 @@ public class Contact {
     }
 
     public void setContactAppointments(ObservableList<Appointment> contactAppointments) {
-        this.contactAppointments = contactAppointments;
+        Contact.contactAppointments = contactAppointments;
     }
 
     /**

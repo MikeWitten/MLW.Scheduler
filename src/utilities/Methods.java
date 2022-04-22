@@ -56,6 +56,9 @@ public class Methods {
             case "Customer overlapping appointment" -> alert.setContentText("Customers are not allowed to have overlapping appointments." +
                     "Please remove the conflicting appointment, or schedule this appointment for another time.");
             case "Please select a date." -> alert.setContentText("Please select a date.");
+            case "The appointment was not deleted" -> alert.setContentText("You selected cancel." +
+                    "The appointment was not deleted and can be found in the Appointment manager.");
+            case "This information hasn't been saved yet." -> alert.setContentText("This appointment doesn't exist yet, to start over press the clear all button.");
             case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes to the selected Item");
             case "String too long" -> alert.setContentText("Please limit your input to 50 total characters(including spaces).");
             case "No available times." -> alert.setContentText("There are no times available for this date.");
@@ -179,6 +182,21 @@ public class Methods {
     }
 
     /**
+     * Method to pass the 'user football' to appointment details page.
+     */
+    public static void passTheContactToAptDetails(Contact contact, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Appointment Details.fxml"));
+        loader.load();
+        AppointmentDetails controller = loader.getController();
+        controller.receiveContact(contact);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
+    }
+
+    /**
      * Pass the 'customer football' to the customer details page.
      */
     public static void passTheCustomer(Customer customer, Stage stage1) throws IOException {
@@ -241,7 +259,8 @@ public class Methods {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
+                Alerts("Deleted appointment");
+            } else Alerts("The appointment was not deleted");
         });
     }
 
