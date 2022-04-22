@@ -45,16 +45,17 @@
    <Pane layoutX="342.0" layoutY="100.0" prefHeight="386.0" prefWidth="645.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
       <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
          <columns>
-            <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Appt ID" />
-            <TableColumn fx:id="customerName" prefWidth="211.39996337890625" text="Customer Name" />
-            <TableColumn fx:id="startTime" prefWidth="177.0" text="Start" />
-            <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
+            <TableColumn fx:id="appointmentID" prefWidth="100.0" text="Appt ID" />
+            <TableColumn fx:id="customerID" prefWidth="125.99996948242188" text="Customer ID" />
+            <TableColumn fx:id="date" prefWidth="139.60003662109375" text="Date" />
+            <TableColumn fx:id="startTime" prefWidth="121.4000244140625" text="Start" />
+            <TableColumn fx:id="endTime" prefWidth="136.4000244140625" text="End" />
          </columns>
       </TableView>
-      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0" visible="false">
+      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Edit" />
             <Button layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
             <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
          </buttons>
@@ -62,6 +63,5 @@
       <TextField fx:id="appointmentFilter" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" promptText="Search by ApptID or Customer Name" />
       <Label layoutX="344.0" layoutY="18.0" text="Search" />
       <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
-      <Button layoutX="14.0" layoutY="340.0" mnemonicParsing="false" onAction="#turnOnButtonBar" text="Turn on Editing" fx:id="editableButton" />
    </Pane>
 </AnchorPane>

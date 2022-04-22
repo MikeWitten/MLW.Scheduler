@@ -49,7 +49,7 @@ public class ManageProfile implements Initializable {
         navigation(stage, "/view/Manage Profile.fxml");
     }
 
-    public void toAppointmentManager() throws IOException{
+    public void toAppointmentManager() throws IOException {
         //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
@@ -72,7 +72,7 @@ public class ManageProfile implements Initializable {
      */
     public void toAppointmentDetails() throws IOException {
         //Ensure an appointment is selected.
-        if (AppointmentTable.getSelectionModel().getSelectedItem() == null){
+        if (AppointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alerts("no item selected");
             return;
         }
@@ -83,7 +83,7 @@ public class ManageProfile implements Initializable {
     }
 
     /**
-     *Navigate to the appointment details screen.  Pass the user information
+     * Navigate to the appointment details screen.  Pass the user information
      */
     public void addAppointment() throws IOException {
         //Passes user information to create a new appointment object. Found in utilities.methods.
@@ -104,15 +104,14 @@ public class ManageProfile implements Initializable {
      */
     public void deleteAppointment() {
         //Ensure that an appointment is selected.
-        if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
+        if (AppointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alerts("no item selected");
             return;
-        }
-        else
+        } else
             appointment = AppointmentTable.getSelectionModel().getSelectedItem();
         //Method found in utilities.methods.
-            deleteAppointmentFromAll(appointment, currentUser, null, null);
-        Alerts("Deleted appointment");
+        deleteAppointmentFromAll(appointment, currentUser, null, null);
+        AppointmentTable.getSelectionModel().clearSelection();
         AppointmentTable.refresh();
     }
 
@@ -124,14 +123,14 @@ public class ManageProfile implements Initializable {
     public TableColumn<Object, Object> customerID;
     public TableColumn<Object, Object> title;
     public TableColumn<Object, Object> dateColumn;
-    public TableColumn<Object, Object>  startTime;
+    public TableColumn<Object, Object> startTime;
     public TableColumn<Object, Object> endTime;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Get active user data and populate text fields
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'of' yyyy 'at' hh:mm a" );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'of' yyyy 'at' hh:mm a");
         userIDTxt.setText(String.valueOf(getActiveUser(null).getUserID()));
         passwordTxt.setText(getActiveUser(null).getPassword());
         userNameTxt.setText(getActiveUser(null).getUserName());
@@ -148,12 +147,12 @@ public class ManageProfile implements Initializable {
         }
         //If another user was logged on previously, clear their associated appointments.
         assert currentUser != null;
-        if (currentUser.getUserAppointments().size() > 0 ){
+        if (currentUser.getUserAppointments().size() > 0) {
             currentUser.getUserAppointments().clear();
         }
 
         //Populate the current user's associated appointments.
-        if(currentUser.getUserAppointments().isEmpty()) {
+        if (currentUser.getUserAppointments().isEmpty()) {
             for (Appointment allAppointment : AllAppointments) {
                 if (allAppointment.getUserID() == currentUser.getUserID()) {
                     currentUser.addUserAppointment(allAppointment);

@@ -16,7 +16,10 @@ public abstract class DBAppointment {
     public static void insertApt(Appointment appointment) throws SQLException {
         //Convert time values to UTC for storage in the database.
         ZoneId utcID = ZoneId.of("UTC");
-        Timestamp lastUpdate =Timestamp.valueOf(ZonedDateTime.of(appointment.getLastUpdate().toLocalDateTime(), utcID).toLocalDateTime());
+        Timestamp rawTS = appointment.getLastUpdate();
+        ZonedDateTime rawZDT = ZonedDateTime.ofInstant(rawTS.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime convZDT = rawZDT.withZoneSameInstant(utcID);
+        Timestamp lastUpdate = Timestamp.valueOf(convZDT.toLocalDateTime());
         LocalDateTime start = ZonedDateTime.of(appointment.getRawStart(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         LocalDateTime end = ZonedDateTime.of(appointment.getRawEnd(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         LocalDateTime createDate =ZonedDateTime.of(appointment.getCreateDate(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
@@ -60,9 +63,12 @@ public abstract class DBAppointment {
      * Method to update an existing appointment object in the database.
      */
     public static void updateApt(Appointment appointment) throws SQLException {
-        //Convert time values to UTC for storage in the database.
+         //Convert time values to UTC for storage in the database.
         ZoneId utcID = ZoneId.of("UTC");
-        Timestamp lastUpdate =Timestamp.valueOf(ZonedDateTime.of(appointment.getLastUpdate().toLocalDateTime(), utcID).toLocalDateTime());
+        Timestamp rawTS = appointment.getLastUpdate();
+        ZonedDateTime rawZDT = ZonedDateTime.ofInstant(rawTS.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime convZDT = rawZDT.withZoneSameInstant(utcID);
+        Timestamp lastUpdate = Timestamp.valueOf(convZDT.toLocalDateTime());
         LocalDateTime start = ZonedDateTime.of(appointment.getRawStart(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         LocalDateTime end = ZonedDateTime.of(appointment.getRawEnd(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         LocalDateTime createDate =ZonedDateTime.of(appointment.getCreateDate(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();

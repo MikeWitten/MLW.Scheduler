@@ -38,9 +38,10 @@
       <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
          <columns>
             <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Apt ID" />
-            <TableColumn fx:id="customerName" prefWidth="211.39996337890625" text="Customer Name" />
-            <TableColumn fx:id="startTime" prefWidth="177.0" text="Start" />
-            <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
+            <TableColumn fx:id="customerID" prefWidth="89.39993286132812" text="CustomerID" />
+            <TableColumn fx:id="date" prefWidth="158.0" text="Date" />
+            <TableColumn fx:id="startTime" prefWidth="154.0" text="Start" />
+            <TableColumn fx:id="endTime" prefWidth="147.5999755859375" text="End" />
          </columns>
       </TableView>
       <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">

@@ -62,9 +62,13 @@ public class HomePage implements Initializable {
     }
 
     public void toNextAppointment() throws IOException {
-        //Method found in utilities.methods.
-        Stage stage = (Stage) (stageLabel).getScene().getWindow();
-        passTheAppointment(currentAppointment, stage);
+        if(currentAppointment == null){
+            toYourProfile();
+        } else {
+            //Method found in utilities.methods.
+            Stage stage = (Stage) (stageLabel).getScene().getWindow();
+            passTheAppointment(currentAppointment, stage);
+        }
     }
 
     @Override

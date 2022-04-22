@@ -25,23 +25,22 @@
       </buttons>
    </ButtonBar>
    <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="408.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TextField fx:id="divisionIDTxt" editable="false" layoutX="115.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="divisionTxt" editable="false" layoutX="115.0" layoutY="80.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="createDateTxt" editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="CreatedByTxt" editable="false" layoutX="115.0" layoutY="160" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="countryTxt" editable="false" layoutX="115.0" layoutY="200" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="115.0" layoutY="241.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="115.0" layoutY="281.0" prefHeight="26.0" prefWidth="200.0" />
-      <Label alignment="CENTER_RIGHT" layoutX="29.0" layoutY="47.0" text="Division ID" textAlignment="RIGHT" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="36.0" layoutY="85.0" text="Division" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="28.0" layoutY="125.0" text="Created By" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="27.0" layoutY="165.0" text="Created On" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="29.0" layoutY="205.0" text="Country ID" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="22.0" layoutY="245.0" text="Last Updated" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="285.0" text="Last Updated By" />
+      <Label alignment="CENTER_RIGHT" layoutX="15" layoutY="47.0" text="Division ID: " textAlignment="RIGHT" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="85.0" text="Division: " />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="125.0" text="Created By: " />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="165.0" text="Created On: " />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="205.0" text="Country: " />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="245.0" text="Last Updated: " />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="285.0" text="Last Updated By: " />
       <Label layoutX="98.0" layoutY="338.0" text="Contact an administrator" />
-      <Label layoutX="50.0" layoutY="355.0" text="to change or update your user information." />
-      <Button layoutX="342.0" layoutY="201.0" mnemonicParsing="false" text="Details" />
+      <Label layoutX="53.0" layoutY="355.0" text="to change or update Division information." />
+      <Button fx:id="countryButton" layoutX="115.0" layoutY="201.0" mnemonicParsing="false" onAction="#toCountryDetails" prefHeight="25.0" prefWidth="200.0" text="null" />
+      <Label fx:id="createDateLabel" layoutX="115.0" layoutY="165.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+      <Label fx:id="createdByLabel" layoutX="115.0" layoutY="125.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+      <Label fx:id="divisionLabel" layoutX="115.0" layoutY="85.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+      <Label fx:id="divisionIDLabel" layoutX="115.0" layoutY="47.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+      <Label fx:id="lastUpdateLabel" layoutX="115.0" layoutY="245.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+      <Label fx:id="updateByLabel" layoutX="115.0" layoutY="285.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
    </Pane>
    <Pane layoutX="428.0" layoutY="100.0" prefHeight="386.0" prefWidth="560.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
       <TableView fx:id="CustomerTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="532.0">
@@ -53,14 +52,12 @@
       </TableView>
       <ButtonBar layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
          <buttons>
-            <Button mnemonicParsing="false" onAction="#addCustomer" text="Add" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
-            <Button layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
-            <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
+            <Button fx:id="addCustomer" mnemonicParsing="false" onAction="#addCustomer" text="Add" />
+            <Button fx:id="editCustomer" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
+            <Button fx:id="deleteCustomer" layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
+            <Button fx:id="toCustomerDetails" layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
          </buttons>
       </ButtonBar>
-      <TextField fx:id="customerFilterTxt" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="160.0" promptText="Search by Name or Phone" />
-      <Label layoutX="344.0" layoutY="18.0" text="Search" />
       <Label layoutX="43.0" layoutY="18.0" text="Associated Customers" />
    </Pane>
 </AnchorPane>

@@ -45,11 +45,11 @@
       <Label layoutY="325.0" text="Description" />
 
       <TextField fx:id="appointmentIDTxt" editable="false" layoutX="100.0" layoutY="30.0" prefHeight="25.0" prefWidth="149.0" />
-      <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" prefWidth="150" />
-      <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" prefWidth="150" />
-      <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" prefWidth="150" />
-      <DatePicker fx:id="aptDatePicker" layoutX="101.0" layoutY="198.0" onAction="#populateBoxes" onMouseClicked="#isEditable" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="149.0" />
-      <TextArea fx:id="descriptionTxt" editable="false" layoutX="101.0" layoutY="325.0" prefHeight="61.0" prefWidth="150" />
+      <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" onMouseClicked="#isEditable" prefWidth="150" />
+      <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" onMouseClicked="#isEditable" prefWidth="150" />
+      <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" onMouseClicked="#isEditable" prefWidth="150" />
+      <DatePicker fx:id="aptDatePicker" layoutX="101.0" layoutY="198.0" onAction="#populateBoxes" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="149.0" />
+      <TextArea fx:id="descriptionTxt" editable="false" layoutX="101.0" layoutY="325.0" onMouseClicked="#isEditable" prefHeight="61.0" prefWidth="150" />
 
 
       <Button layoutX="657.0" layoutY="30.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="Customer ID" />
@@ -66,9 +66,9 @@
       <Label layoutX="320" layoutY="94.0" text="Last Updated On" />
       <Label layoutX="320" layoutY="124.0" text="Last Updated By" />
 
-      <ComboBox fx:id="customerCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="30.0" onAction="#isEditable" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
-      <ComboBox fx:id="userCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="120.0" onAction="#isEditable" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
-      <ComboBox fx:id="contactCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="210.0" onAction="#isEditable" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="customerCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="30.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="userCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="120.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="contactCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="210.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
       <ComboBox fx:id="startTimeComboBox" layoutX="100.0" layoutY="234.0" onAction="#changeStartTimeLabel" onMousePressed="#checkForNullDate" prefWidth="150.0" />
       <ComboBox fx:id="endTimeComboBox" layoutX="100.0" layoutY="270.0" onAction="#changeEndTimeLabel" onMousePressed="#checkForNullDate" prefWidth="150.0" />
       <Label fx:id="startTimeAtHQLabel" layoutX="320.0" layoutY="238.0" prefHeight="17.0" prefWidth="204.0" text="Label" />

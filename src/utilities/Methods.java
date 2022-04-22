@@ -1,10 +1,8 @@
 package utilities;
 
 import DAO.DBAppointment;
-import controller.AppointmentDetails;
-import controller.ContactDetails;
-import controller.CustomerDetails;
-import controller.UserDetails;
+import DAO.DBCustomer;
+import controller.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +21,6 @@ import java.util.ResourceBundle;
 
 import static DAO.DBAppointment.*;
 import static model.Contact.deleteContactAppointment;
-import static model.Customer.customerAppointmentList;
 import static model.Customer.deleteCustomerAppointment;
 import static model.User.deleteUserAppointment;
 import static utilities.ActiveUser.voidActiveUser;
@@ -44,6 +41,10 @@ public class Methods {
         switch (alertType) {
             case "Select participants" -> alert.setContentText("Please select a customer, user, and contact for this appointment.");
             case "no item selected" -> alert.setContentText("You haven't selected anything.");
+            case "fill in the blank" -> alert.setContentText("Please fill in the blank.");
+            case "no changes were made" -> alert.setContentText("You have not changed anything about this customer." +
+                    "No changes will be saved.");
+            case "choose a country" -> alert.setContentText("Please select a country to continue.");
             case "no upcoming appointments" -> alert.setContentText("There are no upcoming appointments.");
             case "Deleted appointment" -> alert.setContentText("You have successfully deleted the selected appointment");
             case "Deleted associated appointments" -> alert.setContentText("You have successfully deleted all of this customer's appointments.");
@@ -53,10 +54,16 @@ public class Methods {
             case "Null value" -> alert.setContentText("All editable fields are required.");
             case "The passage of time is important  lol" -> alert.setContentText("Your meeting start time is before (or at the same time as)  your meeting end time." +
                     "Please check to ensure that you have chosen the correct times.");
+            case "updated a customer" -> alert.setContentText("You have successfully updated this customer." +
+                    "You are being routed to the customer details page.");
+            case "created a customer" -> alert.setContentText("You have successfully created a customer, you are being routed to the customer details page.");
             case "Customer overlapping appointment" -> alert.setContentText("Customers are not allowed to have overlapping appointments." +
                     "Please remove the conflicting appointment, or schedule this appointment for another time.");
             case "Please select a date." -> alert.setContentText("Please select a date.");
-            case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes to the selected Item");
+            case "The appointment was not deleted" -> alert.setContentText("You selected cancel." +
+                    "The appointment was not deleted and can be found in the Appointment manager.");
+            case "This information hasn't been saved yet." -> alert.setContentText("This appointment doesn't exist yet, to start over press the clear all button.");
+            case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes.");
             case "String too long" -> alert.setContentText("Please limit your input to 50 total characters(including spaces).");
             case "No available times." -> alert.setContentText("There are no times available for this date.");
             case "appointment date has passed." -> alert.setContentText("The date or time you have chosen has already passed, would you like to continue?");
@@ -179,9 +186,69 @@ public class Methods {
     }
 
     /**
+     * Method to pass the 'user football' to appointment details page.
+     */
+    public static void passTheContactToAptDetails(Contact contact, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Appointment Details.fxml"));
+        loader.load();
+        AppointmentDetails controller = loader.getController();
+        controller.receiveContact(contact);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
+    }
+
+    /**
+     * Method to pass the 'customer football to the appointment details page.
+     */
+    public static void passTheCustomerToAptDetails(Customer customer, Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Appointment Details.fxml"));
+        loader.load();
+        AppointmentDetails controller = loader.getController();
+        controller.receiveCustomer(customer);
+        Parent scene = loader.getRoot();
+        stage.setTitle("Desktop Scheduling Application");
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    /**
+     * Method to pass the 'country football' to the country details page.
+     */
+    public static void passTheCountryToCountryDetails(Country country, Stage stage) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Country Details.fxml"));
+        loader.load();
+        CountryDetails controller = loader.getController();
+        controller.receiveObject(country);
+        Parent scene = loader.getRoot();
+        stage.setTitle("Desktop Scheduling Application");
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    /**
+     * Method to pass the 'division football' to the first level divisions page.
+     */
+    public static void passTheDivisionToDivision(Division division, Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/First Level Division.fxml"));
+        loader.load();
+        FirstLevelDivision controller = loader.getController();
+        controller.receiveDivision(division);
+        Parent scene = loader.getRoot();
+        stage.setTitle("Desktop Scheduling Application");
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    /**
      * Pass the 'customer football' to the customer details page.
      */
-    public static void passTheCustomer(Customer customer, Stage stage1) throws IOException {
+    public static void passTheCustomer(Customer customer, Stage stage1) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Methods.class.getResource("/view/Customer Details.fxml"));
         loader.load();
@@ -191,6 +258,21 @@ public class Methods {
         stage1.setTitle("Desktop Scheduling Application");
         stage1.setScene(new Scene(scene));
         stage1.show();
+    }
+
+    /**
+     * Pass the 'Division' to the division details page
+     */
+    public static void passTheDivision(Division division, Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/First Level Division.fxml"));
+        loader.load();
+        FirstLevelDivision controller = loader.getController();
+        controller.receiveDivision(division);
+        Parent scene = loader.getRoot();
+        stage.setTitle("Desktop Scheduling Application");
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     /**
@@ -225,6 +307,21 @@ public class Methods {
     }
 
     /**
+     * Method to pass the 'customer football' to the edit / add customer page.
+     */
+    public static void sendCustomerToEdit(Customer customer, Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Customer Edit.fxml"));
+        loader.load();
+        CustomerEdit controller = loader.getController();
+        controller.receiveCustomerToEdit(customer);
+        Parent scene = loader.getRoot();
+        stage.setTitle("Desktop Scheduling Application");
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    /**
      * Method to delete appointments part 1.
      */
     public static void deleteAppointmentFromAll(Appointment appointment, User user, Customer customer, Contact contact){
@@ -241,7 +338,8 @@ public class Methods {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
+                Alerts("Deleted appointment");
+            } else Alerts("The appointment was not deleted");
         });
     }
 
@@ -270,18 +368,21 @@ public class Methods {
                     Do you wish to do that now?""");
             alert1.showAndWait().ifPresent(response1 -> {
                 if (response1 == ButtonType.OK) {
-                    int i;
-                    for (i = 0; i < Customer.customerAppointmentList.size(); i++) {          //Iterate through all associated appointments and delete them.
-                        Appointment choppedAppointment = customerAppointmentList.get(i);
+                    for(Appointment a: customer.getAllCustomerAppointments()){
                         try {
-                            deleteAppointmentFromAllPart2(choppedAppointment, null, null, null);
+                            deleteAppointmentFromAllPart2(a, null, null, null);
                         } catch (SQLException e) {
                             e.printStackTrace();
+                            System.out.println("we fu**D up");
+                            return;
                         }
                     }
                 }
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);                       //Give the user feedback about deleting the customer's appointments.
+                alert3.setContentText("All of this user's associated appointments have been deleted.");
+                alert3.showAndWait();
             });
-            Alerts("Deleted associated appointments");                              //Give the user feedback about deleting the customer's appointments.
+
         }
         Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);                         //Confirm the deletion of a Customer object.
         alert2.setTitle("Delete this customer?");
@@ -291,11 +392,16 @@ public class Methods {
                 Press OK to continue or Cancel to go back.""");
         alert2.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK){
-                Alerts("Deleted Customer");
+                try {
+                    DBCustomer.deleteCustomer(customer);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                AllCustomers.remove(customer);
+                Alerts("Deleted customer");
             }
         });
-    }
-
+    } //FIXME not tested
 
     /**
      * Method to add an appointment to the database and update the current AllAppointmentsList.
@@ -410,5 +516,6 @@ public class Methods {
             }
         }
     }
+
 
 }

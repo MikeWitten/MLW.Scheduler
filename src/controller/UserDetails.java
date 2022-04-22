@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
@@ -15,7 +16,6 @@ import static utilities.Methods.*;
 public class UserDetails implements Initializable {
     public Label stageLabel;
     public ButtonBar buttonBar;
-    public Button editableButton;
     public TextField userIDTxt;
     public TextField userNameTxt;
     public TextField createDateTxt;
@@ -24,6 +24,7 @@ public class UserDetails implements Initializable {
     public TextField lastUpdatedByTxt;
     public TextField appointmentFilter;
     static User currentUser;
+
 
     //Navigation
     public void toExit() {
@@ -55,26 +56,20 @@ public class UserDetails implements Initializable {
         navigation(stage, "/view/Home Page.fxml");
     }
 
-    public void toAppointmentDetails() {
+    public void toAppointmentDetails() throws IOException {
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alerts("no item selected");
             return;
         }
-    }//FIXME pass the appointment football
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        Appointment a = AppointmentTable.getSelectionModel().getSelectedItem();
+        passTheAppointment(a, stage);
+    }
 
     public void addAppointment() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/Appointment Details.fxml");
-    }  //FIXME pass the User football
-
-    public void editAppointment() {
-        if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
-            Alerts("no item selected");
-            return;
-        }
-
-    }//FIXME pass the appointment football
-
+        passTheUser(currentUser, stage);
+    }
     /**
      * Get user data and populate text fields
      */
@@ -86,6 +81,20 @@ public class UserDetails implements Initializable {
         createdByTxt.setText(currentUser.getCreatedBy());
         lastUpdatedTxt.setText(String.valueOf(currentUser.getLastUpdate()));
         lastUpdatedByTxt.setText(currentUser.getLastUpdatedBy());
+        //Ensure associated appointment list is up to date.
+        currentUser.getUserAppointments().clear();
+        for (Appointment a: AllAppointments){
+            if(currentUser.getUserID() == a.getUserID()){
+                currentUser.getUserAppointments().add(a);
+            }
+        }
+        //populate the table.
+        AppointmentTable.setItems(currentUser.getUserAppointments());
+        appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        date.setCellValueFactory(new PropertyValueFactory<>("parsedStartDate"));
+        startTime.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
+        endTime.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
     }
 
 
@@ -101,24 +110,7 @@ public class UserDetails implements Initializable {
         Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
         //Method found in utilities.methods.
         deleteAppointmentFromAll(appointment, null, null, null);
-        Alerts("Deleted appointment");
-    }
-
-    /**
-     * Method to allow the active user to manage appointments for other users.
-     */
-    public void turnOnButtonBar() {
-       // FIXME if(AppointmentTable.getSelectionModel().getSelectedItem().getUserID() != activeUser.getID()){}
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Edit another user's appointments?");
-        alert.setContentText("This is not your profile. \n" +
-                "Do you wish to make changes to another user's schedule?");
-        alert.showAndWait().ifPresent(response -> {
-            if(response == ButtonType.OK){
-                buttonBar.setVisible(true);
-                editableButton.setVisible(false);
-            }
-        });
+        AppointmentTable.getSelectionModel().clearSelection();
     }
 
     /**
@@ -126,7 +118,8 @@ public class UserDetails implements Initializable {
      */
     public TableView<Appointment> AppointmentTable;
     public TableColumn<Object, Object> appointmentID;
-    public TableColumn<Object, Object> customerName;
+    public TableColumn<Object, Object> customerID;
+    public TableColumn<Object, Object> date;
     public TableColumn<Object, Object>  startTime;
     public TableColumn<Object, Object> endTime;
 

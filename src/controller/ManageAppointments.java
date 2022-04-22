@@ -28,58 +28,38 @@ public class ManageAppointments implements Initializable {
     public void toExit() {
         exitHere();
     }
-
     public void toLogOut() {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
-
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
-
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
-
     public void toCustomerManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
-
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
-
-    /**
-     * Navigate to add appointment.
-     */
     public void addAppointment() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Appointment Details.fxml");
     }
-
-    /**
-     * Navigate to edit an existing appointment.
-     */
-    public void editAppointment(){
+    public void toAppointmentDetails() throws IOException {
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
             Alerts("no item selected");
             return;
         }
-    }  //FIXME pass the Appointment football
-
-    /**
-     * Navigate to view existing appointment details.
-     */
-    public void toAppointmentDetails() {
-        if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
-            Alerts("no item selected");
-            return;
-        }
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        Appointment a = AppointmentTable.getSelectionModel().getSelectedItem();
+        passTheAppointment(a, stage);
     }
 
     /**
@@ -92,7 +72,6 @@ public class ManageAppointments implements Initializable {
         }
         Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
         deleteAppointmentFromAll(appointment, null, null, null);
-        Alerts("Deleted appointment");
         AppointmentTable.refresh();
     }
 
@@ -175,8 +154,8 @@ public class ManageAppointments implements Initializable {
         customerColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
     }
 
 

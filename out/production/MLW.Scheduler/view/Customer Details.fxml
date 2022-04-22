@@ -5,17 +5,6 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerDetails">
-   <Label fx:id="stageLabel" layoutX="427.0" layoutY="14.0" text="Customer Details">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="408.0" layoutY="511.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
    <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
       <buttons>
          <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
@@ -24,60 +13,80 @@
          <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
       </buttons>
    </ButtonBar>
-   <Pane layoutX="10.0" layoutY="100.0" prefHeight="411.0" prefWidth="328.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TextField fx:id="customerIDTxt" editable="false" layoutX="115.0" layoutY="10" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="customerNameTxt" editable="false" layoutX="115.0" layoutY="40" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="streetAddressTxt" editable="false" layoutX="115.0" layoutY="70" prefHeight="26.0" prefWidth="200.0" />
-      <ComboBox fx:id="countryComboBox" layoutX="115.0" layoutY="100" prefHeight="25.0" prefWidth="200.0" />
-      <ComboBox fx:id="stateComboBox" layoutX="115.0" layoutY="130" prefHeight="25.0" prefWidth="200.0" />
-      <TextField fx:id="postalCodeTxt" editable="false" layoutX="115.0" layoutY="160.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="phoneTxt" editable="false" layoutX="115.0" layoutY="190" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="createdOnTxt" editable="false" layoutX="115.0" layoutY="220" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="createdByTxt" editable="false" layoutX="115.0" layoutY="250" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="lastUpdateTxt" editable="false" layoutX="115.0" layoutY="280" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="115.0" layoutY="310" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="divisionIDTxt" editable="false" layoutX="115.0" layoutY="340" prefHeight="26.0" prefWidth="200.0" />
+   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
+      <buttons>
+         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+      </buttons>
+   </ButtonBar>
+   <Label fx:id="stageLabel" layoutX="427.0" layoutY="15" text="Customer Details">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+   </Label>
+   <Pane layoutX="14.0" layoutY="81.0" prefHeight="416.0" prefWidth="343.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+      <Label fx:id="customerNameLabel" layoutX="13.0" layoutY="15" text="Customer Name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="customerIDLabel" layoutX="275" layoutY="13.0" text="ID: N">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="streetAddressLabel" layoutX="15" layoutY="60" text="Street Address" />
+      <Label fx:id="phoneLabel" layoutX="230.0" layoutY="60.0" text="123-123-123-1232" />
+      <Label fx:id="stateProvinceZipLabel" layoutX="15" layoutY="80" text="city ST, postal code" />
+      <Label fx:id="countryLabel" layoutX="15.0" layoutY="100" text="country" />
 
 
-      <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="15.0" text="Customer ID" textAlignment="RIGHT" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="45.0" text="Name" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="75.0" text="Street Address" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="165.0" text="Postal Code" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="195.0" text="Phone" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="225.0" text="Created On" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="255.0" text="Created By" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="285.0" text="Last Updated On" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="315.0" text="Last Updated By" />
-      <ButtonBar layoutX="30.0" layoutY="366.0" prefHeight="40.0" prefWidth="200.0">
-        <buttons>
-          <Button mnemonicParsing="false" text="Add" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" text="Edit" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" text="Delete" />
-        </buttons>
-      </ButtonBar>
-      <Button layoutX="10.0" layoutY="100.0" mnemonicParsing="false" onAction="#toCountryDetails" text="Country" />
-      <Button layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#toDivisionDetails" text="Division ID" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="10.0" layoutY="134.0" text="State / Province" />
-   </Pane>
-   <Pane layoutX="342.0" layoutY="100.0" prefHeight="411.0" prefWidth="646.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
-         <columns>
-            <TableColumn fx:id="appointmentID" prefWidth="75.0" text="Apt ID" />
-            <TableColumn fx:id="customerName" prefWidth="211.39996337890625" text="Title" />
-            <TableColumn fx:id="startTime" prefWidth="177.0" text="Start" />
-            <TableColumn fx:id="endTime" prefWidth="158.199951171875" text="End" />
-         </columns>
-      </TableView>
-      <ButtonBar layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
+      <Label layoutX="15.0" layoutY="136.0" text="Created By:" />
+      <Label fx:id="createdByLabel" layoutX="119.0" layoutY="136.0" text="Name" />
+
+      <Label layoutX="15.0" layoutY="150.0" text="On:" />
+      <Label fx:id="createDateLabel" layoutX="120" layoutY="150.0" text="Date" />
+
+      <Label layoutX="15" layoutY="185.0" text="Last Updated by: " />
+      <Label fx:id="updatedByLabel" layoutX="120" layoutY="185.0" text="Name" />
+
+      <Label layoutX="15" layoutY="200.0" text="On:" />
+      <Label fx:id="lastUpdateLabel" layoutX="120.0" layoutY="200.0" text="Date" />
+
+
+      <Button fx:id="countryButton" layoutX="15.0" layoutY="240.0" mnemonicParsing="false" onAction="#toCountryDetails" prefHeight="25.0" prefWidth="182.0" text="Country" />
+      <Button fx:id="divisionButton" layoutX="15.0" layoutY="275.0" mnemonicParsing="false" onAction="#toDivisionDetails" prefHeight="25.0" prefWidth="182.0" text="Division" />
+
+
+      <ButtonBar layoutX="52.0" layoutY="362.0" prefHeight="40.0" prefWidth="200.0">
          <buttons>
-            <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
-            <Button layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
-            <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
+            <Button mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
          </buttons>
       </ButtonBar>
-      <TextField fx:id="appointmentFilter" layoutX="461.0" layoutY="14.0" prefHeight="25.0" prefWidth="175.0" promptText="Search by AptID or Title" />
-      <Label layoutX="416.0" layoutY="18.0" text="Search" />
-      <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
+
+   </Pane>
+   <Pane layoutX="373.0" layoutY="81.0" prefHeight="416.0" prefWidth="617.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+      <ButtonBar layoutX="175.0" layoutY="363.0" prefHeight="40.0" prefWidth="257.0">
+         <buttons>
+            <Button mnemonicParsing="false" onAction="#toAppointmentDetails" text="View/Edit" />
+            <Button  layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#addAppointment" text="Add" />
+            <Button layoutX="208.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+         </buttons>
+      </ButtonBar>
+      <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="45.0" prefHeight="318.0" prefWidth="596.0">
+         <columns>
+            <TableColumn fx:id="appointmentID" prefWidth="71.79998779296875" text="ID" />
+            <TableColumn fx:id="title" prefWidth="174.20001220703125" text="Title" />
+            <TableColumn fx:id="date" prefWidth="130.39996337890625" text="Date" />
+            <TableColumn fx:id="startTime" prefWidth="110.0" text="Start" />
+            <TableColumn fx:id="endTime" prefWidth="114.00006103515625" text="End" />
+         </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="11.0" text="Associated Appointments">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </Pane>
 </AnchorPane>

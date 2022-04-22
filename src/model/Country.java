@@ -85,40 +85,15 @@ public class Country {
     /**
      * Create a list of associated First Level Divisions
      */
-    ObservableList<Division> divisions = FXCollections.observableArrayList();
+    ObservableList<Division> countryDivisions = FXCollections.observableArrayList();
 
     /**
      * Method to get the first Level Division list.
      */
-    ObservableList<Division> getFirstLevelDivisions(){
-        return divisions;
+    public ObservableList<Division> getFirstLevelDivisions(){
+        return countryDivisions;
     }
 
-    /**
-     * Create a list of associated customers.
-     */
-    static ObservableList<Customer> countryCustomers = FXCollections.observableArrayList();
-
-    /**
-     * Method to add a customer to associated list.
-     */
-    public  void addCountryCustomer(Customer customer){
-        countryCustomers.add(customer);
-    }
-
-    /**
-     * Method to delete a customer from the associated list.
-     */
-    public static void deleteCountryCustomer(Customer customer){
-        countryCustomers.remove(customer);
-    }
-
-    /**
-     * Method to get country customers list.
-     */
-    ObservableList<Customer> getCountryCustomers(){
-        return countryCustomers;
-    }
 
     @Override
     public String toString(){

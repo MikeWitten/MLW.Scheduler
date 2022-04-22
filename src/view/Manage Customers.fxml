@@ -36,7 +36,7 @@
       <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#addCustomer" text="Add" />
-            <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
+            <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="Edit" />
             <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
             <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
          </buttons>

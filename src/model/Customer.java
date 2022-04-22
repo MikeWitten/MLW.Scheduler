@@ -26,7 +26,7 @@ public class Customer {
     public Customer(int customerID, String customerName, String address, String postalCode, String phone,
                     LocalDateTime createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,
                     int divisionID) {
-        this.customerID = customerID;               //FIXME unique value 10 char max
+        this.customerID = customerID;
         this.customerName = customerName;           //FIXME 50 char max (alert already exists)
         this.address = address;                     //FIXME 100 char max
         this.postalCode = postalCode;               //FIXME 50 char max

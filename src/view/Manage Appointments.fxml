@@ -39,16 +39,14 @@
         <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">
             <buttons>
                 <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
-                <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
+                <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Edit" />
                 <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
                 <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
             </buttons>
         </ButtonBar>
         <Label fx:id="monthOfTheYear" layoutX="423.0" layoutY="13.0" />
-        <Button fx:id="prevMonthButton" layoutX="491.0" layoutY="9.0" mnemonicParsing="false" onAction="#previousMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" />
-        <Button fx:id="nextMonthButton" layoutX="416.0" layoutY="9.0" mnemonicParsing="false" onAction="#nextMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Next" />
-        <Label layoutX="739.0" layoutY="14.0" text="Search" />
-        <TextField fx:id="appointmentFilterTxt" layoutX="806.0" layoutY="10.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Appt ID, or Customer Name" />
+        <Button fx:id="prevMonthButton" layoutX="449.0" layoutY="9.0" mnemonicParsing="false" onAction="#previousMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" />
+        <Button fx:id="nextMonthButton" layoutX="524.0" layoutY="9.0" mnemonicParsing="false" onAction="#nextMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Next" />
       <ButtonBar layoutX="13.0" layoutY="2.0" prefHeight="40.0" prefWidth="394.0">
         <buttons>
             <RadioButton fx:id="monthViewButton" disable="true" mnemonicParsing="false" onAction="#toMonthView" selected="true" text="Month View" />

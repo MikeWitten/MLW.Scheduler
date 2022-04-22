@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerEdit">
+    <Pane layoutX="14.0" layoutY="8.0" prefHeight="480.0" prefWidth="187.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <Label fx:id="customerNameLabel" layoutX="9.0" layoutY="173.0" text="Customer Name">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="streetAddressLabel" layoutX="10" layoutY="200" prefHeight="17.0" prefWidth="169.0" text="Street Address" />
+        <Label fx:id="phoneLabel" layoutX="10" layoutY="280.0" prefHeight="17.0" prefWidth="169.0" text="123-123-123-1232" />
+        <Label fx:id="stateProvinceZipLabel" layoutX="10" layoutY="220" prefHeight="17.0" prefWidth="169.0" text="State/Province, postal code" />
+        <Label fx:id="countryLabel" layoutX="10" layoutY="240" text="Country" />
+        <Label fx:id="previewLabel" layoutX="10" layoutY="15" text="Current Customer" />
+    </Pane>
+    <Pane layoutX="208.0" layoutY="8.0" prefHeight="480.0" prefWidth="286.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <Label fx:id="startPrompt" layoutX="14.0" layoutY="39.0" text="Start Here" textFill="#ec0c0c" />
+        <ComboBox fx:id="countryBox" layoutX="85.0" layoutY="35.0" onAction="#getDivision" prefHeight="25.0" prefWidth="197.0" promptText="select a country" />
+        <Label fx:id="divPrompt" layoutX="14.0" layoutY="90.0" text="Choose one" visible="false" />
+        <ComboBox fx:id="divisionBox" layoutX="85.0" layoutY="86.0" onAction="#getAddress" prefHeight="25.0" prefWidth="197.0" promptText="select a State/Province" visible="false" />
+        <TextField fx:id="addressTxt" layoutX="6.0" layoutY="181.0" prefHeight="25.0" prefWidth="276.0" promptText="new Street Adress" visible="false" />
+        <TextField fx:id="postalTxt" layoutX="6.0" layoutY="248.0" prefHeight="25.0" prefWidth="276.0" promptText="new Postal Code" visible="false" />
+        <TextField fx:id="phoneTxt" layoutX="6.0" layoutY="315.0" prefHeight="25.0" prefWidth="276.0" promptText="new phone number" visible="false" />
+        <Button fx:id="saveButton" disable="true" layoutX="124.0" layoutY="441.0" mnemonicParsing="false" onAction="#saveCustomer" text="Save" />
+        <Button layoutX="222.0" layoutY="441.0" mnemonicParsing="false" onAction="#toHomePage" text="Cancel" />
+        <Button fx:id="next1" layoutX="113.0" layoutY="206.0" mnemonicParsing="false" onAction="#getPostalCode" prefHeight="25.0" prefWidth="51.0" text="Next" visible="false" />
+        <Button fx:id="next2" layoutX="113.0" layoutY="273.0" mnemonicParsing="false" onAction="#getPhone" prefHeight="25.0" prefWidth="51.0" text="Next" visible="false" />
+        <Button fx:id="commitButton" layoutX="112.0" layoutY="407.0" mnemonicParsing="false" onAction="#commit" prefHeight="25.0" prefWidth="51.0" text="Next" visible="false" />
+        <Button fx:id="startOverButton" disable="true" layoutX="11.0" layoutY="441.0" mnemonicParsing="false" onAction="#clearForm" text="Start Over" />
+      <TextField fx:id="nameTxt" layoutX="5.0" layoutY="382.0" prefHeight="25.0" prefWidth="276.0" promptText="new Name" visible="false" />
+      <Button fx:id="next3" layoutX="113.0" layoutY="340.0" mnemonicParsing="false" onAction="#getName" prefHeight="25.0" prefWidth="51.0" text="Next" visible="false" />
+      <CheckBox fx:id="addressPrompt" layoutX="9.0" layoutY="164.0" mnemonicParsing="false" onAction="#leaveAddress" text="Don't Change" visible="false" />
+      <CheckBox fx:id="postalPrompt" layoutX="9.0" layoutY="232.0" mnemonicParsing="false" onAction="#leavePostalCode" text="Don't Change" visible="false" />
+      <CheckBox fx:id="phonePrompt" layoutX="9.0" layoutY="298.0" mnemonicParsing="false" onAction="#leavePhone" text="Don't Change" visible="false" />
+      <CheckBox fx:id="namePrompt" layoutX="9.0" layoutY="365.0" mnemonicParsing="false" onAction="#leaveName" text="Don't Change" visible="false" />
+      <Label fx:id="promptOverAddress" layoutX="170.0" layoutY="164.0" text="Address and City" visible="false" />
+    </Pane>
+</AnchorPane>

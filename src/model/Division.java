@@ -119,6 +119,6 @@ public class Division {
 
     @Override
     public String toString(){
-        return (division);
+        return (division + "   ID: " + divisionID);
     }
 }

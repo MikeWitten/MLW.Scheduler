@@ -1,7 +1,11 @@
 package controller;
 
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import DAO.DBCustomer;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Country;
@@ -9,145 +13,183 @@ import model.Customer;
 import model.Division;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
 import static utilities.Methods.*;
 
-public class CustomerDetails implements Initializable {
-    public Label stageLabel;
-    public TextField customerIDTxt;
-    public TextField customerNameTxt;
-    public TextField streetAddressTxt;
-    public ComboBox<model.Country> countryComboBox;
-    public ComboBox<model.Division> stateComboBox;
-    public TextField postalCodeTxt;
-    public TextField phoneTxt;
-    public TextField createdOnTxt;
-    public TextField createdByTxt;
-    public TextField lastUpdateTxt;
-    public TextField lastUpdatedByTxt;
-    public TextField divisionIDTxt;
-    public TextField appointmentFilter;
+public class CustomerDetails {
     static Customer currentCustomer;
     static Division currentDivision;
     static Country currentCountry;
+    public Label stageLabel;
+    public Label customerNameLabel;
+    public Label customerIDLabel;
+    public Label streetAddressLabel;
+    public Label phoneLabel;
+    public Label stateProvinceZipLabel;
+    public Label countryLabel;
+    public Label createdByLabel;
+    public Label createDateLabel;
+    public Label updatedByLabel;
+    public Label lastUpdateLabel;
+    public Button countryButton;
+    public Button divisionButton;
+    public TableView <Appointment> AppointmentTable;
+    public TableColumn <Object, Object> appointmentID;
+    public TableColumn <Object, Object> title;
+    public TableColumn <Object, Object> date;
+    public TableColumn <Object, Object> startTime;
+    public TableColumn <Object, Object> endTime;
 
     //Navigation
     public void toExit() {
         exitHere();
     }
-
     public void toLogOut() {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
-
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
-
-    public void toAppointmentManager() throws IOException{
+    public void toAppointmentManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
-
     public void toCustomerManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
-
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
-
     public void toCountryDetails() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/Country.fxml");
-    }  //FIXME pass the Country football
-
+        passTheCountryToCountryDetails(currentCountry, stage);
+    }
     public void toDivisionDetails() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
-        navigation(stage, "/view/First Level Division.fxml");
-    }  //FIXME pass the division football
-
-    public void toAppointmentDetails() {
-    } //FIXME pass appointment football
+        passTheDivisionToDivision(currentDivision, stage);
+    }
+    public void addAppointment() throws IOException {
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        passTheCustomerToAptDetails(currentCustomer, stage);
+    }
+    public void toAppointmentDetails() throws IOException {
+        if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
+            Alerts("no item selected");
+            return;
+        }
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        Appointment appointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        passTheAppointment(appointment, stage);
+    }
+    public void editCustomer() throws IOException {
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        sendCustomerToEdit(currentCustomer, stage);
+    }
 
     /**
-     * Method to add an appointment
+     * Adjust the date to be more readable.
      */
-    public void addAppointment() {
-    } //FIXME
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'of' yyyy   'at:' HH:mm a");
 
     /**
-     * Method to edit an existing appointment.
+     * Receive the customer object from the previous screen.
      */
-    public void editAppointment() {
-    } //FIXME
+    public void receiveCustomer(Customer customer) throws SQLException {
+        AllCustomers.clear();
+        DBCustomer.selectAllCustomers();
+        //Assign the global variable a value.
+        for(Customer c: AllCustomers){
+            if(customer.getCustomerName().equals(c.getCustomerName()) && customer.getPhone().equals(c.getPhone())){
+                currentCustomer = c;
+            }
+        }
+        //Find current Country and Division.
+        getCountryAndDivision();
+        customerNameLabel.setText(currentCustomer.getCustomerName());
+        customerIDLabel.setText("ID: " + currentCustomer.getCustomerID());
+        streetAddressLabel.setText(currentCustomer.getAddress());
+        phoneLabel.setText(currentCustomer.getPhone());
+        stateProvinceZipLabel.setText(currentDivision.getDivision() + ", " + currentCustomer.getPostalCode());
+        countryLabel.setText(currentCountry.getCountry());
+        createdByLabel.setText(currentCustomer.getCreatedBy());
+        createDateLabel.setText(formatter.format(currentCustomer.getCreateDate()));
+        updatedByLabel.setText(currentCustomer.getLastUpdatedBy());
+        lastUpdateLabel.setText(formatter.format(currentCustomer.getLastUpdate().toLocalDateTime()));
+        countryButton.setText(currentCountry.getCountry());
+        divisionButton.setText(currentDivision.getDivision() + ", ID " + currentDivision.getDivisionID());
+        //Refresh the associated appointments for the customer.
+        refreshAppointments();
+        //Populate the associated table.
+        populateTable();
+    }
 
     /**
-     * Method to delete an appointment.
+     * Method to populate table.
+     */
+    private void populateTable() {
+        AppointmentTable.setItems(currentCustomer.getAllCustomerAppointments());
+        appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        date.setCellValueFactory(new PropertyValueFactory<>("parsedStartDate"));
+        startTime.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
+        endTime.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
+    }
+
+    /**
+     * Method to ensure that if a customer is re-loaded they will not have duplicate appointments.
+     */
+    private void refreshAppointments() {
+        currentCustomer.getAllCustomerAppointments().clear();
+        for (Appointment a : AllAppointments){
+            if(currentCustomer.getCustomerID() == a.getCustomerID()){
+                currentCustomer.getAllCustomerAppointments().add(a);
+            }
+        }
+    }
+
+    /**
+     * Method to determine the country and division of the current customer.
+     */
+    private void getCountryAndDivision() {
+        for (Division d : AllDivisions){
+            if (currentCustomer.getDivisionID() == d.getDivisionID()){
+                currentDivision = d;
+            }
+        }
+        for (Country c: AllCountries){
+            if(currentDivision.getCountryID() == c.getCountryID()){
+                currentCountry = c;
+            }
+        }
+    }
+
+    /**
+     * Method to delete the appointment.
      */
     public void deleteAppointment() {
+        if(AppointmentTable.getSelectionModel().getSelectedItem() == null){
+            Alerts("no item selected");
+            return;
+        }
+        //Method found in utilities.methods.
+        Appointment a = AppointmentTable.getSelectionModel().getSelectedItem();
+        deleteAppointmentFromAll(a, null, currentCustomer, null);
+        AppointmentTable.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Method to delete a customer.
+     */
+    public void deleteCustomer() throws IOException {
+        deleteCustomerFromAll(currentCustomer);
+        toHome();
     } //FIXME
 
-    /**
-     * Receive the customer object from the previous scene.
-     */
-    public void receiveCustomer(Customer customer){
-        //Assign value to the current customer and check to ensure the associated appointment list is up-to-date.
-        currentCustomer = customer;
-       /* if (currentCustomer.getAllCustomerAppointments() != null){
-            currentCustomer.getAllCustomerAppointments().clear();
-        }*/
-        //Set text boxes.
-        customerIDTxt.setText(String.valueOf(currentCustomer.getCustomerID()));
-        customerNameTxt.setText(currentCustomer.getCustomerName());
-        streetAddressTxt.setText(currentCustomer.getAddress());
-        postalCodeTxt.setText(currentCustomer.getPostalCode());
-        phoneTxt.setText(currentCustomer.getPhone());
-        createdOnTxt.setText(String.valueOf(currentCustomer.getCreateDate()));
-        createdByTxt.setText(currentCustomer.getCreatedBy());
-        lastUpdateTxt.setText(String.valueOf(currentCustomer.getLastUpdate()));
-        lastUpdatedByTxt.setText(currentCustomer.getLastUpdatedBy());
-        divisionIDTxt.setText(String.valueOf(currentCustomer.getDivisionID()));
 
-        //Identify the division and country.
-        for (Division allDivision : AllDivisions) {
-            if (allDivision.getDivisionID() == currentCustomer.getDivisionID()) {
-                currentDivision = allDivision;
-            }
-        }
-        for (Country allCountry : AllCountries) {
-            if (allCountry.getCountryID() == currentDivision.getCountryID()) {
-                currentCountry = allCountry;
-            }
-
-        }
-
-        //Set the combo boxes default values.
-        countryComboBox.setValue(currentCountry);
-        stateComboBox.setValue(currentDivision);
-    }
-
-    /**
-     * Create the appointment table.
-     */
-    public TableView <Appointment> AppointmentTable;
-    public TableColumn<Object, Object> appointmentID;
-    public TableColumn<Object, Object> customerName;
-    public TableColumn<Object, Object> startTime;
-    public TableColumn<Object, Object> endTime;
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //Set combo boxes up.
-        countryComboBox.setItems(AllCountries);
-        stateComboBox.setItems(AllDivisions);
-    }
 }
