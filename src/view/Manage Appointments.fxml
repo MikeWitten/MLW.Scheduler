@@ -55,5 +55,6 @@
       </ButtonBar>
       <Button fx:id="prevWeekButton" layoutX="416.0" layoutY="9.0" mnemonicParsing="false" onAction="#previousWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" visible="false" />
       <Button fx:id="nextWeekButton" layoutX="491.0" layoutY="9.0" mnemonicParsing="false" onAction="#nextWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Next" visible="false" />
+      <Label layoutX="631.0" layoutY="14.0" prefHeight="17.0" prefWidth="149.0" text="MMM of yyyy or " />
     </Pane>
 </AnchorPane>

@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,7 +15,6 @@ import static utilities.Methods.*;
 public class ManageAppointments implements Initializable {
     public Label stageLabel;
     public Label monthOfTheYear;
-    public TextField appointmentFilterTxt;
     public RadioButton monthViewButton;
     public RadioButton weekViewButton;
     public Button prevMonthButton;
@@ -114,7 +112,7 @@ public class ManageAppointments implements Initializable {
     /**
      * Method to filter results to the next month.
      */
-    public void nextMonthFilter(ActionEvent actionEvent) {
+    public void nextMonthFilter() {
     }
 
     /**
