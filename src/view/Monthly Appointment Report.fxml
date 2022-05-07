@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MonthlyAppointmentReport">
+    <Label fx:id="monthLabel" layoutX="14.0" layoutY="14.0" text="Month Label">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <Label fx:id="stageLabel" layoutX="546.0" layoutY="14.0" text="Total Appointments">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <Label fx:id="totalAppointmentsLabel" layoutX="121.0" layoutY="110.0" prefHeight="18.0" prefWidth="1063.0" text="Total Appointments Label" />
+    <Button layoutX="585.0" layoutY="438.0" mnemonicParsing="false" onAction="#toAppointmentManager" prefHeight="26.0" prefWidth="90.0" text="Exit" />
+   <TableView fx:id="typeTable" layoutX="121.0" layoutY="158.0" prefHeight="310.0" prefWidth="270.0">
+     <columns>
+       <TableColumn fx:id="typeColumn" prefWidth="151.1999969482422" text="Type" />
+       <TableColumn fx:id="numberColumn" prefWidth="118.39999999999998" text="# of Appointments" />
+     </columns>
+   </TableView>
+   <Label layoutX="121.0" layoutY="140.0" text="Appointment Types this month" />
+</AnchorPane>

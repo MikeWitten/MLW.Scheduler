@@ -1,0 +1,12 @@
+Attempted login without credentials at: May, 05, 2022  06:28:25UserName: test
+Attempted login without credentials at:  May, 05, 2022   06:37:37  
+Attempted login without credentials at:  May, 05, 2022   06:37:45  UserName: test
+Failed login at:  May, 05, 2022   06:37:49  UserName: test Password: file
+Failed login at:  May, 05, 2022   06:37:57  UserName: test Password: file
+Successful login at:  May, 05, 2022   06:38:01  UserName: test Password: test
+Successful login at:  May, 05, 2022   07:09:48  UserName: test Password: test
+Successful login at:  May, 05, 2022   07:12:54  UserName: test Password: test
+Successful login at:  May, 05, 2022   07:15:39  UserName: test Password: test
+Successful login at:  May, 05, 2022   07:22:17  UserName: test Password: test
+Successful login at:  May, 05, 2022   07:26:39  UserName: test Password: test
+Successful login at:  May, 07, 2022   14:02:20  UserName: test Password: test
