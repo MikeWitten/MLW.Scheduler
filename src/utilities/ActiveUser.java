@@ -1,7 +1,6 @@
 package utilities;
 
 import model.User;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
  * https://docs.oracle.com/cd/E93962_01/bigData.Doc/eql_onPrem/src/reql_sets_singleton.html
  */
 public final class ActiveUser {
-
     /**
      * Create arguments for the Active User object.
      */
@@ -22,7 +20,6 @@ public final class ActiveUser {
     String createdBy;
     Timestamp lastUpdate;
     String lastUpdatedBy;
-
 
     /**
      * Create a constructor for the Active User object.

@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.DBAppointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -48,64 +49,59 @@ public class AppointmentDetails implements Initializable {
     public ComboBox<String> startTimeComboBox;
     public ComboBox<String> endTimeComboBox;
     public ArrayList<ZonedDateTime> hereBusinessHours = new ArrayList<>();
+    public ArrayList<ZonedDateTime> endTimeHours = new ArrayList<>();
     public ObservableList<String> comboBoxHours = FXCollections.observableArrayList();
-
-    Appointment currentAppointment;
-    User currentUser;
-    Customer tempCustomer;
-    User tempUser;
-    Contact tempContact;
+    public ObservableList<String> endBoxHours = FXCollections.observableArrayList();
+    public ZonedDateTime startTime;
+    public ZonedDateTime endTime;
+    public Appointment currentAppointment;
+    public User currentUser;
+    public Customer tempCustomer;
+    public User tempUser;
+    public Contact tempContact;
 
     //Navigation
     public void toExit() {
         exitHere();
     }
-
     public void toLogOut() {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
-
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
-
     public void toAppointmentManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
-
     public void toCustomerManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
-
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
-
-    public void toCustomerDetails() throws IOException {
-        if(customerCombo.getSelectionModel().isEmpty()){
+    public void toCustomerDetails() throws IOException, SQLException {
+        if (customerCombo.getSelectionModel().isEmpty()) {
             return;
         }
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         Customer currentCustomer = customerCombo.getSelectionModel().getSelectedItem();
         passTheCustomer(currentCustomer, stage);
     }
-
     public void toUserDetails() throws IOException {
-        if(userCombo.getSelectionModel().isEmpty()){
+        if (userCombo.getSelectionModel().isEmpty()) {
             return;
         }
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         currentUser = userCombo.getSelectionModel().getSelectedItem();
         passTheUserToUser(currentUser, stage);
     }
-
     public void toContactDetails() throws IOException {
-        if (contactCombo.getSelectionModel().isEmpty()){
+        if (contactCombo.getSelectionModel().isEmpty()) {
             return;
         }
         Contact currentContact;
@@ -114,9 +110,8 @@ public class AppointmentDetails implements Initializable {
         passTheContact(currentContact, stage);
     }
 
-
     //Create a formatter for readability in the appointment form.
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'at' hh:mm a");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' hh:mm a");
 
     /**
      * clear the form of all data.
@@ -146,7 +141,6 @@ public class AppointmentDetails implements Initializable {
         //Clear previous entries in the arrayList.
         hereBusinessHours.clear();
         comboBoxHours.clear();
-
         //Remove existing conversion display for times at company HQ.
         startTimeAtHQLabel.setText(" ");
         endTimeAtHQLabel.setText(" ");
@@ -176,13 +170,16 @@ public class AppointmentDetails implements Initializable {
         }
         //set combo box hours.
         startTimeComboBox.setItems(comboBoxHours);
-        endTimeComboBox.setItems(comboBoxHours);
     }
 
     /**
      * Update the displayed time at company office for better user experience.
      */
     public void changeStartTimeLabel() {
+        //Ensure the end time combo box is clear so that the user won't break the time continuum.
+        endTimeComboBox.setItems(null);
+        endTimeHours.clear();
+        endBoxHours.clear();
         //If no selection is made, make the label invisible.
         if (startTimeComboBox.getSelectionModel().isEmpty()) {
             startTimeAtHQLabel.setText(" ");
@@ -193,21 +190,21 @@ public class AppointmentDetails implements Initializable {
             startTimeAtHQLabel.setText(" ");
             return;
         }
-        //Make sure the start time is before the end time
+        //Populate the end time list and combo box.
         int i = startTimeComboBox.getSelectionModel().getSelectedIndex();
-        if (endTimeComboBox.getValue() != null) {
-            if (hereBusinessHours.get(endTimeComboBox.getSelectionModel().getSelectedIndex()).isBefore(hereBusinessHours.get(i)) ||
-                    hereBusinessHours.get(endTimeComboBox.getSelectionModel().getSelectedIndex()).equals(hereBusinessHours.get(i))) {
-                Alerts("The passage of time is important  lol");
-                startTimeComboBox.setValue(null);
-                startTimeAtHQLabel.setText(" ");
-                return;
+        ZonedDateTime selectedStartTime = hereBusinessHours.get(i);
+        for (ZonedDateTime zdt : hereBusinessHours) {
+            if (zdt.isAfter(selectedStartTime)) {
+                endTimeHours.add(zdt);
+                endBoxHours.add(formatter.format(zdt));
             }
         }
+        endTimeComboBox.setItems(endBoxHours);
+
         //Set the start Label.
         startTimeAtHQLabel.setText(formatter.format(hereBusinessHours.get(i).withZoneSameInstant(ZoneId.of("US/Eastern"))));
+        startTime = hereBusinessHours.get(i);
     }
-
     public void changeEndTimeLabel() {
         //If no selection is made, make the label invisible.
         if (endTimeComboBox.getSelectionModel().isEmpty()) {
@@ -219,19 +216,10 @@ public class AppointmentDetails implements Initializable {
             endTimeAtHQLabel.setText(" ");
             return;
         }
-        //Ensure that the start time is before the end time.
-        int i = endTimeComboBox.getSelectionModel().getSelectedIndex();
-        if (startTimeComboBox.getValue() != null) {
-            if (hereBusinessHours.get(startTimeComboBox.getSelectionModel().getSelectedIndex()).isAfter(hereBusinessHours.get(i)) ||
-                    hereBusinessHours.get(startTimeComboBox.getSelectionModel().getSelectedIndex()).equals(hereBusinessHours.get(i))) {
-                Alerts("The passage of time is important  lol");
-                endTimeComboBox.setValue(null);
-                endTimeAtHQLabel.setText(" ");
-                return;
-            }
-        }
         //Set the end time label.
-        endTimeAtHQLabel.setText(formatter.format(hereBusinessHours.get(i).withZoneSameInstant(ZoneId.of("US/Eastern"))));
+        int i = endTimeComboBox.getSelectionModel().getSelectedIndex();
+        endTimeAtHQLabel.setText(formatter.format(endTimeHours.get(i).withZoneSameInstant(ZoneId.of("US/Eastern"))));
+        endTime = endTimeHours.get(i);
     }
 
     /**
@@ -262,21 +250,20 @@ public class AppointmentDetails implements Initializable {
      */
     public void receiveAppointment(Appointment appointment) {
         currentAppointment = appointment;
-
         //Find the associated contact, user, and customers using their ID.
-        for (Contact allContact : AllContacts) {
-            if (currentAppointment.getContactID() == allContact.getContactID()) {
-                tempContact = allContact;
+        for (Contact c : AllContacts) {
+            if (currentAppointment.getContactID() == c.getContactID()) {
+                tempContact = c;
             }
         }
-        for (User allUser : AllUsers) {
-            if (currentAppointment.getUserID() == allUser.getUserID()) {
-                tempUser = allUser;
+        for (User u : AllUsers) {
+            if (currentAppointment.getUserID() == u.getUserID()) {
+                tempUser = u;
             }
         }
-        for (Customer allCustomer : AllCustomers) {
-            if (currentAppointment.getCustomerID() == allCustomer.getCustomerID()) {
-                tempCustomer = allCustomer;
+        for (Customer c : AllCustomers) {
+            if (currentAppointment.getCustomerID() == c.getCustomerID()) {
+                tempCustomer = c;
             }
         }
         //Set fields with current appointment data.
@@ -314,6 +301,22 @@ public class AppointmentDetails implements Initializable {
     }
 
     /**
+     * Receive the customer info from the previous page.
+     */
+    public void receiveCustomer(Customer customer) {
+        customerCombo.setValue(customer);
+        tempCustomer = customer;
+    }
+
+    /**
+     * Receive the contact info from the previous screen.
+     */
+    public void receiveContact(Contact contact) {
+        contactCombo.setValue(contact);
+        tempContact = contact;
+    }
+
+    /**
      * Make fields editable for creating new appointments or changing existing ones.
      */
     public void makeEditable() {
@@ -327,14 +330,17 @@ public class AppointmentDetails implements Initializable {
         makeChanges.setVisible(false);
     }
 
-
-
     /**
      * Method to delete the appointment.
      */
-    public void deleteAppointment() {
-    } //FIXME
-
+    public void deleteAppointment() throws IOException {
+        if (appointmentIDTxt.getText().isEmpty()) {
+            Alerts("This information hasn't been saved yet.");
+            return;
+        }
+        deleteAppointmentFromAll(currentAppointment, tempUser, tempCustomer, tempContact);
+        toAppointmentManager();
+    }
 
     /**
      * Save a new or changed appointment.
@@ -345,7 +351,7 @@ public class AppointmentDetails implements Initializable {
         if (containsNullValues(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(), descriptionTxt.getText())) {
             return;
         }
-        if (customerCombo.getSelectionModel().isEmpty() || userCombo.getSelectionModel().isEmpty() || contactCombo.getSelectionModel().isEmpty()){
+        if (customerCombo.getSelectionModel().isEmpty() || userCombo.getSelectionModel().isEmpty() || contactCombo.getSelectionModel().isEmpty()) {
             Alerts("Select participants");
             return;
         }
@@ -353,56 +359,61 @@ public class AppointmentDetails implements Initializable {
         if (stringTooLong(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(), descriptionTxt.getText())) {
             return;
         }
-        if(currentUser == null){
-            for (User user: AllUsers) {
-                if (user.getUserID() == ActiveUser.getActiveUser(null).getUserID()){
+        if (currentUser == null) {
+            for (User user : AllUsers) {
+                if (user.getUserID() == ActiveUser.getActiveUser(null).getUserID()) {
                     currentUser = user;
                 }
             }
         }
-
-
-
         //Check for overlapping appointments.
-        tempCustomer = customerCombo.getSelectionModel().getSelectedItem();
-        tempUser = userCombo.getSelectionModel().getSelectedItem();
-        tempContact = contactCombo.getSelectionModel().getSelectedItem();
-        //Method found in utilities.methods.
-        populateAssociatedLists(tempCustomer, tempUser, tempContact);
-        //Compare appointment times.
-        LocalDateTime aptStart = hereBusinessHours.get(startTimeComboBox.getSelectionModel().getSelectedIndex()).toLocalDateTime();
-        System.out.println(aptStart);
-        LocalDateTime aptEnd = hereBusinessHours.get(endTimeComboBox.getSelectionModel().getSelectedIndex()).toLocalDateTime();
-        //check for overlap for customers.
-        boolean isOverlapping = false;
-        for (Appointment apt: tempCustomer.getAllCustomerAppointments()){
-            if((aptStart.isAfter(apt.getRawStart()) && aptStart.isBefore(apt.getRawEnd()) ||
-                    (aptEnd.isBefore(apt.getRawEnd()) && aptEnd.isAfter(apt.getRawStart())))){
-                isOverlapping = true;
-            }
+        if(tempCustomer == null) {
+            tempCustomer = customerCombo.getSelectionModel().getSelectedItem();
         }
-        if (isOverlapping){
-            Alerts("Customer overlapping appointment");
-            return;
+        if(tempUser == null) {
+            tempUser = userCombo.getSelectionModel().getSelectedItem();
         }
-
-        //Assign values to non-editable fields.
+        if(tempContact == null) {
+            tempContact = contactCombo.getSelectionModel().getSelectedItem();
+        }
         int appointmentID;
         LocalDateTime createDate;
         String createdBy;
+        if (appointmentIDTxt.getText().isEmpty()) {
+            appointmentID = 90909;
+            createDate = LocalDateTime.now();
+            createdBy = currentUser.getUserName();
+        } else {
+            appointmentID = currentAppointment.getAppointmentID();
+            createdBy = createdByTxt.getText();
+            createDate = LocalDateTime.parse(createDateTxt.getText());
+        }
+        //Method found in utilities.methods.
+        populateAssociatedLists(tempCustomer, tempUser, tempContact);
+        //Compare appointment times.
+        LocalDateTime aptStart = LocalDateTime.from(startTime);
+        System.out.println(aptStart);
+        LocalDateTime aptEnd = LocalDateTime.from(endTime);
+        //check for overlap for customers.
+        boolean isOverlapping = false;
+        for (Appointment apt : tempCustomer.getAllCustomerAppointments()) {
+            if (
+                    (aptStart.isBefore(apt.getRawStart()) && (aptEnd.isAfter(apt.getRawEnd())) && (apt.getAppointmentID() != appointmentID)) ||
+                    (aptStart.isAfter(apt.getRawStart()) && (aptStart.isBefore(apt.getRawEnd())) && (apt.getAppointmentID() != appointmentID)) ||
+                    (aptEnd.isAfter(apt.getRawStart()) && aptEnd.isBefore(apt.getRawEnd()) && (apt.getAppointmentID() != appointmentID)) ||
+                    (aptStart.equals(apt.getRawEnd()) || aptStart.equals(apt.getRawStart()) && (apt.getAppointmentID() != appointmentID)) ||
+                    (aptEnd.equals(apt.getRawStart()) || aptEnd.equals(apt.getRawEnd()) && (apt.getAppointmentID() != appointmentID))
+            ) {
+                isOverlapping = true;
+            }
+        }
+        if (isOverlapping) {
+            Alerts("Customer overlapping appointment");
+            return;
+        }
+        //Assign values to non-editable fields.
         Timestamp lastUpdated;
         String lastUpdatedBy;
-        if(appointmentIDTxt.getText().isEmpty()){
-            appointmentID = 90909;
-        } else
-            appointmentID = Integer.parseInt(appointmentIDTxt.getText());
-        if(createDateTxt.getText().isEmpty()){
-            createDate = LocalDateTime.now();
-        }else
-            createDate = LocalDateTime.parse(createDateTxt.getText());
-        if(createdByTxt.getText().isEmpty()){
-            createdBy = currentUser.getUserName();
-        }else createdBy = createdByTxt.getText();
         lastUpdated = Timestamp.from(Instant.now());
         lastUpdatedBy = currentUser.getUserName();
         //Assign user defined attributes.
@@ -414,43 +425,35 @@ public class AppointmentDetails implements Initializable {
         LocalDate parsedEndDate = aptEnd.toLocalDate();
         LocalTime parsedStartTime = aptStart.toLocalTime();
         LocalTime parsedEndTime = aptEnd.toLocalTime();
-        int customerID = customerCombo.getSelectionModel().getSelectedItem().getCustomerID();
-        int userID = userCombo.getSelectionModel().getSelectedItem().getUserID();
-        int contactID = contactCombo.getSelectionModel().getSelectedItem().getContactID();
-
+        int customerID = tempCustomer.getCustomerID();
+        int userID = tempUser.getUserID();
+        int contactID = tempContact.getContactID();
+        //Create the new appointment object.
         Appointment apt = new Appointment(appointmentID, title, description, location, type, aptStart,
                 parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
                 lastUpdated, lastUpdatedBy, customerID, userID, contactID);
-
-        addAppointmentToDB(apt);
-        clearForm();
-
-
-
-    }  //FIXME Resume Here.*/
-
-
-
-
-
-
-
+        //Determine weather to insert or update the appointment.
+        if(currentAppointment == null) {
+            addAppointmentToDB(apt);
+            toAppointmentManager();
+        } else {
+            DBAppointment.updateApt(apt);
+            toAppointmentManager();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         //Explain non-editable fields.
         appointmentIDTxt.setTooltip(tooltip);
         createDateTxt.setTooltip(tooltip);
         createdByTxt.setTooltip(tooltip);
         lastUpdatedTxt.setTooltip(tooltip);
         lastUpdatedByTxt.setTooltip(tooltip);
-
         //Populate the combo boxes.
         userCombo.setItems(AllUsers);
         contactCombo.setItems(AllContacts);
         customerCombo.setItems(AllCustomers);
-
         //Make labels invisible until times are chosen.
         if (startTimeComboBox.getSelectionModel().getSelectedItem() == null) {
             startTimeAtHQLabel.setText(" ");
@@ -459,7 +462,5 @@ public class AppointmentDetails implements Initializable {
             endTimeAtHQLabel.setText(" ");
         }
     }
-
-
 
 }

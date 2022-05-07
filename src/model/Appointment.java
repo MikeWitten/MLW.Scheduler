@@ -26,7 +26,6 @@ public class Appointment {
     int userID;
     int contactID;
 
-
     /**
      * Create a constructor for the Appointment objects.
      */
@@ -54,6 +53,7 @@ public class Appointment {
         this.userID = userID;
         this.contactID = contactID;
     }
+
     /**
      * Create getters and setters for the Appointment objects.
      */

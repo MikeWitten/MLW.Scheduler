@@ -2,14 +2,11 @@ package DAO;
 
 import model.Appointment;
 import utilities.JDBC;
-
 import java.sql.*;
 import java.time.*;
-
 import static utilities.Methods.addApt;
 
 public abstract class DBAppointment {
-
     /**
      * Method to insert an appointment into the database.
      */
@@ -23,7 +20,6 @@ public abstract class DBAppointment {
         LocalDateTime start = ZonedDateTime.of(appointment.getRawStart(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         LocalDateTime end = ZonedDateTime.of(appointment.getRawEnd(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         LocalDateTime createDate =ZonedDateTime.of(appointment.getCreateDate(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
-
         //Take values from an Appointment object that has a placeholder appointmentID.
         String title = appointment.getTitle();
         String description = appointment.getDescription();
@@ -34,7 +30,6 @@ public abstract class DBAppointment {
         int customerID = appointment.getCustomerID();
         int userID = appointment.getUserID();
         int contactID = appointment.getContactID();
-
         //My prepared statement passes in values for everything except the appointment ID so that the
         // Database will autogenerate the ID for me.
         String sql = "INSERT INTO client_schedule.appointments (Title, Description, Location, Type, Start," +
@@ -54,7 +49,6 @@ public abstract class DBAppointment {
         ps.setInt(11,customerID);
         ps.setInt(12, userID);
         ps.setInt(13, contactID);
-
         //Execute the update.
         ps.executeUpdate();
     }
@@ -83,7 +77,6 @@ public abstract class DBAppointment {
         int customerID = appointment.getCustomerID();
         int userID = appointment.getUserID();
         int contactID = appointment.getContactID();
-
         //The prepared statement passes all values from the appointment object.
         String sql = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?," +
                 " Start = ?, End = ?, Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?," +
@@ -103,7 +96,6 @@ public abstract class DBAppointment {
         ps.setInt(12, userID);
         ps.setInt(13, contactID);
         ps.setInt(14, appointmentID);
-
         //Execute the update
         ps.executeUpdate();
     }
@@ -112,15 +104,12 @@ public abstract class DBAppointment {
      * Method to delete an appointment object from the database.
      */
     public static void deleteApt(Appointment appointment) throws SQLException {
-
         //Get the ID from the appointment object.
         int appointmentID = appointment.getAppointmentID();
-
         //Create the prepared statement.
         String sql = "DELETE FROM client_schedule.appointments Where Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, appointmentID);
-
         //Execute the update.
         ps.executeUpdate();
     }
@@ -132,7 +121,6 @@ public abstract class DBAppointment {
         //Create the prepared statement.
         String sql = "SELECT * FROM client_schedule.appointments";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-
         //Iterate through all the database objects until the next() value returns false.
         //Execute the query.
         ResultSet resultSet = ps.executeQuery();
@@ -154,7 +142,6 @@ public abstract class DBAppointment {
             int customerID = resultSet.getInt("Customer_ID");
             int userID = resultSet.getInt("User_ID");
             int contactID = resultSet.getInt("Contact_ID");
-
             //convert UTC database time to local zoned times.
             ZoneId utcZone = ZoneId.of("UTC");
             ZonedDateTime zonedStartTime =ZonedDateTime.of(rawStart, utcZone);

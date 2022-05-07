@@ -4,58 +4,62 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageAppointments">
-   <Label fx:id="stageLabel" layoutX="402.0" layoutY="14.0" text="Appointment Manager">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-      </buttons>
-   </ButtonBar>
-    <Pane layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="1002.0">
-        <TableView fx:id="AppointmentTable" layoutX="11.0" layoutY="47.0" prefHeight="309.0" prefWidth="983.0">
+<AnchorPane prefHeight="550" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageAppointments">
+    <Label fx:id="stageLabel" layoutX="490.0" layoutY="14.0" text="Appointment Manager">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <ButtonBar layoutX="496.0" layoutY="492.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="282.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <Pane layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="1200.0">
+        <TableView fx:id="AppointmentTable" layoutX="9.0" layoutY="49.0" prefHeight="309.0" prefWidth="1183.0">
             <columns>
-                <TableColumn fx:id="aptIDColumn" prefWidth="59.19997787475586" text="Appt ID" />
-                <TableColumn fx:id="titleColumn" prefWidth="91.20001220703125" text="Title" />
-                <TableColumn fx:id="customerColumn" prefWidth="188.3999786376953" text="Customer ID" />
-                <TableColumn fx:id="contactColumn" prefWidth="146.0" text="Contact" />
-                <TableColumn fx:id="locationColumn" prefWidth="171.79998779296875" text="Location" />
-                <TableColumn fx:id="startColumn" prefWidth="157.0" text="Start" />
-                <TableColumn fx:id="endColumn" prefWidth="168.5999755859375" text="End" />
+                <TableColumn fx:id="aptIDColumn" prefWidth="50" text="Apt ID" />
+                <TableColumn fx:id="titleColumn" prefWidth="99.4000129699707" text="Title" />
+                <TableColumn fx:id="description" prefWidth="114.0" text="Description" />
+                <TableColumn fx:id="locationColumn" prefWidth="104.4000244140625" text="Location" />
+                <TableColumn fx:id="contactColumn" prefWidth="174.60000610351562" text="Contact" />
+                <TableColumn fx:id="type" prefWidth="177.4000244140625" text="Type" />
+                <TableColumn fx:id="DateColumn" prefWidth="115.0" text="Date" />
+                <TableColumn fx:id="startColumn" prefWidth="109.199951171875" text="Start" />
+                <TableColumn fx:id="endColumn" prefWidth="100.4000244140625" text="End" />
+                <TableColumn fx:id="customerColumn" prefWidth="74.5999755859375" text="Customer ID" />
+                <TableColumn fx:id="userID" minWidth="0.0" prefWidth="65.800048828125" text="UserID" />
             </columns>
         </TableView>
-        <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">
+        <ButtonBar layoutX="398.0" layoutY="354.0" prefHeight="40.0" prefWidth="379.0">
             <buttons>
                 <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
-                <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
+                <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Edit" />
                 <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
                 <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
             </buttons>
         </ButtonBar>
-        <Label fx:id="monthOfTheYear" layoutX="423.0" layoutY="13.0" />
-        <Button fx:id="prevMonthButton" layoutX="491.0" layoutY="9.0" mnemonicParsing="false" onAction="#previousMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" />
-        <Button fx:id="nextMonthButton" layoutX="416.0" layoutY="9.0" mnemonicParsing="false" onAction="#nextMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Next" />
-        <Label layoutX="739.0" layoutY="14.0" text="Search" />
-        <TextField fx:id="appointmentFilterTxt" layoutX="806.0" layoutY="10.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Appt ID, or Customer Name" />
-      <ButtonBar layoutX="13.0" layoutY="2.0" prefHeight="40.0" prefWidth="394.0">
-        <buttons>
-            <RadioButton fx:id="monthViewButton" disable="true" mnemonicParsing="false" onAction="#toMonthView" selected="true" text="Month View" />
-            <RadioButton fx:id="weekViewButton" layoutX="122.0" layoutY="21.0" mnemonicParsing="false" onAction="#toWeekView" text="Week View" />
-        </buttons>
-      </ButtonBar>
-      <Button fx:id="prevWeekButton" layoutX="416.0" layoutY="9.0" mnemonicParsing="false" onAction="#previousWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" visible="false" />
-      <Button fx:id="nextWeekButton" layoutX="491.0" layoutY="9.0" mnemonicParsing="false" onAction="#nextWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Next" visible="false" />
+        <Label fx:id="monthOfTheYear" layoutX="513.0" layoutY="18.0" />
+        <Button fx:id="prevMonthButton" layoutX="539.0" layoutY="14.0" mnemonicParsing="false" onAction="#previousMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" />
+        <Button fx:id="nextMonthButton" layoutX="614.0" layoutY="14.0" mnemonicParsing="false" onAction="#nextMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Next" />
+        <ButtonBar layoutX="276.0" layoutY="7.0" prefHeight="40.0" prefWidth="230.0">
+            <buttons>
+                <RadioButton fx:id="monthViewButton" disable="true" mnemonicParsing="false" onAction="#toMonthView" selected="true" text="Month View" />
+                <RadioButton fx:id="weekViewButton" layoutX="122.0" layoutY="21.0" mnemonicParsing="false" onAction="#toWeekView" text="Week View" />
+            </buttons>
+        </ButtonBar>
+        <Button fx:id="prevWeekButton" layoutX="506.0" layoutY="14.0" mnemonicParsing="false" onAction="#previousWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" visible="false" />
+        <Button fx:id="nextWeekButton" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#nextWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Next" visible="false" />
+        <Label fx:id="dateLabel" layoutX="721.0" layoutY="19.0" prefHeight="17.0" prefWidth="180.0" text="MMM, yyyy or  week of MMM" />
+      <Button layoutX="65.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Report" />
     </Pane>
 </AnchorPane>

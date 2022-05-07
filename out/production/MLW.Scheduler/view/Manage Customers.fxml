@@ -4,45 +4,43 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageCustomers">
-   <Label fx:id="stageLabel" layoutX="418.0" layoutY="14.0" text="Customer Manager">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-      </buttons>
-   </ButtonBar>
-   <Pane layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="1002.0">
-      <TableView fx:id="CustomerTable" layoutX="11.0" layoutY="47.0" prefHeight="309.0" prefWidth="983.0">
-         <columns>
-            <TableColumn fx:id="customerID" prefWidth="120.19999980926514" text="ID" />
-            <TableColumn fx:id="customerName" prefWidth="624.9999694824219" text="Customer Name" />
-            <TableColumn fx:id="phone" prefWidth="153.4000244140625" text="Phone" />
-            <TableColumn fx:id="divisionID" prefWidth="83.5999755859375" text="Division ID" />
-         </columns>
-      </TableView>
-      <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">
-         <buttons>
-            <Button mnemonicParsing="false" onAction="#addCustomer" text="Add" />
-            <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="Edit" />
-            <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
-            <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
-         </buttons>
-      </ButtonBar>
-      <TextField fx:id="CustomerFilterTxt" layoutX="806.0" layoutY="10.0" prefHeight="26.0" prefWidth="182.0" promptText="Search by Name, or Phone" />
-      <Label layoutX="747.0" layoutY="15.0" text="Search" />
-   </Pane>
+<AnchorPane prefHeight="550" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageCustomers">
+    <Label fx:id="stageLabel" layoutX="418.0" layoutY="14.0" text="Customer Manager">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <Pane layoutY="84.0" minHeight="0.0" minWidth="0.0" prefHeight="408.0" prefWidth="1190.0">
+        <TableView fx:id="CustomerTable" layoutX="11.0" layoutY="47.0" prefHeight="309.0" prefWidth="1170.0">
+            <columns>
+                <TableColumn fx:id="customerID" prefWidth="120.19999980926514" text="ID" />
+                <TableColumn fx:id="customerName" prefWidth="624.9999694824219" text="Customer Name" />
+                <TableColumn fx:id="phone" prefWidth="223.5999755859375" text="Phone" />
+                <TableColumn fx:id="divisionID" prefWidth="199.60003662109375" text="Division ID" />
+            </columns>
+        </TableView>
+        <ButtonBar layoutX="313.0" layoutY="356.0" prefHeight="40.0" prefWidth="379.0">
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#addCustomer" text="Add" />
+                <Button layoutX="341.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerEdit" text="Edit" />
+                <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
+                <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
+            </buttons>
+        </ButtonBar>
+    </Pane>
 
 </AnchorPane>

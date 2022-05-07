@@ -2,12 +2,10 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Customer {
-
     //Create Customer class arguments.
     int customerID;
     String customerName;
@@ -27,15 +25,15 @@ public class Customer {
                     LocalDateTime createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,
                     int divisionID) {
         this.customerID = customerID;
-        this.customerName = customerName;           //FIXME 50 char max (alert already exists)
-        this.address = address;                     //FIXME 100 char max
-        this.postalCode = postalCode;               //FIXME 50 char max
-        this.phone = phone;                         //FIXME 50 char max (alert already exists)
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
         this.createDate = createDate;
-        this.createdBy = createdBy;                 //FIXME 50 char max
+        this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;         //FIXME 50 char max
-        this.divisionID = divisionID;               //FIXME unique value
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.divisionID = divisionID;
     }
 
     /**
@@ -154,5 +152,4 @@ public class Customer {
     public String toString(){
         return (customerName + "   " + "ID: " + customerID);
     }
-
 }

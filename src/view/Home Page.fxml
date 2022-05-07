@@ -4,31 +4,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePage">
-   <Label fx:id="stageLabel" layoutX="450.0" layoutY="14.0" text="Home Page">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-     <buttons>
-       <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-     </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
-     <buttons>
-       <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-     </buttons>
-   </ButtonBar>
-   <TextField fx:id="nextAptTimeTxt" alignment="CENTER" layoutX="213.0" layoutY="175.0" prefHeight="26.0" prefWidth="592.0" text="Your next appointment is scheduled for LocalDateTime" />
-   <Button layoutX="439.0" layoutY="210.0" mnemonicParsing="false" onAction="#toNextAppointment" text="Click here for details" />
-   <Label fx:id="welcomeLabel" layoutX="407.0" layoutY="129.0" prefHeight="40.0" prefWidth="198.0" text="     message here     " textAlignment="CENTER">
-      <font>
-         <Font name="System Bold" size="14.0" />
-      </font></Label>
+<AnchorPane prefHeight="550" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePage">
+    <Label fx:id="stageLabel" layoutX="550.0" layoutY="14.0" text="Home Page">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <ButtonBar layoutX="294.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="508.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <TextField fx:id="nextAptTimeTxt" alignment="CENTER" layoutX="313.0" layoutY="175.0" prefHeight="26.0" prefWidth="592.0" text="Your next appointment is scheduled for LocalDateTime" />
+    <Button layoutX="539.0" layoutY="210.0" mnemonicParsing="false" onAction="#toNextAppointment" text="Click here for details" />
+    <Label fx:id="welcomeLabel" layoutX="507.0" layoutY="129.0" prefHeight="40.0" prefWidth="198.0" text="     message here     " textAlignment="CENTER">
+        <font>
+            <Font name="System Bold" size="14.0" />
+        </font>
+    </Label>
 
 </AnchorPane>

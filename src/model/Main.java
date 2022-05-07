@@ -1,6 +1,5 @@
 package model;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +33,7 @@ public class Main extends Application {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Log In.fxml")),bundle);
         stage.setTitle("Log In");
-        stage.setScene(new Scene(root, 1000, 550));
+        stage.setScene(new Scene(root, 1200, 550));
         stage.show();
     }
 
@@ -42,18 +41,16 @@ public class Main extends Application {
      * Launch the program.
      */
     public static void main(String[] args) throws SQLException {
-
+        System.out.println(System.getProperty("java.version"));
+        System.out.println(System.getProperty("javaFX.version"));
         //Open the connection to the database to populate the user info.
         JDBC.openConnection();
-
         //Load the user objects from the database so that username and password can be verified
         // and appointments to create an alert for time sensitive appointments.
         selectAllUsers();
         selectAllAppointments();
-
         //close the connection until the credentials are verified.
         JDBC.closeConnection();
-
         launch(args);
     }
 }

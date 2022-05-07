@@ -4,60 +4,60 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FirstLevelDivision">
-   <Label fx:id="stageLabel" layoutX="394.0" layoutY="14.0" text="1st Level Division Details">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-      </buttons>
-   </ButtonBar>
-   <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="408.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <Label alignment="CENTER_RIGHT" layoutX="15" layoutY="47.0" text="Division ID: " textAlignment="RIGHT" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="85.0" text="Division: " />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="125.0" text="Created By: " />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="165.0" text="Created On: " />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="205.0" text="Country: " />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="245.0" text="Last Updated: " />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="285.0" text="Last Updated By: " />
-      <Label layoutX="98.0" layoutY="338.0" text="Contact an administrator" />
-      <Label layoutX="53.0" layoutY="355.0" text="to change or update Division information." />
-      <Button fx:id="countryButton" layoutX="115.0" layoutY="201.0" mnemonicParsing="false" onAction="#toCountryDetails" prefHeight="25.0" prefWidth="200.0" text="null" />
-      <Label fx:id="createDateLabel" layoutX="115.0" layoutY="165.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
-      <Label fx:id="createdByLabel" layoutX="115.0" layoutY="125.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
-      <Label fx:id="divisionLabel" layoutX="115.0" layoutY="85.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
-      <Label fx:id="divisionIDLabel" layoutX="115.0" layoutY="47.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
-      <Label fx:id="lastUpdateLabel" layoutX="115.0" layoutY="245.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
-      <Label fx:id="updateByLabel" layoutX="115.0" layoutY="285.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
-   </Pane>
-   <Pane layoutX="428.0" layoutY="100.0" prefHeight="386.0" prefWidth="560.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TableView fx:id="CustomerTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="532.0">
-         <columns>
-            <TableColumn fx:id="customerID" prefWidth="75.5999755859375" text="Customer ID" />
-            <TableColumn fx:id="customerName" prefWidth="322.0" text="Name" />
-            <TableColumn fx:id="phone" prefWidth="135.0" text="Phone" />
-         </columns>
-      </TableView>
-      <ButtonBar layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
-         <buttons>
-            <Button fx:id="addCustomer" mnemonicParsing="false" onAction="#addCustomer" text="Add" />
-            <Button fx:id="editCustomer" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
-            <Button fx:id="deleteCustomer" layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
-            <Button fx:id="toCustomerDetails" layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
-         </buttons>
-      </ButtonBar>
-      <Label layoutX="43.0" layoutY="18.0" text="Associated Customers" />
-   </Pane>
+<AnchorPane prefHeight="550" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FirstLevelDivision">
+    <Label fx:id="stageLabel" layoutX="485.0" layoutY="14.0" text="1st Level Division Details">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <ButtonBar layoutX="499.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="285.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="408.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <Label alignment="CENTER_RIGHT" layoutX="15" layoutY="47.0" text="Division ID: " textAlignment="RIGHT" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="85.0" text="Division: " />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="125.0" text="Created By: " />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="165.0" text="Created On: " />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="205.0" text="Country: " />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="245.0" text="Last Updated: " />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15" layoutY="285.0" text="Last Updated By: " />
+        <Label layoutX="98.0" layoutY="338.0" text="Contact an administrator" />
+        <Label layoutX="53.0" layoutY="355.0" text="to change or update Division information." />
+        <Button fx:id="countryButton" layoutX="115.0" layoutY="201.0" mnemonicParsing="false" onAction="#toCountryDetails" prefHeight="25.0" prefWidth="200.0" text="null" />
+        <Label fx:id="createDateLabel" layoutX="115.0" layoutY="165.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+        <Label fx:id="createdByLabel" layoutX="115.0" layoutY="125.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+        <Label fx:id="divisionLabel" layoutX="115.0" layoutY="85.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+        <Label fx:id="divisionIDLabel" layoutX="115.0" layoutY="47.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+        <Label fx:id="lastUpdateLabel" layoutX="115.0" layoutY="245.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+        <Label fx:id="updateByLabel" layoutX="115.0" layoutY="285.0" prefHeight="17.0" prefWidth="200.0" text="Label" />
+    </Pane>
+    <Pane layoutX="428.0" layoutY="100.0" prefHeight="386.0" prefWidth="764.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <TableView fx:id="CustomerTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="739.0">
+            <columns>
+                <TableColumn fx:id="customerID" prefWidth="75.5999755859375" text="Customer ID" />
+                <TableColumn fx:id="customerName" prefWidth="391.39996337890625" text="Name" />
+                <TableColumn fx:id="phone" prefWidth="271.0" text="Phone" />
+            </columns>
+        </TableView>
+        <ButtonBar layoutX="192.0" layoutY="330.0" prefHeight="40.0" prefWidth="383.0">
+            <buttons>
+                <Button fx:id="addCustomer" mnemonicParsing="false" onAction="#addCustomer" text="Add" />
+                <Button fx:id="editCustomer" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
+                <Button fx:id="deleteCustomer" layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
+                <Button fx:id="toCustomerDetails" layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="View Details" />
+            </buttons>
+        </ButtonBar>
+        <Label layoutX="43.0" layoutY="18.0" text="Associated Customers" />
+    </Pane>
 </AnchorPane>

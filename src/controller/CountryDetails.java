@@ -65,14 +65,14 @@ public class CountryDetails{
     /**
      * Formatter to help usability.
      */
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'of' yyyy 'at' HH:mm a"); //FIXME not tested.
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' hh:mm a");
 
     /**
      * Receive the country object information from the previous screen.
      */
     public void receiveObject(Country country) {
         currentCountry = country;
-        System.out.println(currentCountry.getCountry()); //FIXME Checked!
+        System.out.println(currentCountry.getCountry());
         //Ensure division data is up to date.
         currentCountry.getFirstLevelDivisions().clear();
         for(Division d: AllDivisions){

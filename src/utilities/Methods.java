@@ -12,13 +12,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import model.*;
-
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
 import static DAO.DBAppointment.*;
 import static model.Contact.deleteContactAppointment;
 import static model.Customer.deleteCustomerAppointment;
@@ -32,6 +31,7 @@ public class Methods {
 
     /**
      * Method for notification alerts throughout the program.
+     * Lambda expressions are used here.
      */
     public static void Alerts(String alertType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -42,8 +42,15 @@ public class Methods {
             case "Select participants" -> alert.setContentText("Please select a customer, user, and contact for this appointment.");
             case "no item selected" -> alert.setContentText("You haven't selected anything.");
             case "fill in the blank" -> alert.setContentText("Please fill in the blank.");
+            case "Address fields required" -> alert.setContentText("Street Number, Street Name, and City are all required fields");
             case "no changes were made" -> alert.setContentText("You have not changed anything about this customer." +
                     "No changes will be saved.");
+            case "Does not meet UK standards" -> alert.setContentText("This postal code does not meet the postal standards of the U.K. :  please enter the " +
+                    "postal code in this pattern-   AB12 1AB  ");
+            case "Does not meet CA standards" -> alert.setContentText("This postal code does not meet the postal standards of Canada :  please enter the " +
+                    "postal code in this pattern-   A1A 1A1  ");
+            case "Does not meet US Postal code standard" -> alert.setContentText("This postal code does not meet the postal standards of the U.S.A :  please enter the " +
+                    "postal code in this pattern-   12345 ");
             case "choose a country" -> alert.setContentText("Please select a country to continue.");
             case "no upcoming appointments" -> alert.setContentText("There are no upcoming appointments.");
             case "Deleted appointment" -> alert.setContentText("You have successfully deleted the selected appointment");
@@ -62,6 +69,8 @@ public class Methods {
             case "Please select a date." -> alert.setContentText("Please select a date.");
             case "The appointment was not deleted" -> alert.setContentText("You selected cancel." +
                     "The appointment was not deleted and can be found in the Appointment manager.");
+            case "Street Number required" -> alert.setContentText("The street number you provided is not a number.  The format for addresses in this system is:" +
+                    "123 StreetName, Locality(optional), City");
             case "This information hasn't been saved yet." -> alert.setContentText("This appointment doesn't exist yet, to start over press the clear all button.");
             case "make editable" -> alert.setContentText("Please select the 'Add/Edit' button to make changes.");
             case "String too long" -> alert.setContentText("Please limit your input to 50 total characters(including spaces).");
@@ -75,9 +84,8 @@ public class Methods {
      * Method to navigate between main pages.
      */
     public static void navigation(Stage stage, String string) throws IOException {
-        System.out.println(string);
         Parent root = FXMLLoader.load(Objects.requireNonNull(Methods.class.getResource(string)));
-        Scene scene = new Scene(root, 1000, 550);
+        Scene scene = new Scene(root, 1200, 550);
         stage.setScene(scene);
         stage.setTitle("Desktop Scheduling Application");
         stage.show();
@@ -114,6 +122,7 @@ public class Methods {
 
     /**
      * Method to exit the program.
+     * Lambda expressions are used here.
      */
     public static void exitHere() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -171,6 +180,21 @@ public class Methods {
     }
 
     /**
+     * Method to pass current list and date to the reports.
+     */
+    public static void passTheList(LocalDate date, Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Monthly Appointment Report.fxml"));
+        loader.load();
+        MonthlyAppointmentReport controller = loader.getController();
+        controller.receiveTheList(date);
+        Parent scene = loader.getRoot();
+        stage.setTitle("Desktop Scheduling Application");
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    /**
      * Method to pass the 'user football' to appointment details page.
      */
     public static void passTheUser(User user, Stage stage1) throws IOException {
@@ -218,7 +242,7 @@ public class Methods {
     /**
      * Method to pass the 'country football' to the country details page.
      */
-    public static void passTheCountryToCountryDetails(Country country, Stage stage) throws IOException{
+    public static void passTheCountryToCountryDetails(Country country, Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Methods.class.getResource("/view/Country Details.fxml"));
         loader.load();
@@ -278,31 +302,31 @@ public class Methods {
     /**
      * Pass the 'user football' to the user details page.
      */
-    public static void passTheUserToUser(User user, Stage stage1) throws IOException{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Methods.class.getResource("/view/User Details.fxml"));
-            loader.load();
-            UserDetails controller = loader.getController();
-            controller.receiveTheUser(user);
-            Parent scene = loader.getRoot();
-            stage1.setTitle("Desktop Scheduling Application");
-            stage1.setScene(new Scene(scene));
-            stage1.show();
-        }
+    public static void passTheUserToUser(User user, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/User Details.fxml"));
+        loader.load();
+        UserDetails controller = loader.getController();
+        controller.receiveTheUser(user);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
+    }
 
     /**
      * Method to pass the 'contact football' to the contact details page.
      */
-    public static void passTheContact(Contact contact, Stage stage1) throws IOException{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Methods.class.getResource("/view/Contact Details.fxml"));
-            loader.load();
-            ContactDetails controller = loader.getController();
-            controller.receiveTheContact(contact);
-            Parent scene = loader.getRoot();
-            stage1.setTitle("Desktop Scheduling Application");
-            stage1.setScene(new Scene(scene));
-            stage1.show();
+    public static void passTheContact(Contact contact, Stage stage1) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Methods.class.getResource("/view/Contact Details.fxml"));
+        loader.load();
+        ContactDetails controller = loader.getController();
+        controller.receiveTheContact(contact);
+        Parent scene = loader.getRoot();
+        stage1.setTitle("Desktop Scheduling Application");
+        stage1.setScene(new Scene(scene));
+        stage1.show();
 
     }
 
@@ -324,15 +348,14 @@ public class Methods {
     /**
      * Method to delete appointments part 1.
      */
-    public static void deleteAppointmentFromAll(Appointment appointment, User user, Customer customer, Contact contact){
+    public static void deleteAppointmentFromAll(Appointment appointment, User user, Customer customer, Contact contact) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
         alert.setTitle("Delete this appointment?");
-        alert.setContentText("""
-                Are you sure you want to delete this appointment?\s
-                Deleted appointments can not be recovered.\s
-                Press OK to continue or Cancel to go back.""");
+        alert.setContentText("AppointmentID: " + appointment.getAppointmentID() + ", Appointment Type: " + appointment.getType() +
+                "Are you sure you want to delete this appointment?  Deleted appointments cannot be recovered.");
         alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK){
+            if (response == ButtonType.OK) {
                 try {
                     deleteAppointmentFromAllPart2(appointment, user, customer, contact);
                 } catch (SQLException e) {
@@ -347,9 +370,15 @@ public class Methods {
      * Method allows for a loop to iterate through and delete associated appointments from a customer abject.
      */
     public static void deleteAppointmentFromAllPart2(Appointment appointment, User user, Customer customer, Contact contact) throws SQLException {
-        if(user != null){deleteUserAppointment(appointment);}
-        if(customer !=null){ deleteCustomerAppointment(appointment);}
-        if(contact !=null){ deleteContactAppointment(appointment);}
+        if (user != null) {
+            deleteUserAppointment(appointment);
+        }
+        if (customer != null) {
+            deleteCustomerAppointment(appointment);
+        }
+        if (contact != null) {
+            deleteContactAppointment(appointment);
+        }
         AllAppointments.remove(appointment);
         DBAppointment.deleteApt(appointment);
     }
@@ -357,9 +386,9 @@ public class Methods {
     /**
      * Method to delete a customer.
      */
-    public static void deleteCustomerFromAll(Customer customer){
+    public static void deleteCustomerFromAll(Customer customer) {
         //Check to see if the customer has any associated appointments and delete them.
-        if(!customer.getAllCustomerAppointments().isEmpty()) {
+        if (!customer.getAllCustomerAppointments().isEmpty()) {
             Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);                          //Confirm with user the deletion of all associated appointments.
             alert1.setTitle("You can't do that yet.");
             alert1.setContentText("""
@@ -368,7 +397,7 @@ public class Methods {
                     Do you wish to do that now?""");
             alert1.showAndWait().ifPresent(response1 -> {
                 if (response1 == ButtonType.OK) {
-                    for(Appointment a: customer.getAllCustomerAppointments()){
+                    for (Appointment a : customer.getAllCustomerAppointments()) {
                         try {
                             deleteAppointmentFromAllPart2(a, null, null, null);
                         } catch (SQLException e) {
@@ -391,7 +420,7 @@ public class Methods {
                 Deleted customers can not be recovered.\s
                 Press OK to continue or Cancel to go back.""");
         alert2.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK){
+            if (response == ButtonType.OK) {
                 try {
                     DBCustomer.deleteCustomer(customer);
                 } catch (SQLException e) {
@@ -401,16 +430,16 @@ public class Methods {
                 Alerts("Deleted customer");
             }
         });
-    } //FIXME not tested
+    }
 
     /**
      * Method to add an appointment to the database and update the current AllAppointmentsList.
      */
     public static void addAppointmentToDB(Appointment appointment) throws SQLException {
-        if(appointment.getAppointmentID() < 90909){
+        if (appointment.getAppointmentID() < 90909) {
             //Methods found in DAO.DBAppointment.
             updateApt(appointment);
-        }else{
+        } else {
             insertApt(appointment);
         }
         AllAppointments.clear();
@@ -420,32 +449,19 @@ public class Methods {
     /**
      * Methods to populate appointments list, to be used for table population
      */
-    public static ObservableList<Appointment> AllAppointments= FXCollections.observableArrayList();
+    public static ObservableList<Appointment> AllAppointments = FXCollections.observableArrayList();
 
-    public static void addApt(Appointment appointment){AllAppointments.add(appointment); }
-
-    public static ObservableList<Appointment> getAllAppointments(){
-        return AllAppointments;
+    public static void addApt(Appointment appointment) {
+        AllAppointments.add(appointment);
     }
 
     /**
      * Methods to populate customers list, to be used for table population
      */
-    public static ObservableList<Customer> AllCustomers= FXCollections.observableArrayList();
+    public static ObservableList<Customer> AllCustomers = FXCollections.observableArrayList();
 
-    public static void addCustomer(Customer customer){AllCustomers.add(customer); }
-
-    public static void deleteCustomer(Customer customer){
-        for (int j = 0; j <AllCustomers.size() ; j++) {
-            if(AllCustomers.get(j).getCustomerID() == customer.getCustomerID()){
-                AllCustomers.remove(j);
-                deleteCustomer(customer);
-            }
-        }
-    }
-
-    public static ObservableList<Customer> getAllCustomers(){
-        return AllCustomers;
+    public static void addCustomer(Customer customer) {
+        AllCustomers.add(customer);
     }
 
     /**
@@ -453,64 +469,64 @@ public class Methods {
      */
     public static ObservableList<Contact> AllContacts = FXCollections.observableArrayList();
 
-    public static void addContact(Contact contact) {AllContacts.add(contact);}
-
-    public static ObservableList<Contact> getAllContacts(){return AllContacts;}
+    public static void addContact(Contact contact) {
+        AllContacts.add(contact);
+    }
 
     /**
      * Method to populate countries list, to be used for reference.
      */
     public static ObservableList<Country> AllCountries = FXCollections.observableArrayList();
 
-    public static void addCountry(Country country) {AllCountries.add(country); }
-
-    public static ObservableList<Country> getAllCountries(){ return AllCountries; }
+    public static void addCountry(Country country) {
+        AllCountries.add(country);
+    }
 
     /**
      * Method to populate a divisions list, to be used for reference and table population.
      */
     public static ObservableList<Division> AllDivisions = FXCollections.observableArrayList();
 
-    public static void addDivision(Division division){ AllDivisions.add(division); }
-
-    public static ObservableList<Division> getAllDivisions() { return AllDivisions; }
+    public static void addDivision(Division division) {
+        AllDivisions.add(division);
+    }
 
     /**
      * Method to populate a users list, to be used for reference.
      */
     public static ObservableList<User> AllUsers = FXCollections.observableArrayList();
 
-    public static void addUser(User user) { AllUsers.add(user); }
-
-    public static ObservableList<User> getAllUsers () { return AllUsers; }
+    public static void addUser(User user) {
+        AllUsers.add(user);
+    }
 
     /**
      * Method to populate appointments for users, contacts, and customers.
      */
-    public static void populateAssociatedLists(Customer customer, User user, Contact contact){
+    public static void populateAssociatedLists(Customer customer, User user, Contact contact) {
         int customerID;
         int userID;
         int contactID;
-        if(customer != null){
+        if (customer != null) {
             customerID = customer.getCustomerID();
-            for (Appointment apt: AllAppointments) {
-                if(apt.getCustomerID() == customerID){
+            for (Appointment apt : AllAppointments) {
+                if (apt.getCustomerID() == customerID) {
                     customer.getAllCustomerAppointments().add(apt);
                 }
             }
         }
-        if(user != null){
+        if (user != null) {
             userID = user.getUserID();
-            for (Appointment apt: AllAppointments) {
-                if (userID == apt.getUserID()){
+            for (Appointment apt : AllAppointments) {
+                if (userID == apt.getUserID()) {
                     user.getUserAppointments().add(apt);
                 }
             }
         }
-        if(contact != null){
+        if (contact != null) {
             contactID = contact.getContactID();
-            for (Appointment apt: AllAppointments){
-                if(contactID == apt.getContactID()){
+            for (Appointment apt : AllAppointments) {
+                if (contactID == apt.getContactID()) {
                     contact.getContactAppointments().add(apt);
                 }
             }

@@ -2,7 +2,6 @@ package DAO;
 
 import model.Country;
 import utilities.JDBC;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-
 import static utilities.Methods.addCountry;
 
 public abstract class DBCountry {
@@ -21,7 +19,6 @@ public abstract class DBCountry {
         //Create a prepared statement.
         String sql = "SELECT * FROM client_schedule.countries";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-
         //Iterate through all the database objects until the next() value returns false.
         //Execute the query.
         ResultSet resultSet = ps.executeQuery();

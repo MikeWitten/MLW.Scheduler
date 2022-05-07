@@ -4,82 +4,77 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentDetails">
-   <Label fx:id="stageLabel" layoutX="412.0" layoutY="15.0" text="Appointment Details">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="409.0" layoutY="501.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-      </buttons>
-   </ButtonBar>
-   <Pane accessibleRole="COMBO_BOX" layoutX="9.0" layoutY="81.0" prefHeight="420.0" prefWidth="979.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <ButtonBar layoutX="271.0" layoutY="367.0" prefHeight="40.0" prefWidth="249.0">
-         <buttons>
-            <Button fx:id="makeChanges" mnemonicParsing="false" onAction="#makeEditable" text="Add/Edit" />
-            <Button fx:id="saveButton" layoutX="657.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" visible="false" />
-            <Button fx:id="clearButton" layoutX="557.0" layoutY="17.0" mnemonicParsing="false" onAction="#clearForm" text="Clear All" />
-            <Button fx:id="deleteButton" layoutX="202.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
-            <Button fx:id="cancelButton" layoutX="631.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelChanges" text="Cancel" visible="false" />
-         </buttons>
-      </ButtonBar>
+<AnchorPane prefHeight="550" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentDetails">
+    <Label fx:id="stageLabel" layoutX="504.0" layoutY="14.0" text="Appointment Details">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <ButtonBar layoutX="508.0" layoutY="500.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="286.0" layoutY="40.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <Pane accessibleRole="COMBO_BOX" layoutX="10.0" layoutY="80.0" prefHeight="420.0" prefWidth="1179.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <ButtonBar layoutX="417.0" layoutY="366.0" prefHeight="40.0" prefWidth="249.0">
+            <buttons>
+                <Button fx:id="makeChanges" mnemonicParsing="false" onAction="#makeEditable" text="Add/Edit" />
+                <Button fx:id="saveButton" layoutX="657.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" visible="false" />
+                <Button fx:id="clearButton" layoutX="557.0" layoutY="17.0" mnemonicParsing="false" onAction="#clearForm" text="Clear All" />
+                <Button fx:id="deleteButton" layoutX="202.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+                <Button fx:id="cancelButton" layoutX="631.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelChanges" text="Cancel" visible="false" />
+            </buttons>
+        </ButtonBar>
 
-      <Label layoutX="5" layoutY="34.0" text="Appointment ID" />
-      <Label layoutX="5" layoutY="64.0" text="Title" />
-      <Label layoutX="5" layoutY="94.0" text="Location" />
-      <Label layoutX="5" layoutY="124.0" text="Apt Type" />
-      <Label layoutX="5" layoutY="202.0" text="Start Date" />
-      <Label layoutX="5" layoutY="238.0" text="Start Time" />
-      <Label layoutX="5" layoutY="274.0" text="End Time" />
-      <Label layoutY="325.0" text="Description" />
+        <Label layoutX="5" layoutY="34.0" text="Appointment ID" />
+        <Label layoutX="5" layoutY="64.0" text="Title" />
+        <Label layoutX="5" layoutY="94.0" text="Location" />
+        <Label layoutX="5" layoutY="124.0" text="Apt Type" />
+        <Label layoutX="5" layoutY="202.0" text="Start Date" />
+        <Label layoutX="5" layoutY="238.0" text="Start Time" />
+        <Label layoutX="5" layoutY="274.0" text="End Time" />
+        <Label layoutY="325.0" text="Description" />
 
-      <TextField fx:id="appointmentIDTxt" editable="false" layoutX="100.0" layoutY="30.0" prefHeight="25.0" prefWidth="149.0" />
-      <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" onMouseClicked="#isEditable" prefWidth="150" />
-      <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" onMouseClicked="#isEditable" prefWidth="150" />
-      <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" onMouseClicked="#isEditable" prefWidth="150" />
-      <DatePicker fx:id="aptDatePicker" layoutX="101.0" layoutY="198.0" onAction="#populateBoxes" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="149.0" />
-      <TextArea fx:id="descriptionTxt" editable="false" layoutX="101.0" layoutY="325.0" onMouseClicked="#isEditable" prefHeight="61.0" prefWidth="150" />
-
-
-      <Button layoutX="657.0" layoutY="30.0" mnemonicParsing="false" onAction="#toCustomerDetails" text="Customer ID" />
-      <Button layoutX="684.0" layoutY="120.0" mnemonicParsing="false" onAction="#toUserDetails" text="User ID" />
-      <Button layoutX="667.0" layoutY="210.0" mnemonicParsing="false" onAction="#toContactDetails" text="Contact ID" />
-
-      <TextField fx:id="createDateTxt" editable="false" layoutX="415.0" layoutY="30.0" />
-      <TextField fx:id="createdByTxt" editable="false" layoutX="415.0" layoutY="60.0" />
-      <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="415.0" layoutY="90.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="415.0" layoutY="120.0" />
-
-      <Label layoutX="320" layoutY="34.0" text="Created On" />
-      <Label layoutX="320" layoutY="64.0" text="Created By" />
-      <Label layoutX="320" layoutY="94.0" text="Last Updated On" />
-      <Label layoutX="320" layoutY="124.0" text="Last Updated By" />
-
-      <ComboBox fx:id="customerCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="30.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
-      <ComboBox fx:id="userCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="120.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
-      <ComboBox fx:id="contactCombo" accessibleRole="IMAGE_VIEW" layoutX="748.0" layoutY="210.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
-      <ComboBox fx:id="startTimeComboBox" layoutX="100.0" layoutY="234.0" onAction="#changeStartTimeLabel" onMousePressed="#checkForNullDate" prefWidth="150.0" />
-      <ComboBox fx:id="endTimeComboBox" layoutX="100.0" layoutY="270.0" onAction="#changeEndTimeLabel" onMousePressed="#checkForNullDate" prefWidth="150.0" />
-      <Label fx:id="startTimeAtHQLabel" layoutX="320.0" layoutY="238.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
-      <Label fx:id="endTimeAtHQLabel" layoutX="320.0" layoutY="274.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
-      <Label layoutX="320.0" layoutY="202.0" text="Time of appointment at company HQ :" />
+        <TextField fx:id="appointmentIDTxt" editable="false" layoutX="100.0" layoutY="30.0" prefHeight="25.0" prefWidth="227.0" />
+        <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
+        <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
+        <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
+        <DatePicker fx:id="aptDatePicker" layoutX="101.0" layoutY="198.0" onAction="#populateBoxes" onMouseClicked="#isEditable" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
+        <TextArea fx:id="descriptionTxt" editable="false" layoutX="101.0" layoutY="325.0" onMousePressed="#isEditable" prefHeight="61.0" prefWidth="227.0" />
 
 
+        <Button layoutX="824.0" layoutY="30.0" mnemonicParsing="false" onAction="#toCustomerDetails" prefHeight="25.0" prefWidth="162.0" text="Customer Report" />
+        <Button layoutX="824.0" layoutY="120.0" mnemonicParsing="false" onAction="#toUserDetails" prefHeight="25.0" prefWidth="162.0" text="User Report" />
+        <Button layoutX="824.0" layoutY="210.0" mnemonicParsing="false" onAction="#toContactDetails" prefHeight="25.0" prefWidth="162.0" text="Contact Report" />
+
+        <TextField fx:id="createDateTxt" editable="false" layoutX="562.0" layoutY="30.0" />
+        <TextField fx:id="createdByTxt" editable="false" layoutX="562.0" layoutY="60.0" />
+        <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="562.0" layoutY="90.0" prefHeight="25.0" prefWidth="150.0" />
+        <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="562.0" layoutY="120.0" />
+
+        <Label layoutX="467.0" layoutY="34.0" text="Created On" />
+        <Label layoutX="467.0" layoutY="64.0" text="Created By" />
+        <Label layoutX="467.0" layoutY="94.0" text="Last Updated On" />
+        <Label layoutX="467.0" layoutY="124.0" text="Last Updated By" />
+
+        <ComboBox fx:id="customerCombo" accessibleRole="IMAGE_VIEW" layoutX="995.0" layoutY="30.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
+        <ComboBox fx:id="userCombo" accessibleRole="IMAGE_VIEW" layoutX="995.0" layoutY="120.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
+        <ComboBox fx:id="contactCombo" accessibleRole="IMAGE_VIEW" layoutX="995.0" layoutY="210.0" onMouseClicked="#isEditable" prefHeight="25.0" prefWidth="150.0" />
+        <ComboBox fx:id="startTimeComboBox" layoutX="100.0" layoutY="234.0" onAction="#changeStartTimeLabel" onMousePressed="#checkForNullDate" prefHeight="25.0" prefWidth="227.0" />
+        <ComboBox fx:id="endTimeComboBox" layoutX="100.0" layoutY="270.0" onAction="#changeEndTimeLabel" onMousePressed="#checkForNullDate" prefHeight="25.0" prefWidth="227.0" />
+        <Label fx:id="startTimeAtHQLabel" layoutX="467.0" layoutY="238.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
+        <Label fx:id="endTimeAtHQLabel" layoutX="467.0" layoutY="274.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
+        <Label layoutX="467.0" layoutY="202.0" text="Time of appointment at company HQ :" />
 
 
-
-
-
-   </Pane>
+    </Pane>
 </AnchorPane>

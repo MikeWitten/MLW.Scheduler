@@ -20,37 +20,30 @@ public class ContactDetails {
     static Contact currentContact;
     Appointment selectedAppointment;
 
-
     //Navigation
     public void toExit() {
         exitHere();
     }
-
     public void toLogOut() {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
-
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
-
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
-
     public void toCustomerManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
-
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
-
     public void toAppointmentDetails() throws IOException {
         //Ensure an appointment is selected.
         if (AppointmentTable.getSelectionModel().getSelectedItem() == null){
@@ -98,11 +91,13 @@ public class ContactDetails {
      */
     public TableView<Appointment> AppointmentTable;
     public TableColumn<Object, Object> appointmentID;
+    public TableColumn<Object, Object> title;
+    public TableColumn<Object, Object> type;
+    public TableColumn<Object, Object> description;
     public TableColumn<Object, Object> customerID;
     public TableColumn<Object, Object> date;
     public TableColumn<Object, Object> startTime;
     public TableColumn<Object, Object> endTime;
-
 
     /**
      * Receive the contact football.
@@ -129,9 +124,11 @@ public class ContactDetails {
         AppointmentTable.setItems(currentContact.getContactAppointments());
         appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         customerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
         date.setCellValueFactory(new PropertyValueFactory<>("parsedStartDate"));
         startTime.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
         endTime.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
     }
-
 }

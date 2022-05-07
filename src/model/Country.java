@@ -2,12 +2,10 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Country {
-
     //Create Country object arguments.
     int countryID;
     String country;
@@ -28,8 +26,6 @@ public class Country {
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
     }
-
-
 
     /**
      * Create getters and setters for the Country objects.
@@ -93,7 +89,6 @@ public class Country {
     public ObservableList<Division> getFirstLevelDivisions(){
         return countryDivisions;
     }
-
 
     @Override
     public String toString(){

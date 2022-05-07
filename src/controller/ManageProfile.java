@@ -9,12 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
 import static utilities.ActiveUser.getActiveUser;
 import static utilities.Methods.*;
 
@@ -27,7 +25,6 @@ public class ManageProfile implements Initializable {
     public TextField createdByTxt;
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
-
     User currentUser;
     Appointment appointment;
 
@@ -36,40 +33,31 @@ public class ManageProfile implements Initializable {
         //Method found in utilities.methods.
         exitHere();
     }
-
     public void toLogOut() {
         //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
-
     public void toYourProfile() throws IOException {
         //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
-
     public void toAppointmentManager() throws IOException {
         //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
-
     public void toCustomerManager() throws IOException {
         //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
-
     public void toHome() throws IOException {
         //Method found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
-
-    /**
-     * Navigate to the appointment details page.  Pass all appointment information.
-     */
     public void toAppointmentDetails() throws IOException {
         //Ensure an appointment is selected.
         if (AppointmentTable.getSelectionModel().getSelectedItem() == null) {
@@ -81,19 +69,11 @@ public class ManageProfile implements Initializable {
         Appointment currentAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
         passTheAppointment(currentAppointment, stage1);
     }
-
-    /**
-     * Navigate to the appointment details screen.  Pass the user information
-     */
     public void addAppointment() throws IOException {
         //Passes user information to create a new appointment object. Found in utilities.methods.
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         passTheUser(currentUser, stage);
     }
-
-    /**
-     * Navigate to the appointment details page.  Pass all appointment information.
-     */
     public void editAppointment() throws IOException {
         //uses same method as the view appointment detail button.
         toAppointmentDetails();
@@ -125,7 +105,6 @@ public class ManageProfile implements Initializable {
     public TableColumn<Object, Object> dateColumn;
     public TableColumn<Object, Object> startTime;
     public TableColumn<Object, Object> endTime;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

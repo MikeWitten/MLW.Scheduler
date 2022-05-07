@@ -5,9 +5,9 @@ import javafx.collections.ObservableList;
 
 public class Contact {
     //Create Contact object arguments.
-    int contactID;          //FIXME unique value.
-    String contactName;     //FIXME 50 char limit. (Alert already exists)
-    String Email;           //FIXME check valid email format.
+    int contactID;
+    String contactName;
+    String Email;
 
     /**
      * Create a constructor for the Contact objects.

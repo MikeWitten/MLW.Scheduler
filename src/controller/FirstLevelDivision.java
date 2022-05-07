@@ -9,11 +9,9 @@ import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
 import model.Division;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-
 import static utilities.Methods.*;
 
 public class FirstLevelDivision{
@@ -31,7 +29,6 @@ public class FirstLevelDivision{
     public TableColumn<Object, Object> phone;
     public Division currentDivision;
     public Country currentCountry;
-
 
     //Navigation
     public void toExit() {
@@ -58,7 +55,9 @@ public class FirstLevelDivision{
         navigation(stage, "/view/Home Page.fxml");
     }
     public void toCountryDetails() throws IOException {
-    } //FIXME
+        Stage stage = (Stage) stageLabel.getScene().getWindow();
+        passTheCountryToCountryDetails(currentCountry, stage);
+    }
 
     /**
      * Create a formatter for Readability.
@@ -146,7 +145,4 @@ public class FirstLevelDivision{
         Customer customer = CustomerTable.getSelectionModel().getSelectedItem();
         passTheCustomer(customer, stage);
     }
-
-
-
 }

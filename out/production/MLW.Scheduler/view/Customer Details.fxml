@@ -4,89 +4,89 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerDetails">
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-      </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
-   <Label fx:id="stageLabel" layoutX="427.0" layoutY="15" text="Customer Details">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <Pane layoutX="14.0" layoutY="81.0" prefHeight="416.0" prefWidth="343.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <Label fx:id="customerNameLabel" layoutX="13.0" layoutY="15" text="Customer Name">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="customerIDLabel" layoutX="275" layoutY="13.0" text="ID: N">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="streetAddressLabel" layoutX="15" layoutY="60" text="Street Address" />
-      <Label fx:id="phoneLabel" layoutX="230.0" layoutY="60.0" text="123-123-123-1232" />
-      <Label fx:id="stateProvinceZipLabel" layoutX="15" layoutY="80" text="city ST, postal code" />
-      <Label fx:id="countryLabel" layoutX="15.0" layoutY="100" text="country" />
+<AnchorPane prefHeight="550" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerDetails">
+    <ButtonBar layoutX="295.0" layoutY="40.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="509.0" layoutY="497.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <Label fx:id="stageLabel" layoutX="528.0" layoutY="14.0" text="Customer Details">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <Pane layoutX="14.0" layoutY="81.0" prefHeight="416.0" prefWidth="343.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <Label fx:id="customerNameLabel" layoutX="13.0" layoutY="15" text="Customer Name">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="customerIDLabel" layoutX="275" layoutY="13.0" text="ID: N">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="streetAddressLabel" layoutX="15" layoutY="60" text="Street Address" />
+        <Label fx:id="phoneLabel" layoutX="230.0" layoutY="60.0" text="123-123-123-1232" />
+        <Label fx:id="stateProvinceZipLabel" layoutX="15" layoutY="80" text="city ST, postal code" />
+        <Label fx:id="countryLabel" layoutX="15.0" layoutY="100" text="country" />
 
 
-      <Label layoutX="15.0" layoutY="136.0" text="Created By:" />
-      <Label fx:id="createdByLabel" layoutX="119.0" layoutY="136.0" text="Name" />
+        <Label layoutX="15.0" layoutY="136.0" text="Created By:" />
+        <Label fx:id="createdByLabel" layoutX="119.0" layoutY="136.0" text="Name" />
 
-      <Label layoutX="15.0" layoutY="150.0" text="On:" />
-      <Label fx:id="createDateLabel" layoutX="120" layoutY="150.0" text="Date" />
+        <Label layoutX="15.0" layoutY="150.0" text="On:" />
+        <Label fx:id="createDateLabel" layoutX="120" layoutY="150.0" text="Date" />
 
-      <Label layoutX="15" layoutY="185.0" text="Last Updated by: " />
-      <Label fx:id="updatedByLabel" layoutX="120" layoutY="185.0" text="Name" />
+        <Label layoutX="15" layoutY="185.0" text="Last Updated by: " />
+        <Label fx:id="updatedByLabel" layoutX="120" layoutY="185.0" text="Name" />
 
-      <Label layoutX="15" layoutY="200.0" text="On:" />
-      <Label fx:id="lastUpdateLabel" layoutX="120.0" layoutY="200.0" text="Date" />
-
-
-      <Button fx:id="countryButton" layoutX="15.0" layoutY="240.0" mnemonicParsing="false" onAction="#toCountryDetails" prefHeight="25.0" prefWidth="182.0" text="Country" />
-      <Button fx:id="divisionButton" layoutX="15.0" layoutY="275.0" mnemonicParsing="false" onAction="#toDivisionDetails" prefHeight="25.0" prefWidth="182.0" text="Division" />
+        <Label layoutX="15" layoutY="200.0" text="On:" />
+        <Label fx:id="lastUpdateLabel" layoutX="120.0" layoutY="200.0" text="Date" />
 
 
-      <ButtonBar layoutX="52.0" layoutY="362.0" prefHeight="40.0" prefWidth="200.0">
-         <buttons>
-            <Button mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
-         </buttons>
-      </ButtonBar>
+        <Button fx:id="countryButton" layoutX="15.0" layoutY="240.0" mnemonicParsing="false" onAction="#toCountryDetails" prefHeight="25.0" prefWidth="182.0" text="Country Report" />
+        <Button fx:id="divisionButton" layoutX="15.0" layoutY="275.0" mnemonicParsing="false" onAction="#toDivisionDetails" prefHeight="25.0" prefWidth="182.0" text="Division Report" />
 
-   </Pane>
-   <Pane layoutX="373.0" layoutY="81.0" prefHeight="416.0" prefWidth="617.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <ButtonBar layoutX="175.0" layoutY="363.0" prefHeight="40.0" prefWidth="257.0">
-         <buttons>
-            <Button mnemonicParsing="false" onAction="#toAppointmentDetails" text="View/Edit" />
-            <Button  layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#addAppointment" text="Add" />
-            <Button layoutX="208.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
-         </buttons>
-      </ButtonBar>
-      <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="45.0" prefHeight="318.0" prefWidth="596.0">
-         <columns>
-            <TableColumn fx:id="appointmentID" prefWidth="71.79998779296875" text="ID" />
-            <TableColumn fx:id="title" prefWidth="174.20001220703125" text="Title" />
-            <TableColumn fx:id="date" prefWidth="130.39996337890625" text="Date" />
-            <TableColumn fx:id="startTime" prefWidth="110.0" text="Start" />
-            <TableColumn fx:id="endTime" prefWidth="114.00006103515625" text="End" />
-         </columns>
-      </TableView>
-      <Label layoutX="14.0" layoutY="11.0" text="Associated Appointments">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-   </Pane>
+
+        <ButtonBar layoutX="52.0" layoutY="362.0" prefHeight="40.0" prefWidth="200.0">
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
+                <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
+            </buttons>
+        </ButtonBar>
+
+    </Pane>
+    <Pane layoutX="373.0" layoutY="81.0" prefHeight="416.0" prefWidth="820.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <ButtonBar layoutX="276.0" layoutY="363.0" prefHeight="40.0" prefWidth="257.0">
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#toAppointmentDetails" text="View/Edit" />
+                <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#addAppointment" text="Add" />
+                <Button layoutX="208.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+            </buttons>
+        </ButtonBar>
+        <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="45.0" prefHeight="318.0" prefWidth="797.0">
+            <columns>
+                <TableColumn fx:id="appointmentID" prefWidth="71.79998779296875" text="ID" />
+                <TableColumn fx:id="title" prefWidth="254.39993286132812" text="Title" />
+                <TableColumn fx:id="date" prefWidth="196.800048828125" text="Date" />
+                <TableColumn fx:id="startTime" prefWidth="133.199951171875" text="Start" />
+                <TableColumn fx:id="endTime" prefWidth="141.5999755859375" text="End" />
+            </columns>
+        </TableView>
+        <Label layoutX="14.0" layoutY="11.0" text="Associated Appointments">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+    </Pane>
 </AnchorPane>

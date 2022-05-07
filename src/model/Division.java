@@ -2,7 +2,6 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -29,8 +28,6 @@ public class Division {
         this.lastUpdatedBy = lastUpdatedBy;
         this.CountryID = countryID;
     }
-
-
 
     /**
      * Create getters and setters for the First Level Division objects.

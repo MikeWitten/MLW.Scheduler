@@ -9,7 +9,6 @@ import model.Country;
 import model.Customer;
 import model.Division;
 import model.User;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -17,12 +16,10 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-
 import static utilities.ActiveUser.getActiveUser;
 import static utilities.Methods.*;
 
 public class CustomerEdit implements Initializable {
-
     public Label customerNameLabel;
     public Label streetAddressLabel;
     public Label phoneLabel;
@@ -33,7 +30,6 @@ public class CustomerEdit implements Initializable {
     public ComboBox<model.Country> countryBox;
     public Label divPrompt;
     public ComboBox<model.Division> divisionBox;
-    public TextField addressTxt;
     public Button next1;
     public Button next2;
     public Button next3;
@@ -61,8 +57,37 @@ public class CustomerEdit implements Initializable {
     public String newLastUpdatedBy;
     public int newDivisionID;
     public User currentUser;
-    public Label promptOverAddress;
+    public Label example;
+    public Label example1;
+    public Label example11;
+    public Label example111;
+    public TextField streetNameTxt;
+    public TextField localityTxt;
+    public TextField cityTxt;
+    public TextField streetNumTxt;
+    String stNum;
+    String stName;
+    String locality;
+    String city;
+    String address;
 
+    //Navigation.
+    public void toHomePage() throws IOException {
+        Stage stage = (Stage) previewLabel.getScene().getWindow();
+        navigation(stage, "/view/Home Page.fxml");
+    }
+
+    /**
+     * Returns the user to a blank form.
+     */
+    public void clearForm() throws IOException {
+        Stage stage = (Stage) previewLabel.getScene().getWindow();
+        sendCustomerToEdit(currentCustomer, stage);
+    }
+
+    /**
+     * Receive the customer object to edit.
+     */
     public void receiveCustomerToEdit(Customer customer) {
         if(customer == null){
             previewLabel.setText("Preview");
@@ -95,6 +120,9 @@ public class CustomerEdit implements Initializable {
         countryLabel.setText(currentCountry.getCountry());
     }
 
+    /**
+     * Method to move to the next step after choosing a country.
+     */
     public void getDivision() {
         currentCountry = countryBox.getSelectionModel().getSelectedItem();
         currentCountry.getFirstLevelDivisions().clear();
@@ -111,47 +139,94 @@ public class CustomerEdit implements Initializable {
         countryLabel.setText(currentCountry.getCountry());
     }
 
+    /**
+     * Method to move to the next step after choosing a division.
+     */
     public void getAddress() {
         currentDivision = divisionBox.getSelectionModel().getSelectedItem();
         newDivisionID = currentDivision.getDivisionID();
         divPrompt.setVisible(false);
         divisionBox.setDisable(true);
         addressPrompt.setVisible(true);
-        promptOverAddress.setVisible(true);
-        addressTxt.setVisible(true);
+        streetNumTxt.setVisible(true);
+        streetNameTxt.setVisible(true);
+        localityTxt.setVisible(true);
+        cityTxt.setVisible(true);
+        example.setVisible(true);
+        example1.setVisible(true);
+        example11.setVisible(true);
+        example111.setVisible(true);
         next1.setVisible(true);
         if(currentCustomer == null){
             stateProvinceZipLabel.setText(currentDivision.getDivision() + ", ");
-            System.out.println(currentDivision.getDivision());
             return;
         }
         stateProvinceZipLabel.setText(currentDivision.getDivision() + ", " + currentCustomer.getPostalCode());
-        System.out.println(currentDivision.getDivision());
     }
 
+    /**
+     * Method to move to the next step after entering an address.
+     */
     public void getPostalCode() {
-        //check for null values.
-        if(addressTxt.getText().isEmpty()){
-            Alerts("fill in the blank");
+        //Check for null fields.
+        if (containsNullValues(streetNameTxt.getText(), streetNumTxt.getText(), cityTxt.getText())){
+            Alerts("Address fields required");
+            return;
+        }
+        //Check street number for being a number.
+        try{
+            Integer.parseInt(streetNumTxt.getText());
+            stNum = streetNumTxt.getText();
+        } catch (NumberFormatException nfe){
+            Alerts("Street Number required");
             return;
         }
         addressPrompt.setVisible(false);
-        promptOverAddress.setVisible(false);
-        addressTxt.setVisible(false);
+        streetNumTxt.setVisible(false);
+        streetNameTxt.setVisible(false);
+        localityTxt.setVisible(false);
+        cityTxt.setVisible(false);
+        example.setVisible(false);
+        example1.setVisible(false);
+        example11.setVisible(false);
+        example111.setVisible(false);
         next1.setVisible(false);
         postalPrompt.setVisible(true);
         postalTxt.setVisible(true);
         next2.setVisible(true);
-        streetAddressLabel.setText(addressTxt.getText());
-        newAddress = addressTxt.getText();
-        System.out.println(newAddress);
-
+        stName = streetNameTxt.getText();
+        city = cityTxt.getText();
+        if(localityTxt.getText().isEmpty()) {
+            address = stNum +" " + stName +", " + city;
+        }else{
+            locality = localityTxt.getText();
+            address = stNum +" " + stName +", " + locality + ", " + city;
+        }
+        streetAddressLabel.setText(address);
+        newAddress = address;
     }
 
+    /**
+     * Method to move to the next step after entering the Postal Code.
+     */
     public void getPhone() {
         if(postalTxt.getText().isEmpty()){
             Alerts("fill in the blank");
             return;
+        }
+        if(currentCountry.getCountryID() == 1){
+            if(!isUSPattern()){
+                return;
+            }
+        }
+        else if(currentCountry.getCountryID() == 2){
+            if(!isUKPattern()){
+                return;
+            }
+        }else if(currentCountry.getCountryID() == 3){
+            if(!isCAPattern()){
+                return;
+            }
         }
         postalPrompt.setVisible(false);
         postalTxt.setVisible(false);
@@ -162,14 +237,82 @@ public class CustomerEdit implements Initializable {
         if(currentCustomer == null) {
             stateProvinceZipLabel.setText(stateProvinceZipLabel.getText() + postalTxt.getText());
             newPostalCode = postalTxt.getText();
-            System.out.println(newPostalCode);
             return;
         }
         stateProvinceZipLabel.setText(currentDivision.getDivision() +", " + postalTxt.getText());
         newPostalCode = postalTxt.getText();
-        System.out.println(newPostalCode);
     }
 
+    /**
+     * Methods to confirm valid postal code patterns.
+     */
+    private Boolean isCAPattern() {
+        String testCA = postalTxt.getText();
+        if(testCA.length() != 7){
+            Alerts("Does not meet CA standards");
+            return false;
+        }
+        if ((!(Character.isAlphabetic(testCA.charAt(0)))) ||
+                (!(Character.isAlphabetic(testCA.charAt(2)))) ||
+                (!(Character.isAlphabetic(testCA.charAt(5))))
+        ){
+            Alerts("Does not meet CA standards");
+            return false;
+        }
+        if (!(Character.isDigit(testCA.charAt(1))) ||
+                !(Character.isDigit(testCA.charAt(4))) ||
+                !(Character.isDigit(testCA.charAt(6)))
+        ) {
+            Alerts("Does not meet CA standards");
+            return false;
+        }
+        if (testCA.charAt(3) != ' ') {
+            Alerts("Does not meet CA standards");
+            return false;
+        }
+        return true;
+    }
+    private Boolean isUKPattern() {
+        String testUK = postalTxt.getText();
+        if (testUK.length() != 8) {
+            return false;
+        }
+        if ((!(Character.isAlphabetic(testUK.charAt(0)))) ||
+                (!(Character.isAlphabetic(testUK.charAt(2)))) ||
+                (!(Character.isAlphabetic(testUK.charAt(5))))
+        ) {
+            return false;
+        }
+        if (!(Character.isDigit(testUK.charAt(1))) ||
+                !(Character.isDigit(testUK.charAt(4))) ||
+                !(Character.isDigit(testUK.charAt(6)))
+        ) {
+            return false;
+        }
+        if (testUK.charAt(3) != ' ') {
+            Alerts("Does not meet UK standards");
+            return false;
+        }
+        return true;
+    }
+    private Boolean isUSPattern() {
+        String us = postalTxt.getText();
+        if(us.length() != 5){
+            Alerts("Does not meet US Postal code standard");
+            return false;
+        }
+        try {
+            Integer.parseInt(us);
+        }catch (NumberFormatException nfe){
+            Alerts("Does not meet US Postal code standard");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Method to move to the next step after entering the Phone number.
+     */
     public void getName() {
         if(phoneTxt.getText().isEmpty()){
             Alerts("fill in the blank");
@@ -183,9 +326,11 @@ public class CustomerEdit implements Initializable {
         commitButton.setVisible(true);
         phoneLabel.setText(phoneTxt.getText());
         newPhone = phoneTxt.getText();
-        System.out.println(newPhone);
     }
 
+    /**
+     * Method to make the save and start over features available.  The user can review changes on the screen.
+     */
     public void commit() {
         if(nameTxt.getText().isEmpty()){
             Alerts("fill in the blank");
@@ -198,29 +343,46 @@ public class CustomerEdit implements Initializable {
         startOverButton.setDisable(false);
         customerNameLabel.setText(nameTxt.getText());
         newCustomerName = nameTxt.getText();
-        System.out.println(newCustomerName + "1");
     }
 
+    /**
+     * Series of methods that allow the user to keep any imported customer data, rather than changing it.
+     */
     public void leaveAddress() {
         if(currentCustomer == null){
             Alerts("fill in the blank");
             addressPrompt.setSelected(false);
             return;
         }
-        addressTxt.setText(currentCustomer.getAddress());
-        getPostalCode();
-    } //FIXME not tested
-
+        addressPrompt.setVisible(false);
+        streetNumTxt.setVisible(false);
+        streetNameTxt.setVisible(false);
+        localityTxt.setVisible(false);
+        cityTxt.setVisible(false);
+        example.setVisible(false);
+        example1.setVisible(false);
+        example11.setVisible(false);
+        example111.setVisible(false);
+        next1.setVisible(false);
+        postalPrompt.setVisible(true);
+        postalTxt.setVisible(true);
+        next2.setVisible(true);
+        newAddress = currentCustomer.getAddress();
+    }
     public void leavePostalCode() {
         if(currentCustomer == null){
             Alerts("fill in the blank");
             postalPrompt.setSelected(false);
             return;
         }
-        postalTxt.setText(currentCustomer.getPostalCode());
-        getPhone();
-    }//FIXME not Tested
-
+        newPostalCode = currentCustomer.getPostalCode();
+        postalPrompt.setVisible(false);
+        postalTxt.setVisible(false);
+        next2.setVisible(false);
+        phonePrompt.setVisible(true);
+        phoneTxt.setVisible(true);
+        next3.setVisible(true);
+    }
     public void leavePhone() {
         if (currentCustomer == null){
             Alerts("fill in the blank");
@@ -229,19 +391,33 @@ public class CustomerEdit implements Initializable {
         }
         phoneTxt.setText(currentCustomer.getPhone());
         phonePrompt.setSelected(false);
-        getName();
-    }//FIXME
-
+        phoneTxt.setVisible(false);
+        phonePrompt.setVisible(false);
+        next3.setVisible(false);
+        namePrompt.setVisible(true);
+        nameTxt.setVisible(true);
+        commitButton.setVisible(true);
+        phoneLabel.setText(phoneTxt.getText());
+        newPhone = currentCustomer.getPhone();
+    }
     public void leaveName() {
         if (currentCustomer == null){
             Alerts("fill in the blank");
             namePrompt.setSelected(false);
             return;
         }
-        nameTxt.setText(currentCustomer.getCustomerName());
-        commit();
+        nameTxt.setVisible(false);
+        namePrompt.setVisible(false);
+        commitButton.setVisible(false);
+        saveButton.setDisable(false);
+        startOverButton.setDisable(false);
+        customerNameLabel.setText(nameTxt.getText());
+        newCustomerName = currentCustomer.getCustomerName();
     }
 
+    /**
+     * Method to create or update a customer object in the application and the database.
+     */
     public void saveCustomer() throws SQLException, IOException {
         if ((currentCustomer != null) && (newCustomerName.equals(currentCustomer.getCustomerName())) &&
                 (newDivisionID == currentCustomer.getDivisionID()) &&(newAddress.equals(currentCustomer.getAddress())) &&
@@ -265,12 +441,10 @@ public class CustomerEdit implements Initializable {
         }
         newLastUpdate = Timestamp.from(Instant.now());
         newLastUpdatedBy = currentUser.getUserName();
-        System.out.println(newCustomerName + "2");
         Customer c = new Customer(newCustomerID,newCustomerName,newAddress,newPostalCode,newPhone,newCreateDate,newCreatedBy,
                 newLastUpdate,newLastUpdatedBy,newDivisionID);
         Stage stage = (Stage) previewLabel.getScene().getWindow();
         if(c.getCustomerID() < 90909){
-            System.out.println(c.getCustomerName());
             DBCustomer.updateCustomer(c);
             AllCustomers.clear();
             DBCustomer.selectAllCustomers();
@@ -285,24 +459,9 @@ public class CustomerEdit implements Initializable {
         passTheCustomer(c,stage);
     }
 
-    /**
-     * Navigate to the homepage.
-     */
-    public void toHomePage() throws IOException {
-        Stage stage = (Stage) previewLabel.getScene().getWindow();
-        navigation(stage, "/view/Home Page.fxml");
-    }
-
-    /**
-     * Returns the user to a blank form.
-     */
-    public void clearForm() throws IOException {
-        Stage stage = (Stage) previewLabel.getScene().getWindow();
-        sendCustomerToEdit(currentCustomer, stage);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Ensure the countries list is up-to-date.
         AllCountries.clear();
         try {
             DBCountry.selectAllCountries();
@@ -310,7 +469,6 @@ public class CustomerEdit implements Initializable {
             e.printStackTrace();
         }
         countryBox.setItems(AllCountries);
-
         for (User u : AllUsers){
             if(getActiveUser(null).getUserID() == u.getUserID()){
                 currentUser = u;
@@ -318,8 +476,4 @@ public class CustomerEdit implements Initializable {
             }
         }
     }
-
-
-
-
 }

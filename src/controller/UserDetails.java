@@ -6,11 +6,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import static utilities.Methods.*;
 
 public class UserDetails implements Initializable {
@@ -25,37 +23,30 @@ public class UserDetails implements Initializable {
     public TextField appointmentFilter;
     static User currentUser;
 
-
     //Navigation
     public void toExit() {
         exitHere();
     }
-
     public void toLogOut() {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
-
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
-
     public void toAppointmentManager() throws IOException{
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
-
     public void toCustomerManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
-
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
-
     public void toAppointmentDetails() throws IOException {
         if(AppointmentTable.getSelectionModel().getSelectedItem() == null) {
             Alerts("no item selected");
@@ -65,11 +56,11 @@ public class UserDetails implements Initializable {
         Appointment a = AppointmentTable.getSelectionModel().getSelectedItem();
         passTheAppointment(a, stage);
     }
-
     public void addAppointment() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         passTheUser(currentUser, stage);
     }
+
     /**
      * Get user data and populate text fields
      */
@@ -81,7 +72,7 @@ public class UserDetails implements Initializable {
         createdByTxt.setText(currentUser.getCreatedBy());
         lastUpdatedTxt.setText(String.valueOf(currentUser.getLastUpdate()));
         lastUpdatedByTxt.setText(currentUser.getLastUpdatedBy());
-        //Ensure associated appointment list is up to date.
+        //Ensure associated appointment list is up-to-date.
         currentUser.getUserAppointments().clear();
         for (Appointment a: AllAppointments){
             if(currentUser.getUserID() == a.getUserID()){
@@ -96,7 +87,6 @@ public class UserDetails implements Initializable {
         startTime.setCellValueFactory(new PropertyValueFactory<>("parsedStartTime"));
         endTime.setCellValueFactory(new PropertyValueFactory<>("parsedEndTime"));
     }
-
 
     //Methods.
     /**
@@ -127,6 +117,4 @@ public class UserDetails implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-
-
 }

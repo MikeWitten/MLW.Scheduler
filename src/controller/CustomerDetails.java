@@ -95,7 +95,7 @@ public class CustomerDetails {
     /**
      * Adjust the date to be more readable.
      */
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd 'of' yyyy   'at:' HH:mm a");
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy 'at:' hh:mm a");
 
     /**
      * Receive the customer object from the previous screen.
@@ -189,7 +189,5 @@ public class CustomerDetails {
     public void deleteCustomer() throws IOException {
         deleteCustomerFromAll(currentCustomer);
         toHome();
-    } //FIXME
-
-
+    }
 }

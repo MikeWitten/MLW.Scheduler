@@ -4,64 +4,62 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550" prefWidth="1000" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserDetails">
-   <Label fx:id="stageLabel" layoutX="449.0" layoutY="14.0" text="User Details">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
-      </buttons>
-   </ButtonBar>
-   <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
-      <buttons>
-         <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
-         <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
-         <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
-      </buttons>
-   </ButtonBar>
-   <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="328.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TextField fx:id="userIDTxt" editable="false" layoutX="115.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="userNameTxt" editable="false" layoutX="115.0" layoutY="80.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" text="XXXXXXXXXXXXXXXXXXXXXXXXXX" />
-      <TextField fx:id="createDateTxt" editable="false" layoutX="115.0" layoutY="160" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="createdByTxt" editable="false" layoutX="115.0" layoutY="200" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="115.0" layoutY="241.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="115.0" layoutY="281.0" prefHeight="26.0" prefWidth="200.0" />
-      <Label alignment="CENTER_RIGHT" layoutX="38.0" layoutY="46.0" text="User ID" textAlignment="RIGHT" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="28.0" layoutY="85.0" text="User Name" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="32.0" layoutY="124.0" text="Password" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="27.0" layoutY="165.0" text="Created On" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="28.0" layoutY="205.0" text="Created By" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="22.0" layoutY="245.0" text="Last Updated" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="285.0" text="Last Updated By" />
-      <Label layoutX="98.0" layoutY="338.0" text="Contact an administrator" />
-      <Label layoutX="63.0" layoutY="355.0" text="to change or update user information." />
-   </Pane>
-   <Pane layoutX="342.0" layoutY="100.0" prefHeight="386.0" prefWidth="645.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
-      <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="623.0">
-         <columns>
-            <TableColumn fx:id="appointmentID" prefWidth="100.0" text="Appt ID" />
-            <TableColumn fx:id="customerID" prefWidth="125.99996948242188" text="Customer ID" />
-            <TableColumn fx:id="date" prefWidth="139.60003662109375" text="Date" />
-            <TableColumn fx:id="startTime" prefWidth="121.4000244140625" text="Start" />
-            <TableColumn fx:id="endTime" prefWidth="136.4000244140625" text="End" />
-         </columns>
-      </TableView>
-      <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
-         <buttons>
-            <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
-            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Edit" />
-            <Button layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
-            <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
-         </buttons>
-      </ButtonBar>
-      <TextField fx:id="appointmentFilter" layoutX="386.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" promptText="Search by ApptID or Customer Name" />
-      <Label layoutX="344.0" layoutY="18.0" text="Search" />
-      <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
-   </Pane>
+<AnchorPane prefHeight="550" prefWidth="1200" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserDetails">
+    <Label fx:id="stageLabel" layoutX="449.0" layoutY="14.0" text="User Details">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+    <ButtonBar layoutX="408.0" layoutY="496.0" prefHeight="40.0" prefWidth="153.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toExit" text="Exit" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toLogOut" text="Log Out" />
+        </buttons>
+    </ButtonBar>
+    <ButtonBar layoutX="194.0" layoutY="41.0" prefHeight="40.0" prefWidth="610.0">
+        <buttons>
+            <Button mnemonicParsing="false" onAction="#toYourProfile" text="Your Profile" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentManager" text="Manage Appointments" />
+            <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toCustomerManager" text="Manage Customers" />
+            <Button layoutX="31.0" layoutY="17.0" mnemonicParsing="false" onAction="#toHome" text="Home" />
+        </buttons>
+    </ButtonBar>
+    <Pane layoutX="10.0" layoutY="100.0" prefHeight="386.0" prefWidth="328.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <TextField fx:id="userIDTxt" editable="false" layoutX="115.0" layoutY="42.0" prefHeight="26.0" prefWidth="200.0" />
+        <TextField fx:id="userNameTxt" editable="false" layoutX="115.0" layoutY="80.0" prefHeight="26.0" prefWidth="200.0" />
+        <TextField editable="false" layoutX="115.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" text="XXXXXXXXXXXXXXXXXXXXXXXXXX" />
+        <TextField fx:id="createDateTxt" editable="false" layoutX="115.0" layoutY="160" prefHeight="26.0" prefWidth="200.0" />
+        <TextField fx:id="createdByTxt" editable="false" layoutX="115.0" layoutY="200" prefHeight="26.0" prefWidth="200.0" />
+        <TextField fx:id="lastUpdatedTxt" editable="false" layoutX="115.0" layoutY="241.0" prefHeight="26.0" prefWidth="200.0" />
+        <TextField fx:id="lastUpdatedByTxt" editable="false" layoutX="115.0" layoutY="281.0" prefHeight="26.0" prefWidth="200.0" />
+        <Label alignment="CENTER_RIGHT" layoutX="38.0" layoutY="46.0" text="User ID" textAlignment="RIGHT" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="28.0" layoutY="85.0" text="User Name" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="32.0" layoutY="124.0" text="Password" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="27.0" layoutY="165.0" text="Created On" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="28.0" layoutY="205.0" text="Created By" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="22.0" layoutY="245.0" text="Last Updated" />
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="285.0" text="Last Updated By" />
+        <Label layoutX="98.0" layoutY="338.0" text="Contact an administrator" />
+        <Label layoutX="63.0" layoutY="355.0" text="to change or update user information." />
+    </Pane>
+    <Pane layoutX="342.0" layoutY="100.0" prefHeight="386.0" prefWidth="850.0" style="-fx-border-width: 1; -fx-border-radius: 10px; -fx-border-style: solid;">
+        <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="50.0" prefHeight="280.0" prefWidth="827.0">
+            <columns>
+                <TableColumn fx:id="appointmentID" prefWidth="100.0" text="Appt ID" />
+                <TableColumn fx:id="customerID" prefWidth="226.39993286132812" text="Customer ID" />
+                <TableColumn fx:id="date" prefWidth="221.5999755859375" text="Date" />
+                <TableColumn fx:id="startTime" prefWidth="135.800048828125" text="Start" />
+                <TableColumn fx:id="endTime" prefWidth="143.39996337890625" text="End" />
+            </columns>
+        </TableView>
+        <ButtonBar fx:id="buttonBar" layoutX="131.0" layoutY="332.0" prefHeight="40.0" prefWidth="383.0">
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#addAppointment" text="Add" />
+                <Button layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="Edit" />
+                <Button layoutX="48.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
+                <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#toAppointmentDetails" text="View Details" />
+            </buttons>
+        </ButtonBar>
+        <Label layoutX="43.0" layoutY="18.0" text="Associated Appointments" />
+    </Pane>
 </AnchorPane>
