@@ -64,26 +64,32 @@ public class AppointmentDetails implements Initializable {
     public void toExit() {
         exitHere();
     }
+
     public void toLogOut() {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         logOutHere(stage);
     }
+
     public void toYourProfile() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Profile.fxml");
     }
+
     public void toAppointmentManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Appointments.fxml");
     }
+
     public void toCustomerManager() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Manage Customers.fxml");
     }
+
     public void toHome() throws IOException {
         Stage stage = (Stage) stageLabel.getScene().getWindow();
         navigation(stage, "/view/Home Page.fxml");
     }
+
     public void toCustomerDetails() throws IOException, SQLException {
         if (customerCombo.getSelectionModel().isEmpty()) {
             return;
@@ -92,6 +98,7 @@ public class AppointmentDetails implements Initializable {
         Customer currentCustomer = customerCombo.getSelectionModel().getSelectedItem();
         passTheCustomer(currentCustomer, stage);
     }
+
     public void toUserDetails() throws IOException {
         if (userCombo.getSelectionModel().isEmpty()) {
             return;
@@ -100,6 +107,7 @@ public class AppointmentDetails implements Initializable {
         currentUser = userCombo.getSelectionModel().getSelectedItem();
         passTheUserToUser(currentUser, stage);
     }
+
     public void toContactDetails() throws IOException {
         if (contactCombo.getSelectionModel().isEmpty()) {
             return;
@@ -205,6 +213,7 @@ public class AppointmentDetails implements Initializable {
         startTimeAtHQLabel.setText(formatter.format(hereBusinessHours.get(i).withZoneSameInstant(ZoneId.of("US/Eastern"))));
         startTime = hereBusinessHours.get(i);
     }
+
     public void changeEndTimeLabel() {
         //If no selection is made, make the label invisible.
         if (endTimeComboBox.getSelectionModel().isEmpty()) {
@@ -366,16 +375,11 @@ public class AppointmentDetails implements Initializable {
                 }
             }
         }
+        //assign values to temp user and temp contact.
+        tempUser = userCombo.getSelectionModel().getSelectedItem();
+        tempContact = contactCombo.getSelectionModel().getSelectedItem();
         //Check for overlapping appointments.
-        if(tempCustomer == null) {
-            tempCustomer = customerCombo.getSelectionModel().getSelectedItem();
-        }
-        if(tempUser == null) {
-            tempUser = userCombo.getSelectionModel().getSelectedItem();
-        }
-        if(tempContact == null) {
-            tempContact = contactCombo.getSelectionModel().getSelectedItem();
-        }
+        tempCustomer = customerCombo.getSelectionModel().getSelectedItem();
         int appointmentID;
         LocalDateTime createDate;
         String createdBy;
@@ -399,10 +403,10 @@ public class AppointmentDetails implements Initializable {
         for (Appointment apt : tempCustomer.getAllCustomerAppointments()) {
             if (
                     (aptStart.isBefore(apt.getRawStart()) && (aptEnd.isAfter(apt.getRawEnd())) && (apt.getAppointmentID() != appointmentID)) ||
-                    (aptStart.isAfter(apt.getRawStart()) && (aptStart.isBefore(apt.getRawEnd())) && (apt.getAppointmentID() != appointmentID)) ||
-                    (aptEnd.isAfter(apt.getRawStart()) && aptEnd.isBefore(apt.getRawEnd()) && (apt.getAppointmentID() != appointmentID)) ||
-                    (aptStart.equals(apt.getRawEnd()) || aptStart.equals(apt.getRawStart()) && (apt.getAppointmentID() != appointmentID)) ||
-                    (aptEnd.equals(apt.getRawStart()) || aptEnd.equals(apt.getRawEnd()) && (apt.getAppointmentID() != appointmentID))
+                            (aptStart.isAfter(apt.getRawStart()) && (aptStart.isBefore(apt.getRawEnd())) && (apt.getAppointmentID() != appointmentID)) ||
+                            (aptEnd.isAfter(apt.getRawStart()) && aptEnd.isBefore(apt.getRawEnd()) && (apt.getAppointmentID() != appointmentID)) ||
+                            (aptStart.equals(apt.getRawEnd()) || aptStart.equals(apt.getRawStart()) && (apt.getAppointmentID() != appointmentID)) ||
+                            (aptEnd.equals(apt.getRawStart()) || aptEnd.equals(apt.getRawEnd()) && (apt.getAppointmentID() != appointmentID))
             ) {
                 isOverlapping = true;
             }
@@ -433,7 +437,7 @@ public class AppointmentDetails implements Initializable {
                 parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
                 lastUpdated, lastUpdatedBy, customerID, userID, contactID);
         //Determine weather to insert or update the appointment.
-        if(currentAppointment == null) {
+        if (currentAppointment == null) {
             addAppointmentToDB(apt);
             toAppointmentManager();
         } else {

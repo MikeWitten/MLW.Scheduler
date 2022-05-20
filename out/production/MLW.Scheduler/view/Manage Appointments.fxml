@@ -60,6 +60,6 @@
         <Button fx:id="prevWeekButton" layoutX="506.0" layoutY="14.0" mnemonicParsing="false" onAction="#previousWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" visible="false" />
         <Button fx:id="nextWeekButton" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#nextWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Next" visible="false" />
         <Label fx:id="dateLabel" layoutX="721.0" layoutY="19.0" prefHeight="17.0" prefWidth="180.0" text="MMM, yyyy or  week of MMM" />
-      <Button layoutX="65.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Report" />
+      <Button fx:id="reportButton" layoutX="65.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Report" />
     </Pane>
 </AnchorPane>

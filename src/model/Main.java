@@ -28,7 +28,9 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) throws IOException {
+       Locale testLocale = Locale.FRANCE;
         //Get the Locale from the user's computer for localization.
+        //Locale currentLocale =testLocale;
         Locale currentLocale = Locale.getDefault();
         ResourceBundle bundle = ResourceBundle.getBundle("resources.myBundle", currentLocale);
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Log In.fxml")),bundle);
@@ -41,8 +43,6 @@ public class Main extends Application {
      * Launch the program.
      */
     public static void main(String[] args) throws SQLException {
-        System.out.println(System.getProperty("java.version"));
-        System.out.println(System.getProperty("javaFX.version"));
         //Open the connection to the database to populate the user info.
         JDBC.openConnection();
         //Load the user objects from the database so that username and password can be verified

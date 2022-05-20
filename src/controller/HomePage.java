@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -9,7 +10,9 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -22,6 +25,7 @@ public class HomePage implements Initializable {
     public TextField nextAptTimeTxt;
     public Label welcomeLabel;
     Appointment currentAppointment;
+    LocalDateTime nextApt = null;
 
     //Navigation
     public void toExit() {
@@ -102,7 +106,7 @@ public class HomePage implements Initializable {
         //Sort the associated appointments by datetime.
         currentUser.getUserAppointments().sort(Comparator.comparing(Appointment::getRawStart));
         //find next appointment. Then, finally, populate the text box.
-        LocalDateTime nextApt;
+
         for (int i = 0; i < currentUser.getUserAppointments().size(); i++) {
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("    MMM dd yyyy   HH:mm");
             if (LocalDateTime.now().isBefore(currentUser.getUserAppointments().get(i).getRawStart())) {
@@ -112,12 +116,28 @@ public class HomePage implements Initializable {
                         + timeFormatter.format(nextApt));
                 //Send an alert if the next appointment is within 15 minutes.
                 if (LocalDateTime.now().plusMinutes(15).isAfter(nextApt)) {
-                    Alerts("You have an upcoming appointment");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeight(550);
+                    alert.setWidth(550);
+                    int id = currentAppointment.getAppointmentID();
+                    LocalDate d = currentAppointment.getParsedStartDate();
+                    LocalTime t = currentAppointment.getParsedStartTime();
+                    alert.setContentText("You have an upcoming appointment in less than 15 minutes \n" +
+                            "\n" +
+                            "Appointment ID :  " + id + "\n" +
+                            "Start Date:  " + d + "\n" +
+                            "Start Time:  " + t);
+                    alert.show();
+                    return;
                 }
-                return;
             }
             //If all appointments have passed, or there are no appointments, set a message to indicate that.
-            else nextAptTimeTxt.setText("You don't have any upcoming Appointments.");
+            else{
+                nextAptTimeTxt.setText("You don't have any upcoming Appointments.");
+            }
+        }
+        if((nextApt == null) || (nextApt.isAfter(LocalDateTime.now().plusMinutes(15)))){
+            Alerts("You don't have any appointments in the next 15 minutes.");
         }
     }
 }

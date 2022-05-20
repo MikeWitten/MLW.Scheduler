@@ -73,7 +73,8 @@
         <ComboBox fx:id="endTimeComboBox" layoutX="100.0" layoutY="270.0" onAction="#changeEndTimeLabel" onMousePressed="#checkForNullDate" prefHeight="25.0" prefWidth="227.0" />
         <Label fx:id="startTimeAtHQLabel" layoutX="467.0" layoutY="238.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
         <Label fx:id="endTimeAtHQLabel" layoutX="467.0" layoutY="274.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
-        <Label layoutX="467.0" layoutY="202.0" text="Time of appointment at company HQ :" />
+        <Label layoutX="467.0" layoutY="202.0" text="Time of appointment at company HQ " />
+      <Label layoutX="467.0" layoutY="215.0" text="US/Easterm:" />
 
 
     </Pane>

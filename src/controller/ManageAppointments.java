@@ -31,6 +31,7 @@ public class ManageAppointments implements Initializable {
     public Button nextMonthButton;
     public Button prevWeekButton;
     public Button nextWeekButton;
+    public Button reportButton;
     public User currentUser;
     public Label dateLabel;
     public LocalDate currentDate;
@@ -106,6 +107,7 @@ public class ManageAppointments implements Initializable {
      */
     public void toMonthView() {
         monthlyList.clear();
+        reportButton.setVisible(true);
         monthViewButton.setSelected(true);
         monthViewButton.setDisable(true);
         nextMonthButton.setVisible(true);
@@ -132,6 +134,7 @@ public class ManageAppointments implements Initializable {
      */
     public void toWeekView() {
         weeklyList.clear();
+        reportButton.setVisible(false);
         monthViewButton.setSelected(false);
         monthViewButton.setDisable(false);
         nextMonthButton.setVisible(false);

@@ -31,7 +31,10 @@ public class Methods {
 
     /**
      * Method for notification alerts throughout the program.
-     * Lambda expressions are used here.
+     * Lambda expressions are used here for brevity of code and because the expression contains no
+     * additional arguments. Here the lambdas refer to variables from their enclosing scope i.e (the string switch Strings),
+     * those variables are captured, so I can refer to them when applying a lambda later. I do not refer to these variables
+     * outside the current method.
      */
     public static void Alerts(String alertType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -45,6 +48,7 @@ public class Methods {
             case "Address fields required" -> alert.setContentText("Street Number, Street Name, and City are all required fields");
             case "no changes were made" -> alert.setContentText("You have not changed anything about this customer." +
                     "No changes will be saved.");
+            case "You don't have any appointments in the next 15 minutes." -> alert.setContentText("There are no appointments scheduled for you in the next 15 minutes.");
             case "Does not meet UK standards" -> alert.setContentText("This postal code does not meet the postal standards of the U.K. :  please enter the " +
                     "postal code in this pattern-   AB12 1AB  ");
             case "Does not meet CA standards" -> alert.setContentText("This postal code does not meet the postal standards of Canada :  please enter the " +
@@ -122,7 +126,10 @@ public class Methods {
 
     /**
      * Method to exit the program.
-     * Lambda expressions are used here.
+     * I used a lambda expression here for brevity of code, but also to show how further arguments can be
+     * included if wrapped in brackets. This is the same syntax for lambda expressions for all the
+     * "show and Wait" alerts in the program. The Lambda here is used as a shorthand for writing a class to implement a functional
+     * interface and then instantiating that class.
      */
     public static void exitHere() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
