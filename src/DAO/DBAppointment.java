@@ -4,6 +4,8 @@ import model.Appointment;
 import utilities.JDBC;
 import java.sql.*;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+
 import static utilities.Methods.addApt;
 
 public abstract class DBAppointment {
@@ -11,14 +13,22 @@ public abstract class DBAppointment {
      * Method to insert an appointment into the database.
      */
     public static void insertApt(Appointment appointment) throws SQLException {
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         //Convert time values to UTC for storage in the database.
         ZoneId utcID = ZoneId.of("UTC");
         Timestamp rawTS = appointment.getLastUpdate();
         ZonedDateTime rawZDT = ZonedDateTime.ofInstant(rawTS.toInstant(), ZoneId.systemDefault());
         ZonedDateTime convZDT = rawZDT.withZoneSameInstant(utcID);
         Timestamp lastUpdate = Timestamp.valueOf(convZDT.toLocalDateTime());
-        LocalDateTime start = ZonedDateTime.of(appointment.getRawStart(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
-        LocalDateTime end = ZonedDateTime.of(appointment.getRawEnd(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
+
+        LocalDateTime rawStart = appointment.getRawStart();
+        ZonedDateTime startZDT = ZonedDateTime.of(rawStart, ZoneId.systemDefault());
+        LocalDateTime start = startZDT.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+
+        LocalDateTime rawEnd = appointment.getRawEnd();
+        ZonedDateTime endZDT = ZonedDateTime.of(rawEnd, ZoneId.systemDefault());
+        LocalDateTime end = endZDT.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+
         LocalDateTime createDate =ZonedDateTime.of(appointment.getCreateDate(), ZoneId.systemDefault()).withZoneSameInstant(utcID).toLocalDateTime();
         //Take values from an Appointment object that has a placeholder appointmentID.
         String title = appointment.getTitle();
@@ -40,8 +50,8 @@ public abstract class DBAppointment {
         ps.setString(2, description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, Timestamp.valueOf(start));
-        ps.setTimestamp(6,Timestamp.valueOf(end));
+        ps.setTimestamp(5, Timestamp.valueOf(f.format(start)));
+        ps.setTimestamp(6,Timestamp.valueOf(f.format(end)));
         ps.setTimestamp(7,Timestamp.valueOf((createDate)));
         ps.setString(8, createdBy);
         ps.setTimestamp(9,lastUpdate);

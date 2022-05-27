@@ -28,7 +28,7 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) throws IOException {
-       Locale testLocale = Locale.FRANCE;
+       //Locale testLocale = Locale.FRANCE;
         //Get the Locale from the user's computer for localization.
         //Locale currentLocale =testLocale;
         Locale currentLocale = Locale.getDefault();

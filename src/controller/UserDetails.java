@@ -20,7 +20,6 @@ public class UserDetails implements Initializable {
     public TextField createdByTxt;
     public TextField lastUpdatedTxt;
     public TextField lastUpdatedByTxt;
-    public TextField appointmentFilter;
     static User currentUser;
 
     //Navigation
