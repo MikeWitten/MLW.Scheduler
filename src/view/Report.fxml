@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="292.0" prefWidth="247.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Report">
+   <children>
+      <Label layoutX="69.0" layoutY="14.0" text="Appointment Report" />
+      <Label fx:id="timeDateStamp" layoutX="22.0" layoutY="52.0" prefHeight="18.0" prefWidth="200.0" text="Label" />
+      <TableView fx:id="ReportTable" layoutX="22.0" layoutY="78.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="appointmentTypes" prefWidth="151.1999969482422" text="Appointment Types" />
+          <TableColumn fx:id="count" prefWidth="48.0" text="Count" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
