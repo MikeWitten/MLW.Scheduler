@@ -48,18 +48,8 @@
                 <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
             </buttons>
         </ButtonBar>
-        <Label fx:id="monthOfTheYear" layoutX="513.0" layoutY="18.0" />
-        <Button fx:id="prevMonthButton" layoutX="539.0" layoutY="14.0" mnemonicParsing="false" onAction="#previousMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" />
-        <Button fx:id="nextMonthButton" layoutX="614.0" layoutY="14.0" mnemonicParsing="false" onAction="#nextMonthFilter" prefHeight="26.0" prefWidth="65.0" text="Next" />
-        <ButtonBar layoutX="276.0" layoutY="7.0" prefHeight="40.0" prefWidth="230.0">
-            <buttons>
-                <RadioButton fx:id="monthViewButton" disable="true" mnemonicParsing="false" onAction="#toMonthView" selected="true" text="Month View" />
-                <RadioButton fx:id="weekViewButton" layoutX="122.0" layoutY="21.0" mnemonicParsing="false" onAction="#toWeekView" text="Week View" />
-            </buttons>
-        </ButtonBar>
-        <Button fx:id="prevWeekButton" layoutX="506.0" layoutY="14.0" mnemonicParsing="false" onAction="#previousWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Previous" visible="false" />
-        <Button fx:id="nextWeekButton" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#nextWeekFilter" prefHeight="26.0" prefWidth="65.0" text="Next" visible="false" />
-        <Label fx:id="dateLabel" layoutX="721.0" layoutY="19.0" prefHeight="17.0" prefWidth="180.0" text="MMM, yyyy or  week of MMM" />
-      <Button fx:id="reportButton" layoutX="65.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Report" />
+      <Label layoutX="359.0" layoutY="21.0" text="Search Here By Title or Type" />
+      <TextField fx:id="AppointmentSearch" layoutX="513.0" layoutY="17.0" />
+      <Button fx:id="genReport" layoutX="730.0" layoutY="17.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Appointment Report" />
     </Pane>
 </AnchorPane>

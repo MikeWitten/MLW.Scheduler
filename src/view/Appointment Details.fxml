@@ -47,7 +47,7 @@
         <TextField fx:id="appointmentIDTxt" editable="false" layoutX="100.0" layoutY="30.0" prefHeight="25.0" prefWidth="227.0" />
         <TextField fx:id="titleTxt" editable="false" layoutX="100.0" layoutY="60.0" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
         <TextField fx:id="locationTxt" editable="false" layoutX="100.0" layoutY="90.0" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
-        <TextField fx:id="typeTxt" editable="false" layoutX="100.0" layoutY="120.0" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
+      <Accordion />
         <DatePicker fx:id="aptDatePicker" layoutX="101.0" layoutY="198.0" onAction="#populateBoxes" onMouseClicked="#isEditable" onMousePressed="#isEditable" prefHeight="25.0" prefWidth="227.0" />
         <TextArea fx:id="descriptionTxt" editable="false" layoutX="101.0" layoutY="325.0" onMousePressed="#isEditable" prefHeight="61.0" prefWidth="227.0" />
 
@@ -75,6 +75,7 @@
         <Label fx:id="endTimeAtHQLabel" layoutX="467.0" layoutY="274.0" prefHeight="17.0" prefWidth="204.0" text="Label" />
         <Label layoutX="467.0" layoutY="202.0" text="Time of appointment at company HQ " />
       <Label layoutX="467.0" layoutY="215.0" text="US/Easterm:" />
+      <ComboBox fx:id="aptTypeCombo" layoutX="101.0" layoutY="120.0" onAction="#populateDescription" prefHeight="25.0" prefWidth="227.0" />
 
 
     </Pane>

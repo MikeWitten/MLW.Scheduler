@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Appointment;
-import model.Contact;
-import model.Customer;
-import model.User;
+import model.*;
 import utilities.ActiveUser;
 
 import java.io.IOException;
@@ -21,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static model.AptType.*;
 import static utilities.Methods.*;
 
 public class AppointmentDetails implements Initializable {
@@ -28,7 +26,6 @@ public class AppointmentDetails implements Initializable {
     public TextField appointmentIDTxt;
     public TextField titleTxt;
     public TextField locationTxt;
-    public TextField typeTxt;
     public TextField createDateTxt;
     final Tooltip tooltip = new Tooltip("This field is AutoPopulated.");      //explains text fields.
     public TextField createdByTxt;
@@ -39,6 +36,7 @@ public class AppointmentDetails implements Initializable {
     public ComboBox<Contact> contactCombo;
     public ComboBox<User> userCombo;
     public ComboBox<Customer> customerCombo;
+    public ComboBox<AptType> aptTypeCombo;
     public Button makeChanges;
     public Button cancelButton;
     public Button saveButton;
@@ -59,6 +57,7 @@ public class AppointmentDetails implements Initializable {
     public Customer tempCustomer;
     public User tempUser;
     public Contact tempContact;
+
 
     //Navigation
     public void toExit() {
@@ -279,7 +278,7 @@ public class AppointmentDetails implements Initializable {
         appointmentIDTxt.setText(String.valueOf(currentAppointment.getAppointmentID()));
         titleTxt.setText(currentAppointment.getTitle());
         locationTxt.setText(currentAppointment.getLocation());
-        typeTxt.setText(currentAppointment.getType());
+        aptTypeCombo.setValue(currentAppointment.getType());
         aptDatePicker.setValue(currentAppointment.getRawStart().toLocalDate());
         createDateTxt.setText(String.valueOf(currentAppointment.getCreateDate()));
         createdByTxt.setText(currentAppointment.getCreatedBy());
@@ -331,7 +330,6 @@ public class AppointmentDetails implements Initializable {
     public void makeEditable() {
         titleTxt.setEditable(true);
         locationTxt.setEditable(true);
-        typeTxt.setEditable(true);
         descriptionTxt.setEditable(true);
         saveButton.setVisible(true);
         cancelButton.setVisible(true);
@@ -357,7 +355,7 @@ public class AppointmentDetails implements Initializable {
     public void saveChanges() throws SQLException, IOException {
         //Verify all editable fields are complete and that they meet database requirements.
         //Check for null values. Method in utilities.methods.
-        if (containsNullValues(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(), descriptionTxt.getText())) {
+        if (containsNullValues(titleTxt.getText(), locationTxt.getText(), descriptionTxt.getText())) {
             return;
         }
         if (customerCombo.getSelectionModel().isEmpty() || userCombo.getSelectionModel().isEmpty() || contactCombo.getSelectionModel().isEmpty()) {
@@ -365,7 +363,7 @@ public class AppointmentDetails implements Initializable {
             return;
         }
         //Check for input that doesn't meet the 50-character database limit. Method in utilities.methods.
-        if (stringTooLong(titleTxt.getText(), locationTxt.getText(), typeTxt.getText(), descriptionTxt.getText())) {
+        if (stringTooLong(titleTxt.getText(), locationTxt.getText(), descriptionTxt.getText())) {
             return;
         }
         if (currentUser == null) {
@@ -424,7 +422,7 @@ public class AppointmentDetails implements Initializable {
         String title = titleTxt.getText();
         String description = descriptionTxt.getText();
         String location = locationTxt.getText();
-        String type = typeTxt.getText();
+        AptType type = aptTypeCombo.getValue();
         LocalDate parsedStartDate = aptStart.toLocalDate();
         LocalDate parsedEndDate = aptEnd.toLocalDate();
         LocalTime parsedStartTime = aptStart.toLocalTime();
@@ -433,9 +431,50 @@ public class AppointmentDetails implements Initializable {
         int userID = tempUser.getUserID();
         int contactID = tempContact.getContactID();
         //Create the new appointment object.
-        Appointment apt = new Appointment(appointmentID, title, description, location, type, aptStart,
-                parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
-                lastUpdated, lastUpdatedBy, customerID, userID, contactID);
+        if(type == Proposal){
+            PropAppointment apt = new PropAppointment(appointmentID, title, description, location, type, aptStart,
+                    parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
+                    lastUpdated, lastUpdatedBy, customerID, userID, contactID);
+            //Determine weather to insert or update the appointment.
+            if (currentAppointment == null) {
+                addAppointmentToDB(apt);
+                toAppointmentManager();
+            } else {
+                DBAppointment.updateApt(apt);
+                toAppointmentManager();
+            }
+        }
+        else if (type == Update){
+            UpdateAppointment apt = new UpdateAppointment(appointmentID, title, description, location, type, aptStart,
+                    parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
+                    lastUpdated, lastUpdatedBy, customerID, userID, contactID);
+            //Determine weather to insert or update the appointment.
+            if (currentAppointment == null) {
+                addAppointmentToDB(apt);
+                toAppointmentManager();
+            } else {
+                DBAppointment.updateApt(apt);
+                toAppointmentManager();
+            }
+        }
+        else if (type == Evaluation){
+            EvalAppointment apt = new EvalAppointment(appointmentID, title, description, location, type, aptStart,
+                    parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
+                    lastUpdated, lastUpdatedBy, customerID, userID, contactID);
+            //Determine weather to insert or update the appointment.
+            if (currentAppointment == null) {
+                addAppointmentToDB(apt);
+                toAppointmentManager();
+            } else {
+                DBAppointment.updateApt(apt);
+                toAppointmentManager();
+            }
+        }
+        else if (type == null) {
+            Appointment apt = new Appointment(appointmentID, title, description, location, Proposal, aptStart,
+                    parsedStartDate, parsedStartTime, aptEnd, parsedEndDate, parsedEndTime, createDate, createdBy,
+                    lastUpdated, lastUpdatedBy, customerID, userID, contactID);
+
         //Determine weather to insert or update the appointment.
         if (currentAppointment == null) {
             addAppointmentToDB(apt);
@@ -444,7 +483,7 @@ public class AppointmentDetails implements Initializable {
             DBAppointment.updateApt(apt);
             toAppointmentManager();
         }
-    }
+    }}
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -454,10 +493,15 @@ public class AppointmentDetails implements Initializable {
         createdByTxt.setTooltip(tooltip);
         lastUpdatedTxt.setTooltip(tooltip);
         lastUpdatedByTxt.setTooltip(tooltip);
+        //Create an Observable List
+        ObservableList<AptType> AptTypes = FXCollections.observableArrayList();
+        AptTypes.add(Proposal); AptTypes.add(Update); AptTypes.add(Evaluation);
         //Populate the combo boxes.
         userCombo.setItems(AllUsers);
         contactCombo.setItems(AllContacts);
         customerCombo.setItems(AllCustomers);
+        aptTypeCombo.setItems(AptTypes);
+
         //Make labels invisible until times are chosen.
         if (startTimeComboBox.getSelectionModel().getSelectedItem() == null) {
             startTimeAtHQLabel.setText(" ");
@@ -467,4 +511,18 @@ public class AppointmentDetails implements Initializable {
         }
     }
 
+    public void populateDescription() {
+        if(aptTypeCombo.getValue() == Proposal){
+            descriptionTxt.setText("We are going to propose things!");
+            descriptionTxt.setEditable(false);
+        }
+        else if(aptTypeCombo.getValue() == Update){
+            descriptionTxt.setText("Things arent going as we'd hoped.");
+            descriptionTxt.setEditable(false);
+        }
+        else if(aptTypeCombo.getValue() == Evaluation){
+            descriptionTxt.setText("Let's Evaluate ourselves... Marvelous!");
+            descriptionTxt.setEditable(false);
+        }
+    }
 }

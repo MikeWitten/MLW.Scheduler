@@ -1,6 +1,7 @@
 package DAO;
 
 import model.Appointment;
+import model.AptType;
 import utilities.JDBC;
 import java.sql.*;
 import java.time.*;
@@ -34,7 +35,7 @@ public abstract class DBAppointment {
         String title = appointment.getTitle();
         String description = appointment.getDescription();
         String location = appointment.getLocation();
-        String type = appointment.getType();
+        String type = appointment.getType().toString();
         String createdBy = appointment.getCreatedBy();
         String lastUpdatedBy = appointment.getLastUpdatedBy();
         int customerID = appointment.getCustomerID();
@@ -81,7 +82,7 @@ public abstract class DBAppointment {
         String title = appointment.getTitle();
         String description = appointment.getDescription();
         String location = appointment.getLocation();
-        String type = appointment.getType();
+        String type = appointment.getType().toString();
         String createdBy = appointment.getCreatedBy();
         String lastUpdatedBy = appointment.getLastUpdatedBy();
         int customerID = appointment.getCustomerID();
@@ -139,7 +140,8 @@ public abstract class DBAppointment {
             String title = resultSet.getString("Title");
             String description = resultSet.getString("Description");
             String location = resultSet.getString("Location");
-            String type = resultSet.getString("Type");
+            String typeS = resultSet.getString("Type");
+            AptType type = AptType.valueOf(typeS);
             Timestamp startTS = resultSet.getTimestamp("Start");
             LocalDateTime rawStart = startTS.toLocalDateTime();
             Timestamp endTS = resultSet.getTimestamp("End");

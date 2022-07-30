@@ -136,9 +136,7 @@ public class HomePage implements Initializable {
                 nextAptTimeTxt.setText("You don't have any upcoming Appointments.");
             }
         }
-        if((nextApt == null) || (nextApt.isAfter(LocalDateTime.now().plusMinutes(15)))){
-            Alerts("You don't have any appointments in the next 15 minutes.");
-        }
+
     }
 }
 

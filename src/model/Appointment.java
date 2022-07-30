@@ -7,29 +7,29 @@ import java.time.LocalTime;
 
 public class Appointment {
     //Create Appointment class arguments.
-    int appointmentID;
-    String title;
-    String description;
-    String location;
-    String type;
-    LocalDateTime rawStart;
-    LocalDate parsedStartDate;
-    LocalTime parsedStartTime;
-    LocalDateTime rawEnd;
-    LocalDate parsedEndDate;
-    LocalTime parsedEndTime;
-    LocalDateTime createDate;
-    String createdBy;
-    Timestamp lastUpdate;
-    String lastUpdatedBy;
-    int customerID;
-    int userID;
-    int contactID;
+    private int appointmentID;
+    private String title;
+    private String description;
+    private String location;
+    private AptType type;
+    private LocalDateTime rawStart;
+    private LocalDate parsedStartDate;
+    private LocalTime parsedStartTime;
+    private LocalDateTime rawEnd;
+    private LocalDate parsedEndDate;
+    private LocalTime parsedEndTime;
+    private LocalDateTime createDate;
+    private String createdBy;
+    private Timestamp lastUpdate;
+    private String lastUpdatedBy;
+    private int customerID;
+    private int userID;
+    private int contactID;
 
     /**
      * Create a constructor for the Appointment objects.
      */
-    public Appointment(int appointmentID, String title, String description, String location, String type,
+    public Appointment(int appointmentID, String title, String description, String location, AptType type,
                        LocalDateTime rawStart, LocalDate parsedStartDate, LocalTime parsedStartTime,
                        LocalDateTime rawEnd, LocalDate parsedEndDate, LocalTime parsedEndTime,
                        LocalDateTime createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,
@@ -89,11 +89,11 @@ public class Appointment {
         this.location = location;
     }
 
-    public String getType() {
+    public AptType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(AptType type) {
         this.type = type;
     }
 

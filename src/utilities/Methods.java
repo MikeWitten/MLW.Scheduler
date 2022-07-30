@@ -12,12 +12,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import model.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 import static DAO.DBAppointment.*;
 import static model.Contact.deleteContactAppointment;
 import static model.Customer.deleteCustomerAppointment;
@@ -186,20 +187,6 @@ public class Methods {
         stage1.show();
     }
 
-    /**
-     * Method to pass current list and date to the reports.
-     */
-    public static void passTheList(LocalDate date, Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Methods.class.getResource("/view/Monthly Appointment Report.fxml"));
-        loader.load();
-        MonthlyAppointmentReport controller = loader.getController();
-        controller.receiveTheList(date);
-        Parent scene = loader.getRoot();
-        stage.setTitle("Desktop Scheduling Application");
-        stage.setScene(new Scene(scene));
-        stage.show();
-    }
 
     /**
      * Method to pass the 'user football' to appointment details page.

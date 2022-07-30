@@ -1,9 +1,12 @@
 package controller;
 
 import DAO.DBAppointment;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -13,10 +16,6 @@ import model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.WeekFields;
 import java.util.ResourceBundle;
 
 import static utilities.ActiveUser.getActiveUser;
@@ -24,20 +23,10 @@ import static utilities.Methods.*;
 
 public class ManageAppointments implements Initializable {
     public Label stageLabel;
-    public Label monthOfTheYear;
-    public RadioButton monthViewButton;
-    public RadioButton weekViewButton;
-    public Button prevMonthButton;
-    public Button nextMonthButton;
-    public Button prevWeekButton;
-    public Button nextWeekButton;
-    public Button reportButton;
     public User currentUser;
-    public Label dateLabel;
-    public LocalDate currentDate;
-    public Month currentMonth;
-    public static ObservableList<Appointment> monthlyList = FXCollections.observableArrayList();
-    ObservableList<Appointment> weeklyList = FXCollections.observableArrayList();
+    public TextField AppointmentSearch;
+    public Button genReport;
+
 
     //Navigation
     public void toExit() {
@@ -84,11 +73,6 @@ public class ManageAppointments implements Initializable {
     }
 
     /**
-     * Format the dates for better readability.
-     */
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("'Week' W 'of' MMM, yyyy");
-
-    /**
      * Method to delete appointment.
      */
     public void deleteAppointment() throws IOException {
@@ -100,60 +84,6 @@ public class ManageAppointments implements Initializable {
         deleteAppointmentFromAll(appointment, null, null, null);
         AppointmentTable.refresh();
         toAppointmentManager();
-    }
-
-    /**
-     * Method to change the table to filter appointments by month.
-     */
-    public void toMonthView() {
-        monthlyList.clear();
-        reportButton.setVisible(true);
-        monthViewButton.setSelected(true);
-        monthViewButton.setDisable(true);
-        nextMonthButton.setVisible(true);
-        prevMonthButton.setVisible(true);
-        nextWeekButton.setVisible(false);
-        prevWeekButton.setVisible(false);
-        weekViewButton.setDisable(false);
-        weekViewButton.setSelected(false);
-        //Determine the current month and create a list to populate the table.
-        currentDate = LocalDate.now();
-        currentMonth = currentDate.getMonth();
-        dateLabel.setText("Appointments for " + currentMonth + ", " + currentDate.getYear());
-        for(Appointment a : AllAppointments){
-            if(a.getRawStart().getMonth() == currentMonth){
-                monthlyList.add(a);
-            }
-        }
-        //Populate the monthly appointments table.
-        populateTheTable(monthlyList);
-    }
-
-    /**
-     * Method to change the table to filter by week.
-     */
-    public void toWeekView() {
-        weeklyList.clear();
-        reportButton.setVisible(false);
-        monthViewButton.setSelected(false);
-        monthViewButton.setDisable(false);
-        nextMonthButton.setVisible(false);
-        prevMonthButton.setVisible(false);
-        nextWeekButton.setVisible(true);
-        prevWeekButton.setVisible(true);
-        weekViewButton.setDisable(true);
-        weekViewButton.setSelected(true);
-        //Set the date label with the current week.
-        currentDate = LocalDate.now();
-        String weekLabel = formatter.format(currentDate);
-        dateLabel.setText(weekLabel);
-        int weekNumber = currentDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
-        for(Appointment a : AllAppointments){
-            if(weekNumber == a.getRawStart().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear())){
-                weeklyList.add(a);
-            }
-        }
-        populateTheTable(weeklyList);
     }
 
     /**
@@ -174,81 +104,8 @@ public class ManageAppointments implements Initializable {
         userID.setCellValueFactory(new PropertyValueFactory<>("userID"));
     }
 
-    /**
-     * Method to filter results to the next month.
-     */
-    public void previousMonthFilter() {
-        monthlyList.clear();
-        currentDate = currentDate.minusMonths(1);
-        currentMonth = currentDate.getMonth();
-        dateLabel.setText("Appointments for " + currentMonth + ", " + currentDate.getYear());
-        for(Appointment a : AllAppointments){
-            if(a.getRawStart().getMonth() == currentMonth){
-                monthlyList.add(a);
-            }
-        }
-        //Populate the monthly appointments table.
-        populateTheTable(monthlyList);
-    }
 
-    /**
-     * Method to filter results to the next month.
-     */
-    public void nextMonthFilter() {
-        monthlyList.clear();
-        currentDate = currentDate.plusMonths(1);
-        currentMonth = currentDate.getMonth();
-        dateLabel.setText("Appointments for " + currentMonth + ", " + currentDate.getYear());
-        for(Appointment a : AllAppointments){
-            if(a.getRawStart().getMonth() == currentMonth){
-                monthlyList.add(a);
-            }
-        }
-        //Populate the monthly appointments table.
-        populateTheTable(monthlyList);
-    }
 
-    /**
-     * Method to filter to previous week.
-     */
-    public void previousWeekFilter() {
-        weeklyList.clear();
-        currentDate = currentDate.minusWeeks(1);
-        String weekLabel = formatter.format(currentDate);
-        dateLabel.setText(weekLabel);
-        int weekNumber = currentDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
-        for(Appointment a : AllAppointments){
-            if(weekNumber == a.getRawStart().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear())){
-                weeklyList.add(a);
-            }
-        }
-        populateTheTable(weeklyList);
-    }
-
-    /**
-     * Method to filter to next week.
-     */
-    public void nextWeekFilter() {
-        weeklyList.clear();
-        currentDate = currentDate.plusWeeks(1);
-        String weekLabel = formatter.format(currentDate);
-        dateLabel.setText(weekLabel);
-        int weekNumber = currentDate.get(WeekFields.SUNDAY_START.weekOfWeekBasedYear());
-        for(Appointment a : AllAppointments){
-            if(weekNumber == a.getRawStart().get(WeekFields.SUNDAY_START.weekOfWeekBasedYear())){
-                weeklyList.add(a);
-            }
-        }
-        populateTheTable(weeklyList);
-    }
-
-    /**
-     * Generate a simple count of appointments for the month.
-     */
-    public void generateReport()throws IOException {
-        Stage stage = (Stage) stageLabel.getScene().getWindow();
-        passTheList(currentDate, stage);
-    }
 
     /**
      * Set up Appointment Table.
@@ -276,8 +133,44 @@ public class ManageAppointments implements Initializable {
             e.printStackTrace();
         }
         //Set initial table and buttons.
-        toMonthView();
+        populateTheTable(AllAppointments);
+
+        //Creating an easy to use searchbar.
+        //Wrap the Appointments Observable list in an appointments FilteredList initialized to display all data.
+        FilteredList<Appointment> appointmentsFilteredList = new FilteredList<>(AllAppointments, a -> true);
+
+        //Create a listener.
+        AppointmentSearch.textProperty().addListener((observable, oldValue, newValue) -> appointmentsFilteredList.setPredicate(appointment -> {
+            // Display all objects if text field is empty.
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            // Compare appointment Title with filter text.
+            String lowerCaseFilter = newValue.toLowerCase();
+            if (appointment.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
+            //Compare appointment Type with filter text.
+            else return String.valueOf(appointment.getType()).contains(lowerCaseFilter);
+        }));
+
+        //Wrap the filtered list in a sorted list, then bind the tableview.
+        SortedList<Appointment> partSortedList = new SortedList<Appointment>(appointmentsFilteredList);
+        partSortedList.comparatorProperty().bind(AppointmentTable.comparatorProperty());
+
+        //Set the sorted and filtered objects into the TableView.
+        AppointmentTable.setItems(partSortedList);
+
     }
 
 
+    public void generateReport() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/view/Report.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+        Stage stage = new Stage();
+        stage.setTitle("New Window");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
