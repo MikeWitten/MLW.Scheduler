@@ -48,7 +48,7 @@
                 <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
             </buttons>
         </ButtonBar>
-      <Label layoutX="359.0" layoutY="21.0" text="Search Here By Title or Type" />
+      <Label layoutX="398.0" layoutY="21.0" text="Search Here By Title" />
       <TextField fx:id="AppointmentSearch" layoutX="513.0" layoutY="17.0" />
       <Button fx:id="genReport" layoutX="730.0" layoutY="17.0" mnemonicParsing="false" onAction="#generateReport" text="Generate Appointment Report" />
     </Pane>

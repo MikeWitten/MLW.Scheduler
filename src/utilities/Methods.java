@@ -165,7 +165,7 @@ public class Methods {
     public static boolean stringTooLong(String... strings) {
         for (String s : strings) {
             if (s.length() > 50) {
-                Alerts("String too long");
+//                Alerts("String too long");
                 return true;
             }
         }
